@@ -8,6 +8,7 @@ import '../../styles/styles.dart';
 import '../../functions/functions.dart';
 import 'package:http/http.dart' as http;
 import '../../widgets/widgets.dart';
+import '../language/languages.dart';
 import '../login/login.dart';
 import '../noInternet/noInternet.dart';
 import '../onTripPage/booking_confirmation.dart';
@@ -37,8 +38,6 @@ class _LoadingPageState extends State<LoadingPage> {
     getLanguageDone();
     getemailmodule();
     getLandingImages();
-    choosenLanguage = 'en';
-    languageDirection = 'ltr';
     super.initState();
   }
 
@@ -65,8 +64,10 @@ class _LoadingPageState extends State<LoadingPage> {
             )));
   }
 
+  //navigate
   navigate() async {
     if (userRequestData.isNotEmpty && userRequestData['is_completed'] == 1) {
+      //invoice page of ride
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const Invoice()),
@@ -74,6 +75,7 @@ class _LoadingPageState extends State<LoadingPage> {
     } else if (userDetails['metaRequest'] != null) {
       addressList.clear();
       userRequestData = userDetails['metaRequest']['data'];
+      // selectedHistory = i;
       addressList.add(AddressList(
           id: '1',
           type: 'pickup',
@@ -115,6 +117,7 @@ class _LoadingPageState extends State<LoadingPage> {
       ismulitipleride = true;
       var val = await getUserDetails(id: userRequestData['id']);
 
+      //login page
       if (val == true) {
         setState(() {
           _isLoading = false;
@@ -129,6 +132,7 @@ class _LoadingPageState extends State<LoadingPage> {
         }
       }
     } else {
+      //home page
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const Maps()),
@@ -142,6 +146,7 @@ class _LoadingPageState extends State<LoadingPage> {
     }
   }
 
+//get language json and data saved in local (bearer token , choosen language) and find users current status
   getLanguageDone() async {
     _package = await PackageInfo.fromPlatform();
     try {
@@ -195,15 +200,23 @@ class _LoadingPageState extends State<LoadingPage> {
 
           if (val == '3') {
             navigate();
+          } else if (choosenLanguage == '') {
+            // ignore: use_build_context_synchronously
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const Languages()));
           } else if (val == '2') {
             Future.delayed(const Duration(seconds: 2), () {
+              //login page
+              // ignore: use_build_context_synchronously
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const Login()));
             });
           } else {
             Future.delayed(const Duration(seconds: 2), () {
+              //choose language page
+              // ignore: use_build_context_synchronously
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const Login()));
+                  MaterialPageRoute(builder: (context) => const Languages()));
             });
           }
         } else {
@@ -240,6 +253,8 @@ class _LoadingPageState extends State<LoadingPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+
+
                   Container(
                     padding: EdgeInsets.all(media.width * 0.01),
                     width: media.width * 0.5,
@@ -274,6 +289,8 @@ class _LoadingPageState extends State<LoadingPage> {
                 ],
               ),
             ),
+
+            //update available
 
             (updateAvailable == true)
                 ? Positioned(
@@ -336,10 +353,12 @@ class _LoadingPageState extends State<LoadingPage> {
                 ))
                 : Container(),
 
+            //loader
             (_isLoading == true && internet == true)
                 ? const Positioned(top: 0, child: Loading())
                 : Container(),
 
+            //no internet
             (internet == false)
                 ? Positioned(
                 top: 0,

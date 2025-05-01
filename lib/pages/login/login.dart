@@ -162,7 +162,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     var permission = await getGalleryPermission();
     if (permission == PermissionStatus.granted) {
       final pickedFile =
-          await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+      await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
       proImageFile1 = pickedFile?.path;
       pickImage = false;
@@ -179,7 +179,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     var permission = await getCameraPermission();
     if (permission == PermissionStatus.granted) {
       final pickedFile =
-          await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+      await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
 
       proImageFile1 = pickedFile?.path;
       pickImage = false;
@@ -197,17 +197,17 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const Invoice()),
-            (route) => false);
+                (route) => false);
       } else {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const Maps()),
-            (route) => false);
+                (route) => false);
       }
     } else if (verify == false) {
       setState(() {
         _error =
-            'User Doesn\'t exists with this number, please Signup to continue';
+        'User Doesn\'t exists with this number, please Signup to continue';
       });
     } else {
       _error = verify.toString();
@@ -245,22 +245,22 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     {
       'heading': 'ASSURANCE',
       'text':
-          'Customer safety first,Always and forever our pledge,Your well-being, our priority,With you every step, edge to edge.'
+      'Customer safety first,Always and forever our pledge,Your well-being, our priority,With you every step, edge to edge.'
     },
     {
       'heading': 'CLARITY',
       'text':
-          'Fair pricing, crystal clear, Your trust, our promise sincere. With us, you\'ll find no hidden fee, Transparency is our guarantee.'
+      'Fair pricing, crystal clear, Your trust, our promise sincere. With us, you\'ll find no hidden fee, Transparency is our guarantee.'
     },
     {
       'heading': 'INTUTIVE',
       'text':
-          'Seamless journeys, Just a tap away, Explore hassle-free, Every step of the way.'
+      'Seamless journeys, Just a tap away, Explore hassle-free, Every step of the way.'
     },
     {
       'heading': 'SUPPORT',
       'text':
-          'Embark on your journey with confidence, knowing that our commitment to your satisfaction is unwavering'
+      'Embark on your journey with confidence, knowing that our commitment to your satisfaction is unwavering'
     },
   ];
 
@@ -283,102 +283,102 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       height: media.height,
                       child: (images.isNotEmpty)
                           ? Column(
-                              children: [
-                                SizedBox(
-                                  height: media.height * 0.6,
-                                  width: media.width,
-                                  child: ClipPath(
-                                      clipper: ShapePainter(),
-                                      child: images[currentPage]),
+                        children: [
+                          SizedBox(
+                            height: media.height * 0.6,
+                            width: media.width,
+                            child: ClipPath(
+                                clipper: ShapePainter(),
+                                child: images[currentPage]),
+                          ),
+                          SizedBox(
+                            height: media.height * 0.18,
+                            child: PageView(
+                              onPageChanged: (v) {
+                                setState(() {
+                                  currentPage = v;
+                                });
+                              },
+                              children: loginImages
+                                  .asMap()
+                                  .map((k, value) => MapEntry(
+                                k,
+                                Column(
+                                  children: [
+                                    MyText(
+                                      text: loginImages[k]
+                                      ['title'],
+                                      size: media.height * 0.02,
+                                      fontweight: FontWeight.w600,
+                                    ),
+                                    SizedBox(
+                                      height: media.height * 0.02,
+                                    ),
+                                    SizedBox(
+                                        width: media.width * 0.6,
+                                        child: MyText(
+                                          text: loginImages[k]
+                                          ['description'],
+                                          size: media.height *
+                                              0.015,
+                                          maxLines: 4,
+                                          textAlign:
+                                          TextAlign.center,
+                                        )),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: media.height * 0.18,
-                                  child: PageView(
-                                    onPageChanged: (v) {
-                                      setState(() {
-                                        currentPage = v;
-                                      });
-                                    },
-                                    children: loginImages
-                                        .asMap()
-                                        .map((k, value) => MapEntry(
-                                              k,
-                                              Column(
-                                                children: [
-                                                  MyText(
-                                                    text: loginImages[k]
-                                                        ['title'],
-                                                    size: media.height * 0.02,
-                                                    fontweight: FontWeight.w600,
-                                                  ),
-                                                  SizedBox(
-                                                    height: media.height * 0.02,
-                                                  ),
-                                                  SizedBox(
-                                                      width: media.width * 0.6,
-                                                      child: MyText(
-                                                        text: loginImages[k]
-                                                            ['description'],
-                                                        size: media.height *
-                                                            0.015,
-                                                        maxLines: 4,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      )),
-                                                ],
-                                              ),
-                                            ))
-                                        .values
-                                        .toList(),
+                              ))
+                                  .values
+                                  .toList(),
+                            ),
+                          ),
+                          SizedBox(
+                            width: media.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: loginImages
+                                  .asMap()
+                                  .map((k, value) => MapEntry(
+                                k,
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    right: (k <
+                                        loginImages.length -
+                                            1)
+                                        ? media.width * 0.025
+                                        : 0,
                                   ),
+                                  height: media.height * 0.01,
+                                  width: media.height * 0.01,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: (currentPage == k)
+                                          ? theme
+                                          : Colors.grey),
                                 ),
-                                SizedBox(
-                                  width: media.width,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: loginImages
-                                        .asMap()
-                                        .map((k, value) => MapEntry(
-                                              k,
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  right: (k <
-                                                          loginImages.length -
-                                                              1)
-                                                      ? media.width * 0.025
-                                                      : 0,
-                                                ),
-                                                height: media.height * 0.01,
-                                                width: media.height * 0.01,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: (currentPage == k)
-                                                        ? theme
-                                                        : Colors.grey),
-                                              ),
-                                            ))
-                                        .values
-                                        .toList(),
-                                  ),
-                                )
-                              ],
-                            )
+                              ))
+                                  .values
+                                  .toList(),
+                            ),
+                          )
+                        ],
+                      )
                           : Container(),
                     ),
                     Positioned(
                         child: (showSignin == true)
                             ? InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    showSignin = false;
-                                  });
-                                },
-                                child: Container(
-                                  height: media.height,
-                                  width: media.width,
-                                  color: Colors.transparent.withOpacity(0.8),
-                                ),
-                              )
+                          onTap: () {
+                            setState(() {
+                              showSignin = false;
+                            });
+                          },
+                          child: Container(
+                            height: media.height,
+                            width: media.width,
+                            color: Colors.transparent.withOpacity(0.8),
+                          ),
+                        )
                             : Container()),
                     Positioned(
                         bottom: 0,
@@ -408,127 +408,127 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border:
-                                          Border.all(color: theme, width: 0),
+                                      Border.all(color: theme, width: 0),
                                       color: theme,
                                     ),
                                     child: (showSignin == false)
                                         ? Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              MyText(
-                                                text: languages[choosenLanguage]
-                                                    ['text_sign_in'],
-                                                size: media.width * sixteen,
-                                                color: Colors.white,
-                                                fontweight: FontWeight.w600,
-                                              ),
-                                              SizedBox(
-                                                height: media.height * 0.01,
-                                              ),
-                                              Icon(
-                                                Icons
-                                                    .keyboard_double_arrow_up_rounded,
-                                                size: media.width * 0.07,
-                                                color: Colors.white,
-                                              ),
-                                              SizedBox(
-                                                height: media.height * 0.01,
-                                              ),
-                                            ],
-                                          )
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.end,
+                                      children: [
+                                        MyText(
+                                          text: languages[choosenLanguage]
+                                          ['text_sign_in'],
+                                          size: media.width * sixteen,
+                                          color: Colors.white,
+                                          fontweight: FontWeight.w600,
+                                        ),
+                                        SizedBox(
+                                          height: media.height * 0.01,
+                                        ),
+                                        Icon(
+                                          Icons
+                                              .keyboard_double_arrow_up_rounded,
+                                          size: media.width * 0.07,
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(
+                                          height: media.height * 0.01,
+                                        ),
+                                      ],
+                                    )
                                         : Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.end,
+                                      children: [
+                                        SizedBox(
+                                          width: media.width * 0.7,
+                                          child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                            MainAxisAlignment
+                                                .spaceEvenly,
                                             children: [
-                                              SizedBox(
-                                                width: media.width * 0.7,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    InkWell(
-                                                        onTap: () {
-                                                          if (signIn == 1) {
-                                                            setState(() {
-                                                              forgotPassword =
-                                                                  false;
-                                                              newPassword =
-                                                                  false;
-                                                              otpSent = false;
-                                                              withOtp = false;
-                                                              isLoginemail =
-                                                                  true;
-                                                              _error = '';
-                                                              _email.clear();
-                                                              _password.clear();
-                                                              _name.clear();
-                                                              _mobile.clear();
-                                                              signIn = 0;
-                                                            });
-                                                          }
-                                                        },
-                                                        child: MyText(
-                                                          text: languages[
-                                                                  choosenLanguage]
-                                                              ['text_sign_in'],
-                                                          size: media.width *
-                                                              sixteen,
-                                                          color: (signIn == 0)
-                                                              ? Colors.white
-                                                              : Colors.white
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                          fontweight:
-                                                              FontWeight.w600,
-                                                        )),
-                                                    InkWell(
-                                                        onTap: () {
-                                                          if (signIn == 0) {
-                                                            setState(() {
-                                                              forgotPassword =
-                                                                  false;
-                                                              otpSent = false;
-                                                              newPassword =
-                                                                  false;
-                                                              proImageFile1 =
-                                                                  null;
-                                                              isLoginemail =
-                                                                  true;
-                                                              withOtp = false;
-                                                              _error = '';
-                                                              _email.clear();
-                                                              _password.clear();
-                                                              _name.clear();
-                                                              _mobile.clear();
-                                                              gender = '';
-                                                              signIn = 1;
-                                                            });
-                                                          }
-                                                        },
-                                                        child: MyText(
-                                                          text: languages[
-                                                                  choosenLanguage]
-                                                              ['text_sign_up'],
-                                                          size: media.width *
-                                                              sixteen,
-                                                          color: (signIn == 1)
-                                                              ? Colors.white
-                                                              : Colors.white
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                          fontweight:
-                                                              FontWeight.w600,
-                                                        )),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: media.height * 0.05,
-                                              ),
+                                              InkWell(
+                                                  onTap: () {
+                                                    if (signIn == 1) {
+                                                      setState(() {
+                                                        forgotPassword =
+                                                        false;
+                                                        newPassword =
+                                                        false;
+                                                        otpSent = false;
+                                                        withOtp = false;
+                                                        isLoginemail =
+                                                        true;
+                                                        _error = '';
+                                                        _email.clear();
+                                                        _password.clear();
+                                                        _name.clear();
+                                                        _mobile.clear();
+                                                        signIn = 0;
+                                                      });
+                                                    }
+                                                  },
+                                                  child: MyText(
+                                                    text: languages[
+                                                    choosenLanguage]
+                                                    ['text_sign_in'],
+                                                    size: media.width *
+                                                        sixteen,
+                                                    color: (signIn == 0)
+                                                        ? Colors.white
+                                                        : Colors.white
+                                                        .withOpacity(
+                                                        0.5),
+                                                    fontweight:
+                                                    FontWeight.w600,
+                                                  )),
+                                              InkWell(
+                                                  onTap: () {
+                                                    if (signIn == 0) {
+                                                      setState(() {
+                                                        forgotPassword =
+                                                        false;
+                                                        otpSent = false;
+                                                        newPassword =
+                                                        false;
+                                                        proImageFile1 =
+                                                        null;
+                                                        isLoginemail =
+                                                        true;
+                                                        withOtp = false;
+                                                        _error = '';
+                                                        _email.clear();
+                                                        _password.clear();
+                                                        _name.clear();
+                                                        _mobile.clear();
+                                                        gender = '';
+                                                        signIn = 1;
+                                                      });
+                                                    }
+                                                  },
+                                                  child: MyText(
+                                                    text: languages[
+                                                    choosenLanguage]
+                                                    ['text_sign_up'],
+                                                    size: media.width *
+                                                        sixteen,
+                                                    color: (signIn == 1)
+                                                        ? Colors.white
+                                                        : Colors.white
+                                                        .withOpacity(
+                                                        0.5),
+                                                    fontweight:
+                                                    FontWeight.w600,
+                                                  )),
                                             ],
                                           ),
+                                        ),
+                                        SizedBox(
+                                          height: media.height * 0.05,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -537,15 +537,15 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               duration: const Duration(milliseconds: 250),
                               height: (showSignin == true)
                                   ? (signIn == 0)
-                                      ? media.height * 0.6 +
-                                          (MediaQuery.of(context)
-                                                  .viewInsets
-                                                  .bottom /
-                                              2)
-                                      : media.height * 0.7 +
-                                          (MediaQuery.of(context)
-                                              .viewInsets
-                                              .bottom)
+                                  ? media.height * 0.6 +
+                                  (MediaQuery.of(context)
+                                      .viewInsets
+                                      .bottom /
+                                      2)
+                                  : media.height * 0.7 +
+                                  (MediaQuery.of(context)
+                                      .viewInsets
+                                      .bottom)
                                   : 0,
                               width: media.width,
                               decoration: BoxDecoration(
@@ -574,35 +574,35 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         shape: BoxShape.circle,
                                                         color: Colors.white,
                                                         image: (proImageFile1 ==
-                                                                null)
+                                                            null)
                                                             ? const DecorationImage(
-                                                                image:
-                                                                    AssetImage(
-                                                                  'assets/images/default-profile-picture.jpeg',
-                                                                ),
-                                                                fit: BoxFit
-                                                                    .cover)
+                                                            image:
+                                                            AssetImage(
+                                                              'assets/images/default-profile-picture.jpeg',
+                                                            ),
+                                                            fit: BoxFit
+                                                                .cover)
                                                             : DecorationImage(
-                                                                image: FileImage(
-                                                                    File(
-                                                                        proImageFile1)),
-                                                                fit: BoxFit
-                                                                    .cover)),
+                                                            image: FileImage(
+                                                                File(
+                                                                    proImageFile1)),
+                                                            fit: BoxFit
+                                                                .cover)),
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
                                                       right: 0,
                                                       child: Container(
                                                           padding:
-                                                              EdgeInsets.all(
-                                                                  media.width *
-                                                                      0.015),
+                                                          EdgeInsets.all(
+                                                              media.width *
+                                                                  0.015),
                                                           decoration:
-                                                              const BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color: Colors
-                                                                      .grey),
+                                                          const BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: Colors
+                                                                  .grey),
                                                           child: Icon(
                                                             Icons.edit,
                                                             size: media.width *
@@ -620,7 +620,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             ? CrossFadeState.showFirst
                                             : CrossFadeState.showSecond,
                                         duration:
-                                            const Duration(milliseconds: 200)),
+                                        const Duration(milliseconds: 200)),
 
                                     AnimatedCrossFade(
                                         firstChild: Container(),
@@ -631,7 +631,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                               width: media.width * 0.8,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                  BorderRadius.circular(8),
                                                   color: Colors.white),
                                               padding: EdgeInsets.only(
                                                   right: media.width * 0.025,
@@ -640,8 +640,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                 controller: _name,
                                                 decoration: InputDecoration(
                                                     hintText: languages[
-                                                            choosenLanguage]
-                                                        ['text_name'],
+                                                    choosenLanguage]
+                                                    ['text_name'],
                                                     border: InputBorder.none),
                                               ),
                                             ),
@@ -654,14 +654,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             ? CrossFadeState.showFirst
                                             : CrossFadeState.showSecond,
                                         duration:
-                                            const Duration(milliseconds: 200)),
+                                        const Duration(milliseconds: 200)),
 
                                     Container(
                                       height: media.width * 0.12,
                                       width: media.width * 0.8,
                                       decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                          BorderRadius.circular(8),
                                           color: Colors.white),
                                       padding: EdgeInsets.only(
                                           right: media.width * 0.025,
@@ -678,76 +678,76 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                       builder: (builder) {
                                                         return Container(
                                                           padding:
-                                                              EdgeInsets.all(
-                                                                  media.width *
-                                                                      0.05),
+                                                          EdgeInsets.all(
+                                                              media.width *
+                                                                  0.05),
                                                           width: media.width,
                                                           color: page,
                                                           child: Directionality(
                                                             textDirection:
-                                                                (languageDirection ==
-                                                                        'rtl')
-                                                                    ? TextDirection
-                                                                        .rtl
-                                                                    : TextDirection
-                                                                        .ltr,
+                                                            (languageDirection ==
+                                                                'rtl')
+                                                                ? TextDirection
+                                                                .rtl
+                                                                : TextDirection
+                                                                .ltr,
                                                             child: Column(
                                                               children: [
                                                                 Container(
                                                                   padding:
-                                                                      const EdgeInsets
-                                                                          .only(
-                                                                          left:
-                                                                              20,
-                                                                          right:
-                                                                              20),
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      left:
+                                                                      20,
+                                                                      right:
+                                                                      20),
                                                                   height: 40,
                                                                   width: media
-                                                                          .width *
+                                                                      .width *
                                                                       0.9,
                                                                   decoration: BoxDecoration(
                                                                       borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
+                                                                      BorderRadius.circular(
+                                                                          20),
                                                                       border: Border.all(
                                                                           color: Colors
                                                                               .grey,
                                                                           width:
-                                                                              1.5)),
+                                                                          1.5)),
                                                                   child:
-                                                                      TextField(
+                                                                  TextField(
                                                                     decoration: InputDecoration(
                                                                         contentPadding: (languageDirection ==
-                                                                                'rtl')
+                                                                            'rtl')
                                                                             ? EdgeInsets.only(
-                                                                                bottom: media.width *
-                                                                                    0.035)
+                                                                            bottom: media.width *
+                                                                                0.035)
                                                                             : EdgeInsets.only(
-                                                                                bottom: media.width *
-                                                                                    0.04),
+                                                                            bottom: media.width *
+                                                                                0.04),
                                                                         border: InputBorder
                                                                             .none,
                                                                         hintText:
-                                                                            languages[choosenLanguage][
-                                                                                'text_search'],
+                                                                        languages[choosenLanguage][
+                                                                        'text_search'],
                                                                         hintStyle: GoogleFonts.notoSans(
                                                                             fontSize: media.width *
                                                                                 sixteen,
                                                                             color:
-                                                                                hintColor)),
+                                                                            hintColor)),
                                                                     style: GoogleFonts.notoSans(
                                                                         fontSize:
-                                                                            media.width *
-                                                                                sixteen,
+                                                                        media.width *
+                                                                            sixteen,
                                                                         color:
-                                                                            textColor),
+                                                                        textColor),
                                                                     onChanged:
                                                                         (val) {
                                                                       setState(
-                                                                          () {
-                                                                        searchVal =
-                                                                            val;
-                                                                      });
+                                                                              () {
+                                                                            searchVal =
+                                                                                val;
+                                                                          });
                                                                     },
                                                                   ),
                                                                 ),
@@ -755,83 +755,83 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                                     height: 20),
                                                                 Expanded(
                                                                   child:
-                                                                      SingleChildScrollView(
+                                                                  SingleChildScrollView(
                                                                     child:
-                                                                        Column(
+                                                                    Column(
                                                                       children: countries
                                                                           .asMap()
                                                                           .map((i, value) {
-                                                                            return MapEntry(
-                                                                                i,
-                                                                                // MyText(text: 'ttwer', size: 14)
-                                                                                SizedBox(
-                                                                                  width: media.width * 0.9,
-                                                                                  child: (searchVal == '' && countries[i]['flag'] != null)
-                                                                                      ? InkWell(
-                                                                                          onTap: () {
-                                                                                            setState(() {
-                                                                                              phcode = i;
-                                                                                            });
-                                                                                            Navigator.pop(context);
-                                                                                          },
-                                                                                          child: Container(
-                                                                                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                                                                                            color: page,
-                                                                                            child: Row(
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              children: [
-                                                                                                Row(
-                                                                                                  children: [
-                                                                                                    Image.network(countries[i]['flag']),
-                                                                                                    SizedBox(
-                                                                                                      width: media.width * 0.02,
-                                                                                                    ),
-                                                                                                    SizedBox(
-                                                                                                      width: media.width * 0.4,
-                                                                                                      child: MyText(
-                                                                                                        text: countries[i]['name'],
-                                                                                                        size: media.width * sixteen,
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  ],
-                                                                                                ),
-                                                                                                MyText(text: countries[i]['dial_code'], size: media.width * sixteen)
-                                                                                              ],
+                                                                        return MapEntry(
+                                                                            i,
+                                                                            // MyText(text: 'ttwer', size: 14)
+                                                                            SizedBox(
+                                                                              width: media.width * 0.9,
+                                                                              child: (searchVal == '' && countries[i]['flag'] != null)
+                                                                                  ? InkWell(
+                                                                                  onTap: () {
+                                                                                    setState(() {
+                                                                                      phcode = i;
+                                                                                    });
+                                                                                    Navigator.pop(context);
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                                                                    color: page,
+                                                                                    child: Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Row(
+                                                                                          children: [
+                                                                                            Image.network(countries[i]['flag']),
+                                                                                            SizedBox(
+                                                                                              width: media.width * 0.02,
                                                                                             ),
-                                                                                          ))
-                                                                                      : (countries[i]['flag'] != null && countries[i]['name'].toLowerCase().contains(searchVal.toLowerCase()))
-                                                                                          ? InkWell(
-                                                                                              onTap: () {
-                                                                                                setState(() {
-                                                                                                  phcode = i;
-                                                                                                });
-                                                                                                Navigator.pop(context);
-                                                                                              },
-                                                                                              child: Container(
-                                                                                                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                                                                                                color: page,
-                                                                                                child: Row(
-                                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                  children: [
-                                                                                                    Row(
-                                                                                                      children: [
-                                                                                                        Image.network(countries[i]['flag']),
-                                                                                                        SizedBox(
-                                                                                                          width: media.width * 0.02,
-                                                                                                        ),
-                                                                                                        SizedBox(
-                                                                                                          width: media.width * 0.4,
-                                                                                                          child: MyText(text: countries[i]['name'], size: media.width * sixteen),
-                                                                                                        ),
-                                                                                                      ],
-                                                                                                    ),
-                                                                                                    MyText(text: countries[i]['dial_code'], size: media.width * sixteen)
-                                                                                                  ],
-                                                                                                ),
-                                                                                              ))
-                                                                                          : Container(),
-                                                                                ));
-                                                                          })
+                                                                                            SizedBox(
+                                                                                              width: media.width * 0.4,
+                                                                                              child: MyText(
+                                                                                                text: countries[i]['name'],
+                                                                                                size: media.width * sixteen,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                        MyText(text: countries[i]['dial_code'], size: media.width * sixteen)
+                                                                                      ],
+                                                                                    ),
+                                                                                  ))
+                                                                                  : (countries[i]['flag'] != null && countries[i]['name'].toLowerCase().contains(searchVal.toLowerCase()))
+                                                                                  ? InkWell(
+                                                                                  onTap: () {
+                                                                                    setState(() {
+                                                                                      phcode = i;
+                                                                                    });
+                                                                                    Navigator.pop(context);
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                                                                    color: page,
+                                                                                    child: Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Row(
+                                                                                          children: [
+                                                                                            Image.network(countries[i]['flag']),
+                                                                                            SizedBox(
+                                                                                              width: media.width * 0.02,
+                                                                                            ),
+                                                                                            SizedBox(
+                                                                                              width: media.width * 0.4,
+                                                                                              child: MyText(text: countries[i]['name'], size: media.width * sixteen),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                        MyText(text: countries[i]['dial_code'], size: media.width * sixteen)
+                                                                                      ],
+                                                                                    ),
+                                                                                  ))
+                                                                                  : Container(),
+                                                                            ));
+                                                                      })
                                                                           .values
                                                                           .toList(),
                                                                     ),
@@ -855,7 +855,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     ),
                                                     SizedBox(
                                                       width:
-                                                          media.width * 0.015,
+                                                      media.width * 0.015,
                                                     ),
                                                     Icon(
                                                       Icons.arrow_drop_down,
@@ -870,9 +870,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                               height: media.width * 0.12,
                                               child: TextField(
                                                 keyboardType:
-                                                    TextInputType.emailAddress,
+                                                TextInputType.emailAddress,
                                                 enabled: (otpSent == true &&
-                                                        signIn == 0)
+                                                    signIn == 0)
                                                     ? false
                                                     : true,
                                                 controller: _email,
@@ -880,18 +880,18 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                   String pattern =
                                                       r'(^(?:[+0]9)?[0-9]{1,12}$)';
                                                   RegExp regExp =
-                                                      RegExp(pattern);
+                                                  RegExp(pattern);
                                                   if (regExp.hasMatch(
-                                                          _email.text) &&
+                                                      _email.text) &&
                                                       isLoginemail == true &&
                                                       signIn == 0) {
                                                     setState(() {
                                                       isLoginemail = false;
                                                     });
                                                   } else if (isLoginemail ==
-                                                          false &&
+                                                      false &&
                                                       regExp.hasMatch(
-                                                              _email.text) ==
+                                                          _email.text) ==
                                                           false) {
                                                     setState(() {
                                                       isLoginemail = true;
@@ -901,12 +901,12 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                 decoration: InputDecoration(
                                                     hintText: (signIn == 0)
                                                         ? languages[
-                                                                choosenLanguage]
-                                                            [
-                                                            'text_email_mobile']
+                                                    choosenLanguage]
+                                                    [
+                                                    'text_email_mobile']
                                                         : languages[
-                                                                choosenLanguage]
-                                                            ['text_email'],
+                                                    choosenLanguage]
+                                                    ['text_email'],
                                                     border: InputBorder.none),
                                               ),
                                             ),
@@ -928,8 +928,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                       ),
                                     ),
                                     if ((withOtp == false ||
-                                            otpSent == true ||
-                                            signIn == 1) &&
+                                        otpSent == true ||
+                                        signIn == 1) &&
                                         newPassword == false)
                                       Column(
                                         children: [
@@ -941,7 +941,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             width: media.width * 0.8,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                                 color: Colors.white),
                                             padding: EdgeInsets.only(
                                                 right: media.width * 0.025,
@@ -953,25 +953,25 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     controller: _password,
                                                     decoration: InputDecoration(
                                                         hintText: (otpSent ==
-                                                                true)
-                                                            ? languages[
-                                                                    choosenLanguage]
-                                                                ['text_driver_otp'] : languages[
-                                                                  choosenLanguage]
-                                                                [
-                                                                'text_enter_password'],
-                                                        border:
-                                                            InputBorder.none),
-                                                    keyboardType: (otpSent ==
                                                             true)
+                                                            ? languages[
+                                                        choosenLanguage]
+                                                        ['text_driver_otp'] : languages[
+                                                        choosenLanguage]
+                                                        [
+                                                        'text_enter_password'],
+                                                        border:
+                                                        InputBorder.none),
+                                                    keyboardType: (otpSent ==
+                                                        true)
                                                         ? TextInputType.number
                                                         : TextInputType
-                                                            .emailAddress,
+                                                        .emailAddress,
                                                     obscureText: ((withOtp ==
-                                                                    false ||
-                                                                signIn == 1) &&
-                                                            showPassword ==
-                                                                false)
+                                                        false ||
+                                                        signIn == 1) &&
+                                                        showPassword ==
+                                                            false)
                                                         ? true
                                                         : false,
                                                   ),
@@ -983,7 +983,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         setState(() {
                                                           if (showPassword) {
                                                             showPassword =
-                                                                false;
+                                                            false;
                                                           } else {
                                                             showPassword = true;
                                                           }
@@ -993,9 +993,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         Icons
                                                             .remove_red_eye_sharp,
                                                         color: (showPassword ==
-                                                                true)
+                                                            true)
                                                             ? const Color(
-                                                                0xffFFD302)
+                                                            0xffFFD302)
                                                             : null,
                                                       ))
                                               ],
@@ -1016,7 +1016,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                               width: media.width * 0.8,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                  BorderRadius.circular(8),
                                                   color: Colors.white),
                                               padding: EdgeInsets.only(
                                                   right: media.width * 0.025,
@@ -1028,19 +1028,19 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                       controller: _newPassword,
                                                       decoration: InputDecoration(
                                                           hintText: languages[
-                                                                  choosenLanguage]
-                                                              [
-                                                              'Enter New Password'],
+                                                          choosenLanguage]
+                                                          [
+                                                          'Enter New Password'],
                                                           border:
-                                                              InputBorder.none),
+                                                          InputBorder.none),
                                                       keyboardType:
-                                                          TextInputType
-                                                              .emailAddress,
+                                                      TextInputType
+                                                          .emailAddress,
                                                       obscureText:
-                                                          (showNewPassword ==
-                                                                  false)
-                                                              ? true
-                                                              : false,
+                                                      (showNewPassword ==
+                                                          false)
+                                                          ? true
+                                                          : false,
                                                     ),
                                                   ),
                                                   // if(withOtp == false || signIn == 1)
@@ -1049,10 +1049,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         setState(() {
                                                           if (showNewPassword) {
                                                             showNewPassword =
-                                                                false;
+                                                            false;
                                                           } else {
                                                             showNewPassword =
-                                                                true;
+                                                            true;
                                                           }
                                                         });
                                                       },
@@ -1060,11 +1060,11 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         Icons
                                                             .remove_red_eye_sharp,
                                                         color:
-                                                            (showNewPassword ==
-                                                                    true)
-                                                                ? const Color(
-                                                                    0xffFFD302)
-                                                                : null,
+                                                        (showNewPassword ==
+                                                            true)
+                                                            ? const Color(
+                                                            0xffFFD302)
+                                                            : null,
                                                       ))
                                                 ],
                                               ),
@@ -1075,7 +1075,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             ? CrossFadeState.showFirst
                                             : CrossFadeState.showSecond,
                                         duration:
-                                            const Duration(milliseconds: 200)),
+                                        const Duration(milliseconds: 200)),
 
                                     AnimatedCrossFade(
                                         firstChild: Container(),
@@ -1089,7 +1089,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                               width: media.width * 0.8,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                  BorderRadius.circular(8),
                                                   color: Colors.white),
                                               padding: EdgeInsets.only(
                                                   right: media.width * 0.025,
@@ -1106,38 +1106,38 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                               return Container(
                                                                 padding: EdgeInsets
                                                                     .all(media
-                                                                            .width *
-                                                                        0.05),
+                                                                    .width *
+                                                                    0.05),
                                                                 width:
-                                                                    media.width,
+                                                                media.width,
                                                                 color: page,
                                                                 child:
-                                                                    Directionality(
+                                                                Directionality(
                                                                   textDirection: (languageDirection ==
-                                                                          'rtl')
+                                                                      'rtl')
                                                                       ? TextDirection
-                                                                          .rtl
+                                                                      .rtl
                                                                       : TextDirection
-                                                                          .ltr,
+                                                                      .ltr,
                                                                   child: Column(
                                                                     children: [
                                                                       Container(
                                                                         padding: const EdgeInsets
                                                                             .only(
                                                                             left:
-                                                                                20,
+                                                                            20,
                                                                             right:
-                                                                                20),
+                                                                            20),
                                                                         height:
-                                                                            40,
+                                                                        40,
                                                                         width: media.width *
                                                                             0.9,
                                                                         decoration: BoxDecoration(
                                                                             borderRadius:
-                                                                                BorderRadius.circular(20),
+                                                                            BorderRadius.circular(20),
                                                                             border: Border.all(color: Colors.grey, width: 1.5)),
                                                                         child:
-                                                                            TextField(
+                                                                        TextField(
                                                                           decoration: InputDecoration(
                                                                               contentPadding: (languageDirection == 'rtl') ? EdgeInsets.only(bottom: media.width * 0.035) : EdgeInsets.only(bottom: media.width * 0.04),
                                                                               border: InputBorder.none,
@@ -1156,86 +1156,86 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                                       ),
                                                                       const SizedBox(
                                                                           height:
-                                                                              20),
+                                                                          20),
                                                                       Expanded(
                                                                         child:
-                                                                            SingleChildScrollView(
+                                                                        SingleChildScrollView(
                                                                           child:
-                                                                              Column(
+                                                                          Column(
                                                                             children: countries
                                                                                 .asMap()
                                                                                 .map((i, value) {
-                                                                                  return MapEntry(
-                                                                                      i,
-                                                                                      // MyText(text: 'ttwer', size: 14)
-                                                                                      SizedBox(
-                                                                                        width: media.width * 0.9,
-                                                                                        child: (searchVal == '' && countries[i]['flag'] != null)
-                                                                                            ? InkWell(
-                                                                                                onTap: () {
-                                                                                                  setState(() {
-                                                                                                    phcode = i;
-                                                                                                  });
-                                                                                                  Navigator.pop(context);
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  padding: const EdgeInsets.only(top: 10, bottom: 10),
-                                                                                                  color: page,
-                                                                                                  child: Row(
-                                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                    children: [
-                                                                                                      Row(
-                                                                                                        children: [
-                                                                                                          Image.network(countries[i]['flag']),
-                                                                                                          SizedBox(
-                                                                                                            width: media.width * 0.02,
-                                                                                                          ),
-                                                                                                          SizedBox(
-                                                                                                            width: media.width * 0.4,
-                                                                                                            child: MyText(
-                                                                                                              text: countries[i]['name'],
-                                                                                                              size: media.width * sixteen,
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        ],
-                                                                                                      ),
-                                                                                                      MyText(text: countries[i]['dial_code'], size: media.width * sixteen)
-                                                                                                    ],
+                                                                              return MapEntry(
+                                                                                  i,
+                                                                                  // MyText(text: 'ttwer', size: 14)
+                                                                                  SizedBox(
+                                                                                    width: media.width * 0.9,
+                                                                                    child: (searchVal == '' && countries[i]['flag'] != null)
+                                                                                        ? InkWell(
+                                                                                        onTap: () {
+                                                                                          setState(() {
+                                                                                            phcode = i;
+                                                                                          });
+                                                                                          Navigator.pop(context);
+                                                                                        },
+                                                                                        child: Container(
+                                                                                          padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                                                                          color: page,
+                                                                                          child: Row(
+                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                            children: [
+                                                                                              Row(
+                                                                                                children: [
+                                                                                                  Image.network(countries[i]['flag']),
+                                                                                                  SizedBox(
+                                                                                                    width: media.width * 0.02,
                                                                                                   ),
-                                                                                                ))
-                                                                                            : (countries[i]['flag'] != null && countries[i]['name'].toLowerCase().contains(searchVal.toLowerCase()))
-                                                                                                ? InkWell(
-                                                                                                    onTap: () {
-                                                                                                      setState(() {
-                                                                                                        phcode = i;
-                                                                                                      });
-                                                                                                      Navigator.pop(context);
-                                                                                                    },
-                                                                                                    child: Container(
-                                                                                                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                                                                                                      color: page,
-                                                                                                      child: Row(
-                                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                        children: [
-                                                                                                          Row(
-                                                                                                            children: [
-                                                                                                              Image.network(countries[i]['flag']),
-                                                                                                              SizedBox(
-                                                                                                                width: media.width * 0.02,
-                                                                                                              ),
-                                                                                                              SizedBox(
-                                                                                                                width: media.width * 0.4,
-                                                                                                                child: MyText(text: countries[i]['name'], size: media.width * sixteen),
-                                                                                                              ),
-                                                                                                            ],
-                                                                                                          ),
-                                                                                                          MyText(text: countries[i]['dial_code'], size: media.width * sixteen)
-                                                                                                        ],
-                                                                                                      ),
-                                                                                                    ))
-                                                                                                : Container(),
-                                                                                      ));
-                                                                                })
+                                                                                                  SizedBox(
+                                                                                                    width: media.width * 0.4,
+                                                                                                    child: MyText(
+                                                                                                      text: countries[i]['name'],
+                                                                                                      size: media.width * sixteen,
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                              MyText(text: countries[i]['dial_code'], size: media.width * sixteen)
+                                                                                            ],
+                                                                                          ),
+                                                                                        ))
+                                                                                        : (countries[i]['flag'] != null && countries[i]['name'].toLowerCase().contains(searchVal.toLowerCase()))
+                                                                                        ? InkWell(
+                                                                                        onTap: () {
+                                                                                          setState(() {
+                                                                                            phcode = i;
+                                                                                          });
+                                                                                          Navigator.pop(context);
+                                                                                        },
+                                                                                        child: Container(
+                                                                                          padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                                                                          color: page,
+                                                                                          child: Row(
+                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                            children: [
+                                                                                              Row(
+                                                                                                children: [
+                                                                                                  Image.network(countries[i]['flag']),
+                                                                                                  SizedBox(
+                                                                                                    width: media.width * 0.02,
+                                                                                                  ),
+                                                                                                  SizedBox(
+                                                                                                    width: media.width * 0.4,
+                                                                                                    child: MyText(text: countries[i]['name'], size: media.width * sixteen),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                              MyText(text: countries[i]['dial_code'], size: media.width * sixteen)
+                                                                                            ],
+                                                                                          ),
+                                                                                        ))
+                                                                                        : Container(),
+                                                                                  ));
+                                                                            })
                                                                                 .values
                                                                                 .toList(),
                                                                           ),
@@ -1256,13 +1256,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         children: [
                                                           (phcode != null)
                                                               ? Image.network(
-                                                                  countries[
-                                                                          phcode]
-                                                                      ['flag'],
-                                                                  width: media
-                                                                          .width *
-                                                                      0.06,
-                                                                )
+                                                            countries[
+                                                            phcode]
+                                                            ['flag'],
+                                                            width: media
+                                                                .width *
+                                                                0.06,
+                                                          )
                                                               : Container(),
                                                           SizedBox(
                                                             width: media.width *
@@ -1284,12 +1284,12 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                       controller: _mobile,
                                                       decoration: InputDecoration(
                                                           hintText: languages[
-                                                                  choosenLanguage]
-                                                              ['text_mobile'],
+                                                          choosenLanguage]
+                                                          ['text_mobile'],
                                                           border:
-                                                              InputBorder.none),
+                                                          InputBorder.none),
                                                       keyboardType:
-                                                          TextInputType.number,
+                                                      TextInputType.number,
                                                       enabled: (otpSent == true)
                                                           ? false
                                                           : true,
@@ -1303,7 +1303,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                             _error = '';
                                                             otpSent = false;
                                                             mobileVerified =
-                                                                false;
+                                                            false;
                                                             _otp.clear();
                                                           });
                                                         },
@@ -1321,7 +1321,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             ? CrossFadeState.showFirst
                                             : CrossFadeState.showSecond,
                                         duration:
-                                            const Duration(milliseconds: 200)),
+                                        const Duration(milliseconds: 200)),
                                     if (isMobileOtpSignUp == true)
                                       AnimatedCrossFade(
                                           firstChild: Container(),
@@ -1335,8 +1335,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                 width: media.width * 0.8,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                                    BorderRadius.circular(
+                                                        8),
                                                     color: Colors.white),
                                                 padding: EdgeInsets.only(
                                                     right: media.width * 0.025,
@@ -1344,19 +1344,19 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                 child: TextField(
                                                   controller: _otp,
                                                   keyboardType:
-                                                      TextInputType.number,
+                                                  TextInputType.number,
                                                   decoration: InputDecoration(
                                                       hintText: languages[
-                                                              choosenLanguage]
-                                                          ['text_driver_otp'],
+                                                      choosenLanguage]
+                                                      ['text_driver_otp'],
                                                       border: InputBorder.none),
                                                 ),
                                               ),
                                             ],
                                           ),
                                           crossFadeState: (signIn == 1 &&
-                                                  otpSent == true &&
-                                                  mobileVerified == false)
+                                              otpSent == true &&
+                                              mobileVerified == false)
                                               ? CrossFadeState.showSecond
                                               : CrossFadeState.showFirst,
                                           duration: const Duration(
@@ -1389,11 +1389,11 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                 child: MyText(
                                                   text: (withOtp == false)
                                                       ? languages[
-                                                              choosenLanguage]
-                                                          ['text_sign_in_otp']
+                                                  choosenLanguage]
+                                                  ['text_sign_in_otp']
                                                       : languages[
-                                                              choosenLanguage][
-                                                          'text_sign_in_password'],
+                                                  choosenLanguage][
+                                                  'text_sign_in_password'],
                                                   size: media.width * fourteen,
                                                   textAlign: TextAlign.end,
                                                   color: Colors.white,
@@ -1416,19 +1416,19 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     children: [
                                                       Text(
                                                         languages[
-                                                                choosenLanguage]
-                                                            ['text_gender'],
+                                                        choosenLanguage]
+                                                        ['text_gender'],
                                                         // 'Gender',
                                                         style:
-                                                            GoogleFonts.roboto(
-                                                                fontSize: media
-                                                                        .width *
-                                                                    fourteen,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
+                                                        GoogleFonts.roboto(
+                                                            fontSize: media
+                                                                .width *
+                                                                fourteen,
+                                                            color: Colors
+                                                                .white,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w600),
                                                         maxLines: 1,
                                                       ),
                                                     ],
@@ -1438,8 +1438,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                   ),
                                                   Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                     children: [
                                                       InkWell(
                                                         onTap: () {
@@ -1451,13 +1451,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                           children: [
                                                             Container(
                                                               height:
-                                                                  media.width *
-                                                                      0.05,
+                                                              media.width *
+                                                                  0.05,
                                                               width:
-                                                                  media.width *
-                                                                      0.05,
+                                                              media.width *
+                                                                  0.05,
                                                               decoration:
-                                                                  BoxDecoration(
+                                                              BoxDecoration(
                                                                 shape: BoxShape
                                                                     .circle,
                                                                 border: Border.all(
@@ -1466,49 +1466,49 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                                         .white),
                                                               ),
                                                               alignment:
-                                                                  Alignment
-                                                                      .center,
+                                                              Alignment
+                                                                  .center,
                                                               child: (gender ==
-                                                                      'male')
+                                                                  'male')
                                                                   ? Container(
-                                                                      height: media
-                                                                              .width *
-                                                                          0.03,
-                                                                      width: media
-                                                                              .width *
-                                                                          0.03,
-                                                                      decoration: const BoxDecoration(
-                                                                          shape: BoxShape
-                                                                              .circle,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    )
+                                                                height: media
+                                                                    .width *
+                                                                    0.03,
+                                                                width: media
+                                                                    .width *
+                                                                    0.03,
+                                                                decoration: const BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color:
+                                                                    Colors.white),
+                                                              )
                                                                   : Container(),
                                                             ),
                                                             SizedBox(
                                                               width:
-                                                                  media.width *
-                                                                      0.015,
+                                                              media.width *
+                                                                  0.015,
                                                             ),
                                                             SizedBox(
                                                               width:
-                                                                  media.width *
-                                                                      0.15,
+                                                              media.width *
+                                                                  0.15,
                                                               child: Text(
                                                                 languages[
-                                                                        choosenLanguage]
-                                                                    [
-                                                                    'text_male'],
+                                                                choosenLanguage]
+                                                                [
+                                                                'text_male'],
                                                                 // 'Male',
                                                                 style: GoogleFonts.roboto(
                                                                     fontSize: media
-                                                                            .width *
+                                                                        .width *
                                                                         fourteen,
                                                                     color: Colors
                                                                         .white,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                                 maxLines: 1,
                                                               ),
                                                             ),
@@ -1525,13 +1525,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                           children: [
                                                             Container(
                                                               height:
-                                                                  media.width *
-                                                                      0.05,
+                                                              media.width *
+                                                                  0.05,
                                                               width:
-                                                                  media.width *
-                                                                      0.05,
+                                                              media.width *
+                                                                  0.05,
                                                               decoration:
-                                                                  BoxDecoration(
+                                                              BoxDecoration(
                                                                 shape: BoxShape
                                                                     .circle,
                                                                 border: Border.all(
@@ -1540,49 +1540,49 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                                         .white),
                                                               ),
                                                               alignment:
-                                                                  Alignment
-                                                                      .center,
+                                                              Alignment
+                                                                  .center,
                                                               child: (gender ==
-                                                                      'female')
+                                                                  'female')
                                                                   ? Container(
-                                                                      height: media
-                                                                              .width *
-                                                                          0.03,
-                                                                      width: media
-                                                                              .width *
-                                                                          0.03,
-                                                                      decoration: const BoxDecoration(
-                                                                          shape: BoxShape
-                                                                              .circle,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    )
+                                                                height: media
+                                                                    .width *
+                                                                    0.03,
+                                                                width: media
+                                                                    .width *
+                                                                    0.03,
+                                                                decoration: const BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color:
+                                                                    Colors.white),
+                                                              )
                                                                   : Container(),
                                                             ),
                                                             SizedBox(
                                                               width:
-                                                                  media.width *
-                                                                      0.015,
+                                                              media.width *
+                                                                  0.015,
                                                             ),
                                                             SizedBox(
                                                               width:
-                                                                  media.width *
-                                                                      0.15,
+                                                              media.width *
+                                                                  0.15,
                                                               child: Text(
                                                                 languages[
-                                                                        choosenLanguage]
-                                                                    [
-                                                                    'text_female'],
+                                                                choosenLanguage]
+                                                                [
+                                                                'text_female'],
                                                                 // 'Female',
                                                                 style: GoogleFonts.roboto(
                                                                     fontSize: media
-                                                                            .width *
+                                                                        .width *
                                                                         fourteen,
                                                                     color: Colors
                                                                         .white,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                                 maxLines: 1,
                                                               ),
                                                             ),
@@ -1599,13 +1599,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                           children: [
                                                             Container(
                                                               height:
-                                                                  media.width *
-                                                                      0.05,
+                                                              media.width *
+                                                                  0.05,
                                                               width:
-                                                                  media.width *
-                                                                      0.05,
+                                                              media.width *
+                                                                  0.05,
                                                               decoration:
-                                                                  BoxDecoration(
+                                                              BoxDecoration(
                                                                 shape: BoxShape
                                                                     .circle,
                                                                 border: Border.all(
@@ -1614,48 +1614,48 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                                         .white),
                                                               ),
                                                               alignment:
-                                                                  Alignment
-                                                                      .center,
+                                                              Alignment
+                                                                  .center,
                                                               child: (gender ==
-                                                                      'others')
+                                                                  'others')
                                                                   ? Container(
-                                                                      height: media
-                                                                              .width *
-                                                                          0.03,
-                                                                      width: media
-                                                                              .width *
-                                                                          0.03,
-                                                                      decoration: const BoxDecoration(
-                                                                          shape: BoxShape
-                                                                              .circle,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    )
+                                                                height: media
+                                                                    .width *
+                                                                    0.03,
+                                                                width: media
+                                                                    .width *
+                                                                    0.03,
+                                                                decoration: const BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color:
+                                                                    Colors.white),
+                                                              )
                                                                   : Container(),
                                                             ),
                                                             SizedBox(
                                                               width:
-                                                                  media.width *
-                                                                      0.015,
+                                                              media.width *
+                                                                  0.015,
                                                             ),
                                                             SizedBox(
                                                               width:
-                                                                  media.width *
-                                                                      0.25,
+                                                              media.width *
+                                                                  0.25,
                                                               child: Text(
                                                                 languages[
-                                                                        choosenLanguage]
-                                                                    [
-                                                                    'text_others'],
+                                                                choosenLanguage]
+                                                                [
+                                                                'text_others'],
                                                                 style: GoogleFonts.roboto(
                                                                     fontSize: media
-                                                                            .width *
+                                                                        .width *
                                                                         fourteen,
                                                                     color: Colors
                                                                         .white,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                                 maxLines: 1,
                                                               ),
                                                             ),
@@ -1673,7 +1673,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             ? CrossFadeState.showFirst
                                             : CrossFadeState.showSecond,
                                         duration:
-                                            const Duration(milliseconds: 200)),
+                                        const Duration(milliseconds: 200)),
                                     SizedBox(
                                       height: media.width * 0.025,
                                     ),
@@ -1681,14 +1681,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                       Column(
                                         children: [
                                           Container(
-                                              // width: media.width*0.9,
+                                            // width: media.width*0.9,
                                               constraints: BoxConstraints(
                                                   maxWidth: media.width * 0.9,
                                                   minWidth: media.width * 0.5),
                                               padding: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(12),
+                                                  BorderRadius.circular(12),
                                                   color: const Color(0xffFFFFFF)
                                                       .withOpacity(0.5)),
                                               child: MyText(
@@ -1737,9 +1737,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                             media.width * 0.05),
                                                         child: MyText(
                                                           text: languages[
-                                                                  choosenLanguage]
-                                                              [
-                                                              'text_password_update_successfully'],
+                                                          choosenLanguage]
+                                                          [
+                                                          'text_password_update_successfully'],
                                                           size: media.width *
                                                               fourteen,
                                                           maxLines: 4,
@@ -1753,7 +1753,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             } else {
                                               setState(() {
                                                 _error =
-                                                    'Password must be 8 character length';
+                                                'Password must be 8 character length';
                                               });
                                             }
                                           } else if (signIn == 0) {
@@ -1770,29 +1770,29 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                       if (forgotPassword ==
                                                           true) {
                                                         var val =
-                                                            await emailVerify(
-                                                                _email.text,
-                                                                _password.text);
+                                                        await emailVerify(
+                                                            _email.text,
+                                                            _password.text);
                                                         if (val == 'success') {
                                                           _password.clear();
                                                           newPassword = true;
                                                           showNewPassword =
-                                                              false;
+                                                          false;
                                                         } else {
                                                           _error = val;
                                                         }
                                                       } else {
                                                         var val =
-                                                            await verifyUser(
-                                                                _email.text,
-                                                                (isLoginemail ==
-                                                                        true)
-                                                                    ? 1
-                                                                    : 0,
-                                                                _password.text,
-                                                                '',
-                                                                withOtp,
-                                                                forgotPassword);
+                                                        await verifyUser(
+                                                            _email.text,
+                                                            (isLoginemail ==
+                                                                true)
+                                                                ? 1
+                                                                : 0,
+                                                            _password.text,
+                                                            '',
+                                                            withOtp,
+                                                            forgotPassword);
 
                                                         navigate(val);
                                                       }
@@ -1801,43 +1801,43 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                           true) {
                                                         try {
                                                           PhoneAuthCredential
-                                                              credential =
-                                                              PhoneAuthProvider.credential(
-                                                                  verificationId:
-                                                                      verId,
-                                                                  smsCode:
-                                                                      _password
-                                                                          .text);
+                                                          credential =
+                                                          PhoneAuthProvider.credential(
+                                                              verificationId:
+                                                              verId,
+                                                              smsCode:
+                                                              _password
+                                                                  .text);
 
                                                           // Sign the user in (or link) with the credential
                                                           await FirebaseAuth
                                                               .instance
                                                               .signInWithCredential(
-                                                                  credential);
+                                                              credential);
 
                                                           String? bearerrrrr =
-                                                              await FirebaseAuth
-                                                                  .instance
-                                                                  .currentUser!
-                                                                  .getIdToken();
+                                                          await FirebaseAuth
+                                                              .instance
+                                                              .currentUser!
+                                                              .getIdToken();
 
                                                           var verify =
-                                                              await verifyUser(
-                                                                  _email.text,
-                                                                  0,
-                                                                  '',
-                                                                  '',
-                                                                  withOtp,
-                                                                  forgotPassword);
+                                                          await verifyUser(
+                                                              _email.text,
+                                                              0,
+                                                              '',
+                                                              '',
+                                                              withOtp,
+                                                              forgotPassword);
                                                           if (forgotPassword ==
                                                               true) {
                                                             if (verify ==
                                                                 true) {
                                                               _password.clear();
                                                               newPassword =
-                                                                  true;
+                                                              true;
                                                               showNewPassword =
-                                                                  false;
+                                                              false;
                                                             }
                                                           } else {
                                                             navigate(verify);
@@ -1851,37 +1851,37 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                               _password.clear();
                                                               // otpNumber = '';
                                                               _error =
-                                                                  'Please enter correct Otp or resend';
+                                                              'Please enter correct Otp or resend';
                                                             });
                                                           }
                                                         }
                                                       } else {
                                                         var val =
-                                                            await validateSmsOtp(
-                                                                (signIn == 1)
-                                                                    ? _mobile
-                                                                        .text
-                                                                    : _email
-                                                                        .text,
-                                                                _password.text);
+                                                        await validateSmsOtp(
+                                                            (signIn == 1)
+                                                                ? _mobile
+                                                                .text
+                                                                : _email
+                                                                .text,
+                                                            _password.text);
                                                         if (val == 'success') {
                                                           var verify =
-                                                              await verifyUser(
-                                                                  _email.text,
-                                                                  0,
-                                                                  '',
-                                                                  '',
-                                                                  withOtp,
-                                                                  forgotPassword);
+                                                          await verifyUser(
+                                                              _email.text,
+                                                              0,
+                                                              '',
+                                                              '',
+                                                              withOtp,
+                                                              forgotPassword);
                                                           if (forgotPassword ==
                                                               true) {
                                                             if (verify ==
                                                                 true) {
                                                               _password.clear();
                                                               newPassword =
-                                                                  true;
+                                                              true;
                                                               showNewPassword =
-                                                                  false;
+                                                              false;
                                                             }
                                                           } else {
                                                             navigate(verify);
@@ -1896,30 +1896,30 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     if (_password.text ==
                                                         '123456') {
                                                       var val =
-                                                          await verifyUser(
-                                                              _email.text,
-                                                              (isLoginemail ==
-                                                                      true)
-                                                                  ? 1
-                                                                  : 0,
-                                                              _password.text,
-                                                              '',
-                                                              withOtp,
-                                                              forgotPassword);
+                                                      await verifyUser(
+                                                          _email.text,
+                                                          (isLoginemail ==
+                                                              true)
+                                                              ? 1
+                                                              : 0,
+                                                          _password.text,
+                                                          '',
+                                                          withOtp,
+                                                          forgotPassword);
                                                       if (forgotPassword ==
                                                           true) {
                                                         if (val == true) {
                                                           _password.clear();
                                                           newPassword = true;
                                                           showNewPassword =
-                                                              false;
+                                                          false;
                                                         }
                                                       } else {
                                                         navigate(val);
                                                       }
                                                     } else {
                                                       _error =
-                                                          'Please enter correct otp';
+                                                      'Please enter correct otp';
                                                     }
                                                   }
                                                 } else {
@@ -1927,10 +1927,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     if (_password
                                                         .text.isEmpty) {
                                                       _error =
-                                                          'Please enter otp';
+                                                      'Please enter otp';
                                                     } else {
                                                       _error =
-                                                          'Please enter correct otp';
+                                                      'Please enter correct otp';
                                                     }
                                                   });
                                                 }
@@ -1957,27 +1957,27 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     String pattern =
                                                         r'(^(?:[+0]9)?[0-9]{1,12}$)';
                                                     RegExp regExp =
-                                                        RegExp(pattern);
+                                                    RegExp(pattern);
                                                     if (regExp.hasMatch(
-                                                            _email.text) &&
+                                                        _email.text) &&
                                                         _email.text.length <=
                                                             countries[phcode][
-                                                                'dial_max_length'] &&
+                                                            'dial_max_length'] &&
                                                         _email.text.length >=
                                                             countries[phcode][
-                                                                'dial_min_length']) {
+                                                            'dial_min_length']) {
                                                       // setState(() {
                                                       //   _error = '';
                                                       //   loginLoading = true;
                                                       // });
                                                       if (isCheckFireBaseOTP) {
                                                         var val =
-                                                            await otpCall();
+                                                        await otpCall();
 
                                                         if (val.value == true) {
                                                           await phoneAuth(
                                                               countries[phcode][
-                                                                      'dial_code'] +
+                                                              'dial_code'] +
                                                                   _email.text);
                                                           phoneAuthCheck = true;
                                                           _resend = false;
@@ -1986,13 +1986,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                           resend();
                                                         } else {
                                                           phoneAuthCheck =
-                                                              false;
+                                                          false;
                                                           RemoteNotification noti =
-                                                              const RemoteNotification(
-                                                                  title:
-                                                                      'Otp for Login',
-                                                                  body:
-                                                                      'Login to your account with test OTP 123456');
+                                                          const RemoteNotification(
+                                                              title:
+                                                              'Otp for Login',
+                                                              body:
+                                                              'Login to your account with test OTP 123456');
                                                           showOtpNotification(
                                                               noti);
                                                         }
@@ -2007,7 +2007,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                                 ? _mobile.text
                                                                 : _email.text,
                                                             countries[phcode][
-                                                                    'dial_code']
+                                                            'dial_code']
                                                                 .toString());
                                                         if (val == 'success') {
                                                           phoneAuthCheck = true;
@@ -2024,20 +2024,20 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     } else {
                                                       //  setState(() {
                                                       _error =
-                                                          'Please enter valid mobile number';
+                                                      'Please enter valid mobile number';
                                                       // });
                                                     }
                                                   } else {
                                                     String pattern =
                                                         r"^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])*$";
                                                     RegExp regex =
-                                                        RegExp(pattern);
+                                                    RegExp(pattern);
                                                     if (regex.hasMatch(
                                                         _email.text)) {
                                                       phoneAuthCheck = true;
                                                       var val =
-                                                          await sendOTPtoEmail(
-                                                              _email.text);
+                                                      await sendOTPtoEmail(
+                                                          _email.text);
                                                       if (val == 'success') {
                                                         _resend = false;
                                                         otpSent = true;
@@ -2052,13 +2052,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     } else {
                                                       // setState(() {
                                                       _error =
-                                                          'Please enter valid email address';
+                                                      'Please enter valid email address';
                                                       // });
                                                     }
                                                   }
                                                 } else {
                                                   _error = (isLoginemail ==
-                                                          false)
+                                                      false)
                                                       ? 'Mobile Number doesn\'t exists'
                                                       : 'Email doesn\'t exists';
                                                 }
@@ -2074,15 +2074,15 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     r"^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])*$";
                                                 RegExp regex = RegExp(pattern1);
                                                 if ((regExp.hasMatch(
-                                                            _email.text) &&
-                                                        _email.text.length <=
-                                                            countries[phcode][
-                                                                'dial_max_length'] &&
-                                                        _email.text.length >=
-                                                            countries[phcode][
-                                                                'dial_min_length'] &&
-                                                        isLoginemail ==
-                                                            false) ||
+                                                    _email.text) &&
+                                                    _email.text.length <=
+                                                        countries[phcode][
+                                                        'dial_max_length'] &&
+                                                    _email.text.length >=
+                                                        countries[phcode][
+                                                        'dial_min_length'] &&
+                                                    isLoginemail ==
+                                                        false) ||
                                                     (isLoginemail == true &&
                                                         regex.hasMatch(
                                                             _email.text))) {
@@ -2099,16 +2099,16 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                 } else {
                                                   if (isLoginemail == false) {
                                                     _error =
-                                                        'Please enter valid mobile number';
+                                                    'Please enter valid mobile number';
                                                   } else {
                                                     _error =
-                                                        'please enter valid email address';
+                                                    'please enter valid email address';
                                                   }
                                                 }
                                               } else {
                                                 setState(() {
                                                   _error =
-                                                      'Password must be 8 character length';
+                                                  'Password must be 8 character length';
                                                 });
                                               }
                                             }
@@ -2131,7 +2131,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            const AggreementPage()));
+                                                        const AggreementPage()));
                                               } else {
                                                 _error = val;
                                               }
@@ -2147,18 +2147,18 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     r'(^(?:[+0]9)?[0-9]{1,12}$)';
                                                 RegExp regExp = RegExp(pattern);
                                                 if (regExp.hasMatch(
-                                                        _mobile.text) &&
+                                                    _mobile.text) &&
                                                     _mobile.text.length <=
                                                         countries[phcode][
-                                                            'dial_max_length'] &&
+                                                        'dial_max_length'] &&
                                                     _mobile.text.length >=
                                                         countries[phcode][
-                                                            'dial_min_length']) {
+                                                        'dial_min_length']) {
                                                   // fd;
                                                   String pattern =
                                                       r"^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])*$";
                                                   RegExp regex =
-                                                      RegExp(pattern);
+                                                  RegExp(pattern);
                                                   if (regex
                                                       .hasMatch(_email.text)) {
                                                     name = _name.text;
@@ -2166,21 +2166,21 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     password = _password.text;
                                                     phnumber = _mobile.text;
                                                     var verify =
-                                                        await verifyUser(
-                                                            _mobile.text,
-                                                            0,
-                                                            '',
-                                                            _email.text,
-                                                            withOtp,
-                                                            forgotPassword);
+                                                    await verifyUser(
+                                                        _mobile.text,
+                                                        0,
+                                                        '',
+                                                        _email.text,
+                                                        withOtp,
+                                                        forgotPassword);
                                                     if (verify == false) {
                                                       if (isCheckFireBaseOTP) {
                                                         var val =
-                                                            await otpCall();
+                                                        await otpCall();
                                                         if (val.value == true) {
                                                           await phoneAuth(
                                                               countries[phcode][
-                                                                      'dial_code'] +
+                                                              'dial_code'] +
                                                                   _mobile.text);
                                                           phoneAuthCheck = true;
                                                           _resend = false;
@@ -2191,14 +2191,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                           if (isMobileOtpSignUp ==
                                                               true) {
                                                             phoneAuthCheck =
-                                                                false;
+                                                            false;
                                                             RemoteNotification
-                                                                noti =
-                                                                const RemoteNotification(
-                                                                    title:
-                                                                        'Otp for Login',
-                                                                    body:
-                                                                        'Login to your account with test OTP 123456');
+                                                            noti =
+                                                            const RemoteNotification(
+                                                                title:
+                                                                'Otp for Login',
+                                                                body:
+                                                                'Login to your account with test OTP 123456');
                                                             showOtpNotification(
                                                                 noti);
                                                           } else {
@@ -2207,7 +2207,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            const AggreementPage()));
+                                                                    const AggreementPage()));
                                                           }
                                                         }
                                                         // setState(() {
@@ -2218,19 +2218,19 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         Future.delayed(
                                                             const Duration(
                                                                 seconds: 1),
-                                                            () {
-                                                          _scroll.position
-                                                              .moveTo(_scroll
+                                                                () {
+                                                              _scroll.position
+                                                                  .moveTo(_scroll
                                                                   .position
                                                                   .maxScrollExtent);
-                                                        });
+                                                            });
                                                       } else {
                                                         var val = await sendOTPtoMobile(
                                                             (signIn == 1)
                                                                 ? _mobile.text
                                                                 : _email.text,
                                                             countries[phcode][
-                                                                    'dial_code']
+                                                            'dial_code']
                                                                 .toString());
                                                         if (val == 'success') {
                                                           phoneAuthCheck = true;
@@ -2241,12 +2241,12 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                           Future.delayed(
                                                               const Duration(
                                                                   seconds: 1),
-                                                              () {
-                                                            _scroll.position
-                                                                .moveTo(_scroll
+                                                                  () {
+                                                                _scroll.position
+                                                                    .moveTo(_scroll
                                                                     .position
                                                                     .maxScrollExtent);
-                                                          });
+                                                              });
                                                         } else {
                                                           _error = val;
                                                         }
@@ -2256,19 +2256,19 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     }
                                                   } else {
                                                     _error =
-                                                        'please enter valid email address';
+                                                    'please enter valid email address';
                                                   }
                                                 } else {
                                                   _error =
-                                                      'please enter valid mobile number';
+                                                  'please enter valid mobile number';
                                                 }
                                               } else if (_password.text.length <
                                                   8) {
                                                 _error =
-                                                    'password length must be 8 characters';
+                                                'password length must be 8 characters';
                                               } else {
                                                 _error =
-                                                    'please enter all fields to proceed';
+                                                'please enter all fields to proceed';
                                               }
                                             } else {
                                               if (isMobileOtpSignUp == false) {
@@ -2277,7 +2277,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            const AggreementPage()));
+                                                        const AggreementPage()));
                                               }
                                               // iorejie
 
@@ -2302,25 +2302,25 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         true) {
                                                       try {
                                                         PhoneAuthCredential
-                                                            credential =
-                                                            PhoneAuthProvider
-                                                                .credential(
-                                                                    verificationId:
-                                                                        verId,
-                                                                    smsCode: _otp
-                                                                        .text);
+                                                        credential =
+                                                        PhoneAuthProvider
+                                                            .credential(
+                                                            verificationId:
+                                                            verId,
+                                                            smsCode: _otp
+                                                                .text);
 
                                                         // Sign the user in (or link) with the credential
                                                         await FirebaseAuth
                                                             .instance
                                                             .signInWithCredential(
-                                                                credential);
+                                                            credential);
 
                                                         String? bearerrrrr =
-                                                            await FirebaseAuth
-                                                                .instance
-                                                                .currentUser!
-                                                                .getIdToken();
+                                                        await FirebaseAuth
+                                                            .instance
+                                                            .currentUser!
+                                                            .getIdToken();
 
                                                         mobileVerified = true;
                                                         Navigator.push(
@@ -2328,7 +2328,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
-                                                                        const AggreementPage()));
+                                                                const AggreementPage()));
 
                                                         values = 0;
                                                       } on FirebaseAuthException catch (error) {
@@ -2338,17 +2338,17 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                             _otp.clear();
                                                             // otpNumber = '';
                                                             _error =
-                                                                'Please enter correct Otp or resend';
+                                                            'Please enter correct Otp or resend';
                                                           });
                                                         }
                                                       }
                                                     } else {
                                                       var val =
-                                                          await validateSmsOtp(
-                                                              (signIn == 1)
-                                                                  ? _mobile.text
-                                                                  : _email.text,
-                                                              _otp.text);
+                                                      await validateSmsOtp(
+                                                          (signIn == 1)
+                                                              ? _mobile.text
+                                                              : _email.text,
+                                                          _otp.text);
                                                       if (val == 'success') {
                                                         //                                       var verify = await verifyUser(_email.text,0,'','');
                                                         // navigate(verify);
@@ -2358,7 +2358,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
-                                                                        const AggreementPage()));
+                                                                const AggreementPage()));
                                                       } else {
                                                         _error = val.toString();
                                                       }
@@ -2369,7 +2369,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                const AggreementPage()));
+                                                            const AggreementPage()));
                                                   }
                                                 } else {
                                                   _error = val;
@@ -2387,24 +2387,24 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                         },
                                         text: (signIn == 0)
                                             ? (newPassword == true)
-                                                ? languages[choosenLanguage]
-                                                    ['text_update_password']
-                                                : (withOtp == false)
-                                                    ? languages[choosenLanguage]
-                                                        ['text_sign_in']
-                                                    : (otpSent == true)
-                                                        ? languages[
-                                                                choosenLanguage]
-                                                            ['text_verify_otp']
-                                                        : languages[
-                                                                choosenLanguage]
-                                                            ['text_get_otp']
+                                            ? languages[choosenLanguage]
+                                        ['text_update_password']
+                                            : (withOtp == false)
+                                            ? languages[choosenLanguage]
+                                        ['text_sign_in']
+                                            : (otpSent == true)
+                                            ? languages[
+                                        choosenLanguage]
+                                        ['text_verify_otp']
+                                            : languages[
+                                        choosenLanguage]
+                                        ['text_get_otp']
                                             : (otpSent == false &&
-                                                    mobileVerified == false)
-                                                ? languages[choosenLanguage]
-                                                    ['text_verify_mobile']
-                                                : languages[choosenLanguage]
-                                                    ['text_confirm']),
+                                            mobileVerified == false)
+                                            ? languages[choosenLanguage]
+                                        ['text_verify_mobile']
+                                            : languages[choosenLanguage]
+                                        ['text_confirm']),
                                     // SizedBox(height: media.width*0.01,),
                                     if (otpSent == true && newPassword == false)
                                       Container(
@@ -2413,42 +2413,143 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                         height: media.width * 0.1,
                                         child: (_resend == true)
                                             ? TextButton(
-                                                onPressed: () async {
-                                                  if (signIn == 1) {
+                                            onPressed: () async {
+                                              if (signIn == 1) {
+                                                String pattern =
+                                                    r'(^(?:[+0]9)?[0-9]{1,12}$)';
+                                                RegExp regExp =
+                                                RegExp(pattern);
+                                                if (regExp.hasMatch(
+                                                    _mobile.text) &&
+                                                    _mobile.text.length <=
+                                                        countries[phcode][
+                                                        'dial_max_length'] &&
+                                                    _mobile.text.length >=
+                                                        countries[phcode][
+                                                        'dial_min_length']) {
+                                                  if (isCheckFireBaseOTP) {
+                                                    var val =
+                                                    await otpCall();
+                                                    if (val.value == true) {
+                                                      await phoneAuth(
+                                                          countries[phcode][
+                                                          'dial_code'] +
+                                                              _mobile.text);
+                                                      phoneAuthCheck = true;
+                                                      _resend = false;
+                                                      otpSent = true;
+                                                      resendTimer = 60;
+                                                      resend();
+                                                    } else {
+                                                      phoneAuthCheck =
+                                                      false;
+                                                      RemoteNotification noti =
+                                                      const RemoteNotification(
+                                                          title:
+                                                          'Otp for Login',
+                                                          body:
+                                                          'Login to your account with test OTP 123456');
+                                                      showOtpNotification(
+                                                          noti);
+                                                    }
+                                                    // setState(() {
+                                                    _resend = false;
+                                                    otpSent = true;
+                                                    resendTimer = 60;
+                                                    resend();
+                                                  } else {
+                                                    var val = await sendOTPtoMobile(
+                                                        (signIn == 1)
+                                                            ? _mobile.text
+                                                            : _email.text,
+                                                        countries[phcode][
+                                                        'dial_code']
+                                                            .toString());
+                                                    if (val == 'success') {
+                                                      phoneAuthCheck = true;
+                                                      _resend = false;
+                                                      otpSent = true;
+                                                      resendTimer = 60;
+                                                      resend();
+                                                    } else {
+                                                      _error = val;
+                                                    }
+                                                  }
+
+                                                  // });
+                                                } else {
+                                                  //  setState(() {
+                                                  _error =
+                                                  'Please enter valid mobile number';
+                                                  // });
+                                                }
+                                              } else {
+                                                var exist = true;
+                                                if (forgotPassword ==
+                                                    true) {
+                                                  var ver =
+                                                  await verifyUser(
+                                                      _email.text,
+                                                      (isLoginemail ==
+                                                          true)
+                                                          ? 1
+                                                          : 0,
+                                                      _password.text,
+                                                      '',
+                                                      withOtp,
+                                                      forgotPassword);
+                                                  if (ver == true) {
+                                                    exist = true;
+                                                  } else {
+                                                    exist = false;
+                                                  }
+                                                }
+                                                if (exist == true) {
+                                                  if (isLoginemail ==
+                                                      false) {
                                                     String pattern =
                                                         r'(^(?:[+0]9)?[0-9]{1,12}$)';
                                                     RegExp regExp =
-                                                        RegExp(pattern);
+                                                    RegExp(pattern);
                                                     if (regExp.hasMatch(
-                                                            _mobile.text) &&
-                                                        _mobile.text.length <=
-                                                            countries[phcode][
-                                                                'dial_max_length'] &&
-                                                        _mobile.text.length >=
-                                                            countries[phcode][
-                                                                'dial_min_length']) {
+                                                        _email.text) &&
+                                                        _email.text
+                                                            .length <=
+                                                            countries[
+                                                            phcode][
+                                                            'dial_max_length'] &&
+                                                        _email.text
+                                                            .length >=
+                                                            countries[
+                                                            phcode][
+                                                            'dial_min_length']) {
                                                       if (isCheckFireBaseOTP) {
                                                         var val =
-                                                            await otpCall();
-                                                        if (val.value == true) {
+                                                        await otpCall();
+                                                        if (val.value ==
+                                                            true) {
                                                           await phoneAuth(
-                                                              countries[phcode][
-                                                                      'dial_code'] +
-                                                                  _mobile.text);
-                                                          phoneAuthCheck = true;
+                                                              countries[phcode]
+                                                              [
+                                                              'dial_code'] +
+                                                                  _email
+                                                                      .text);
+                                                          phoneAuthCheck =
+                                                          true;
                                                           _resend = false;
                                                           otpSent = true;
                                                           resendTimer = 60;
                                                           resend();
                                                         } else {
                                                           phoneAuthCheck =
-                                                              false;
-                                                          RemoteNotification noti =
-                                                              const RemoteNotification(
-                                                                  title:
-                                                                      'Otp for Login',
-                                                                  body:
-                                                                      'Login to your account with test OTP 123456');
+                                                          false;
+                                                          RemoteNotification
+                                                          noti =
+                                                          const RemoteNotification(
+                                                              title:
+                                                              'Otp for Login',
+                                                              body:
+                                                              'Login to your account with test OTP 123456');
                                                           showOtpNotification(
                                                               noti);
                                                         }
@@ -2460,13 +2561,18 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                       } else {
                                                         var val = await sendOTPtoMobile(
                                                             (signIn == 1)
-                                                                ? _mobile.text
-                                                                : _email.text,
-                                                            countries[phcode][
-                                                                    'dial_code']
+                                                                ? _mobile
+                                                                .text
+                                                                : _email
+                                                                .text,
+                                                            countries[phcode]
+                                                            [
+                                                            'dial_code']
                                                                 .toString());
-                                                        if (val == 'success') {
-                                                          phoneAuthCheck = true;
+                                                        if (val ==
+                                                            'success') {
+                                                          phoneAuthCheck =
+                                                          true;
                                                           _resend = false;
                                                           otpSent = true;
                                                           resendTimer = 60;
@@ -2480,176 +2586,70 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                     } else {
                                                       //  setState(() {
                                                       _error =
-                                                          'Please enter valid mobile number';
+                                                      'Please enter valid mobile number';
                                                       // });
                                                     }
                                                   } else {
-                                                    var exist = true;
-                                                    if (forgotPassword ==
-                                                        true) {
-                                                      var ver =
-                                                          await verifyUser(
-                                                              _email.text,
-                                                              (isLoginemail ==
-                                                                      true)
-                                                                  ? 1
-                                                                  : 0,
-                                                              _password.text,
-                                                              '',
-                                                              withOtp,
-                                                              forgotPassword);
-                                                      if (ver == true) {
-                                                        exist = true;
+                                                    String pattern =
+                                                        r"^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])*$";
+                                                    RegExp regex =
+                                                    RegExp(pattern);
+                                                    if (regex.hasMatch(
+                                                        _email.text)) {
+                                                      phoneAuthCheck = true;
+                                                      var val =
+                                                      await sendOTPtoEmail(
+                                                          _email.text);
+                                                      if (val ==
+                                                          'success') {
+                                                        _resend = false;
+                                                        otpSent = true;
+                                                        resendTimer = 60;
+                                                        resend();
                                                       } else {
-                                                        exist = false;
-                                                      }
-                                                    }
-                                                    if (exist == true) {
-                                                      if (isLoginemail ==
-                                                          false) {
-                                                        String pattern =
-                                                            r'(^(?:[+0]9)?[0-9]{1,12}$)';
-                                                        RegExp regExp =
-                                                            RegExp(pattern);
-                                                        if (regExp.hasMatch(
-                                                                _email.text) &&
-                                                            _email.text
-                                                                    .length <=
-                                                                countries[
-                                                                        phcode][
-                                                                    'dial_max_length'] &&
-                                                            _email.text
-                                                                    .length >=
-                                                                countries[
-                                                                        phcode][
-                                                                    'dial_min_length']) {
-                                                          if (isCheckFireBaseOTP) {
-                                                            var val =
-                                                                await otpCall();
-                                                            if (val.value ==
-                                                                true) {
-                                                              await phoneAuth(
-                                                                  countries[phcode]
-                                                                          [
-                                                                          'dial_code'] +
-                                                                      _email
-                                                                          .text);
-                                                              phoneAuthCheck =
-                                                                  true;
-                                                              _resend = false;
-                                                              otpSent = true;
-                                                              resendTimer = 60;
-                                                              resend();
-                                                            } else {
-                                                              phoneAuthCheck =
-                                                                  false;
-                                                              RemoteNotification
-                                                                  noti =
-                                                                  const RemoteNotification(
-                                                                      title:
-                                                                          'Otp for Login',
-                                                                      body:
-                                                                          'Login to your account with test OTP 123456');
-                                                              showOtpNotification(
-                                                                  noti);
-                                                            }
-                                                            // setState(() {
-                                                            _resend = false;
-                                                            otpSent = true;
-                                                            resendTimer = 60;
-                                                            resend();
-                                                          } else {
-                                                            var val = await sendOTPtoMobile(
-                                                                (signIn == 1)
-                                                                    ? _mobile
-                                                                        .text
-                                                                    : _email
-                                                                        .text,
-                                                                countries[phcode]
-                                                                        [
-                                                                        'dial_code']
-                                                                    .toString());
-                                                            if (val ==
-                                                                'success') {
-                                                              phoneAuthCheck =
-                                                                  true;
-                                                              _resend = false;
-                                                              otpSent = true;
-                                                              resendTimer = 60;
-                                                              resend();
-                                                            } else {
-                                                              _error = val;
-                                                            }
-                                                          }
-
-                                                          // });
-                                                        } else {
-                                                          //  setState(() {
-                                                          _error =
-                                                              'Please enter valid mobile number';
-                                                          // });
-                                                        }
-                                                      } else {
-                                                        String pattern =
-                                                            r"^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])*$";
-                                                        RegExp regex =
-                                                            RegExp(pattern);
-                                                        if (regex.hasMatch(
-                                                            _email.text)) {
-                                                          phoneAuthCheck = true;
-                                                          var val =
-                                                              await sendOTPtoEmail(
-                                                                  _email.text);
-                                                          if (val ==
-                                                              'success') {
-                                                            _resend = false;
-                                                            otpSent = true;
-                                                            resendTimer = 60;
-                                                            resend();
-                                                          } else {
-                                                            _error = val;
-                                                          }
-                                                        } else {
-                                                          // setState(() {
-                                                          _error =
-                                                              'Please enter valid email address';
-                                                          // });
-                                                        }
+                                                        _error = val;
                                                       }
                                                     } else {
-                                                      _error = (isLoginemail ==
-                                                              false)
-                                                          ? 'Mobile Number doesn\'t exists'
-                                                          : 'Email doesn\'t exists';
+                                                      // setState(() {
+                                                      _error =
+                                                      'Please enter valid email address';
+                                                      // });
                                                     }
                                                   }
-                                                },
-                                                child: MyText(
-                                                  text:
-                                                      languages[choosenLanguage]
-                                                          ['text_resend_otp'],
-                                                  size: media.width * fourteen,
-                                                  textAlign: TextAlign.center,
-                                                  color: Colors.white,
-                                                ))
+                                                } else {
+                                                  _error = (isLoginemail ==
+                                                      false)
+                                                      ? 'Mobile Number doesn\'t exists'
+                                                      : 'Email doesn\'t exists';
+                                                }
+                                              }
+                                            },
+                                            child: MyText(
+                                              text:
+                                              languages[choosenLanguage]
+                                              ['text_resend_otp'],
+                                              size: media.width * fourteen,
+                                              textAlign: TextAlign.center,
+                                              color: Colors.white,
+                                            ))
                                             : (otpSent == true)
-                                                ? MyText(
-                                                    text: languages[
-                                                                choosenLanguage]
-                                                            [
-                                                            'text_resend_otp_in']
-                                                        .toString()
-                                                        .replaceAll(
-                                                            '1111',
-                                                            resendTimer
-                                                                .toString()),
-                                                    // 'Resend OTP in $resendTimer',
-                                                    size:
-                                                        media.width * fourteen,
-                                                    textAlign: TextAlign.center,
-                                                    color: Colors.white,
-                                                  )
-                                                : Container(),
+                                            ? MyText(
+                                          text: languages[
+                                          choosenLanguage]
+                                          [
+                                          'text_resend_otp_in']
+                                              .toString()
+                                              .replaceAll(
+                                              '1111',
+                                              resendTimer
+                                                  .toString()),
+                                          // 'Resend OTP in $resendTimer',
+                                          size:
+                                          media.width * fourteen,
+                                          textAlign: TextAlign.center,
+                                          color: Colors.white,
+                                        )
+                                            : Container(),
                                       ),
                                     SizedBox(
                                       height: media.width * 0.025,
@@ -2683,9 +2683,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             child: MyText(
                                               text: (forgotPassword == true)
                                                   ? languages[choosenLanguage]
-                                                      ['text_sign_in']
+                                              ['text_sign_in']
                                                   : languages[choosenLanguage]
-                                                      ['text_forgot_password'],
+                                              ['text_forgot_password'],
                                               size: media.width * fourteen,
                                               textAlign: TextAlign.end,
                                               color: Colors.white,
@@ -2699,142 +2699,142 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         )),
                     (pickImage == true)
                         ? Positioned(
-                            bottom: 0,
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  pickImage = false;
-                                });
-                              },
-                              child: Container(
-                                height: media.height * 1,
-                                width: media.width * 1,
-                                color: Colors.transparent.withOpacity(0.6),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      padding:
-                                          EdgeInsets.all(media.width * 0.05),
-                                      width: media.width * 1,
-                                      decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(25),
-                                              topRight: Radius.circular(25)),
-                                          border: Border.all(
-                                            color: borderLines,
-                                            width: 1.2,
-                                          ),
-                                          color: page),
-                                      child: Column(
+                        bottom: 0,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              pickImage = false;
+                            });
+                          },
+                          child: Container(
+                            height: media.height * 1,
+                            width: media.width * 1,
+                            color: Colors.transparent.withOpacity(0.6),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  padding:
+                                  EdgeInsets.all(media.width * 0.05),
+                                  width: media.width * 1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(25),
+                                          topRight: Radius.circular(25)),
+                                      border: Border.all(
+                                        color: borderLines,
+                                        width: 1.2,
+                                      ),
+                                      color: page),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: media.width * 0.02,
+                                        width: media.width * 0.15,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(
+                                              media.width * 0.01),
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: media.width * 0.05,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Container(
-                                            height: media.width * 0.02,
-                                            width: media.width * 0.15,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      media.width * 0.01),
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: media.width * 0.05,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                          Column(
                                             children: [
-                                              Column(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      pickImageFromCamera();
-                                                    },
-                                                    child: Container(
-                                                        height:
-                                                            media.width * 0.171,
-                                                        width:
-                                                            media.width * 0.171,
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color:
-                                                                    borderLines,
-                                                                width: 1.2),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
-                                                        child: Icon(
-                                                          Icons
-                                                              .camera_alt_outlined,
-                                                          size: media.width *
-                                                              0.064,
-                                                          color: textColor,
-                                                        )),
-                                                  ),
-                                                  SizedBox(
-                                                    height: media.width * 0.02,
-                                                  ),
-                                                  MyText(
-                                                    text: languages[
-                                                            choosenLanguage]
-                                                        ['text_camera'],
-                                                    size: media.width * ten,
-                                                    color: textColor
-                                                        .withOpacity(0.4),
-                                                  )
-                                                ],
+                                              InkWell(
+                                                onTap: () {
+                                                  pickImageFromCamera();
+                                                },
+                                                child: Container(
+                                                    height:
+                                                    media.width * 0.171,
+                                                    width:
+                                                    media.width * 0.171,
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color:
+                                                            borderLines,
+                                                            width: 1.2),
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            12)),
+                                                    child: Icon(
+                                                      Icons
+                                                          .camera_alt_outlined,
+                                                      size: media.width *
+                                                          0.064,
+                                                      color: textColor,
+                                                    )),
                                               ),
-                                              Column(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      pickImageFromGallery();
-                                                    },
-                                                    child: Container(
-                                                        height:
-                                                            media.width * 0.171,
-                                                        width:
-                                                            media.width * 0.171,
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color:
-                                                                    borderLines,
-                                                                width: 1.2),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
-                                                        child: Icon(
-                                                          Icons.image_outlined,
-                                                          size: media.width *
-                                                              0.064,
-                                                          color: textColor,
-                                                        )),
-                                                  ),
-                                                  SizedBox(
-                                                    height: media.width * 0.02,
-                                                  ),
-                                                  MyText(
-                                                    text: languages[
-                                                            choosenLanguage]
-                                                        ['text_gallery'],
-                                                    size: media.width * ten,
-                                                    color: textColor
-                                                        .withOpacity(0.4),
-                                                  )
-                                                ],
+                                              SizedBox(
+                                                height: media.width * 0.02,
                                               ),
+                                              MyText(
+                                                text: languages[
+                                                choosenLanguage]
+                                                ['text_camera'],
+                                                size: media.width * ten,
+                                                color: textColor
+                                                    .withOpacity(0.4),
+                                              )
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  pickImageFromGallery();
+                                                },
+                                                child: Container(
+                                                    height:
+                                                    media.width * 0.171,
+                                                    width:
+                                                    media.width * 0.171,
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color:
+                                                            borderLines,
+                                                            width: 1.2),
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            12)),
+                                                    child: Icon(
+                                                      Icons.image_outlined,
+                                                      size: media.width *
+                                                          0.064,
+                                                      color: textColor,
+                                                    )),
+                                              ),
+                                              SizedBox(
+                                                height: media.width * 0.02,
+                                              ),
+                                              MyText(
+                                                text: languages[
+                                                choosenLanguage]
+                                                ['text_gallery'],
+                                                size: media.width * ten,
+                                                color: textColor
+                                                    .withOpacity(0.4),
+                                              )
                                             ],
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ))
+                              ],
+                            ),
+                          ),
+                        ))
                         : Container(),
                     (loginLoading == true)
                         ? const Positioned(top: 0, child: Loading())
