@@ -8,7 +8,6 @@ import '../../styles/styles.dart';
 import '../../functions/functions.dart';
 import 'package:http/http.dart' as http;
 import '../../widgets/widgets.dart';
-import '../language/languages.dart';
 import '../login/login.dart';
 import '../noInternet/noInternet.dart';
 import '../onTripPage/booking_confirmation.dart';
@@ -53,8 +52,8 @@ class _LoadingPageState extends State<LoadingPage> {
         context,
         MaterialPageRoute(
             builder: (context) => BookingConfirmation(
-                  type: 2,
-                )));
+              type: 2,
+            )));
   }
 
   naviagterental() {
@@ -62,35 +61,32 @@ class _LoadingPageState extends State<LoadingPage> {
         context,
         MaterialPageRoute(
             builder: (context) => BookingConfirmation(
-                  type: 1,
-                )));
+              type: 1,
+            )));
   }
 
-  //navigate
   navigate() async {
     if (userRequestData.isNotEmpty && userRequestData['is_completed'] == 1) {
-      //invoice page of ride
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const Invoice()),
-          (route) => false);
+              (route) => false);
     } else if (userDetails['metaRequest'] != null) {
       addressList.clear();
       userRequestData = userDetails['metaRequest']['data'];
-      // selectedHistory = i;
       addressList.add(AddressList(
           id: '1',
           type: 'pickup',
           address: userRequestData['pick_address'],
           pickup: true,
           latlng:
-              LatLng(userRequestData['pick_lat'], userRequestData['pick_lng']),
+          LatLng(userRequestData['pick_lat'], userRequestData['pick_lng']),
           name: userDetails['name'],
           number: userDetails['mobile']));
       if (userRequestData['requestStops']['data'].isNotEmpty) {
         for (var i = 0;
-            i < userRequestData['requestStops']['data'].length;
-            i++) {
+        i < userRequestData['requestStops']['data'].length;
+        i++) {
           addressList.add(AddressList(
               id: userRequestData['requestStops']['data'][i]['id'].toString(),
               type: 'drop',
@@ -119,7 +115,6 @@ class _LoadingPageState extends State<LoadingPage> {
       ismulitipleride = true;
       var val = await getUserDetails(id: userRequestData['id']);
 
-      //login page
       if (val == true) {
         setState(() {
           _isLoading = false;
@@ -134,11 +129,10 @@ class _LoadingPageState extends State<LoadingPage> {
         }
       }
     } else {
-      //home page
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const Maps()),
-          (route) => false);
+              (route) => false);
     }
   }
 
@@ -148,7 +142,6 @@ class _LoadingPageState extends State<LoadingPage> {
     }
   }
 
-//get language json and data saved in local (bearer token , choosen language) and find users current status
   getLanguageDone() async {
     _package = await PackageInfo.fromPlatform();
     try {
@@ -202,23 +195,15 @@ class _LoadingPageState extends State<LoadingPage> {
 
           if (val == '3') {
             navigate();
-          } else if (choosenLanguage == '') {
-            // ignore: use_build_context_synchronously
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const Languages()));
           } else if (val == '2') {
             Future.delayed(const Duration(seconds: 2), () {
-              //login page
-              // ignore: use_build_context_synchronously
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const Login()));
             });
           } else {
             Future.delayed(const Duration(seconds: 2), () {
-              //choose language page
-              // ignore: use_build_context_synchronously
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const Languages()));
+                  MaterialPageRoute(builder: (context) => const Login()));
             });
           }
         } else {
@@ -255,8 +240,6 @@ class _LoadingPageState extends State<LoadingPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-
                   Container(
                     padding: EdgeInsets.all(media.width * 0.01),
                     width: media.width * 0.5,
@@ -288,91 +271,86 @@ class _LoadingPageState extends State<LoadingPage> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
 
-            //update available
-
             (updateAvailable == true)
                 ? Positioned(
-                    top: 0,
-                    child: Container(
-                      height: media.height * 1,
-                      width: media.width * 1,
-                      color: Colors.transparent.withOpacity(0.6),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              width: media.width * 0.9,
-                              padding: EdgeInsets.all(media.width * 0.05),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: page,
+                top: 0,
+                child: Container(
+                  height: media.height * 1,
+                  width: media.width * 1,
+                  color: Colors.transparent.withOpacity(0.6),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: media.width * 0.9,
+                          padding: EdgeInsets.all(media.width * 0.05),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: page,
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                  width: media.width * 0.8,
+                                  child: MyText(
+                                    text:
+                                    'New version of this app is available in store, please update the app for continue using',
+                                    size: media.width * sixteen,
+                                    fontweight: FontWeight.w600,
+                                  )),
+                              SizedBox(
+                                height: media.width * 0.05,
                               ),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                      width: media.width * 0.8,
-                                      child: MyText(
-                                        text:
-                                            'New version of this app is available in store, please update the app for continue using',
-                                        size: media.width * sixteen,
-                                        fontweight: FontWeight.w600,
-                                      )),
-                                  SizedBox(
-                                    height: media.width * 0.05,
-                                  ),
-                                  Button(
-                                      onTap: () async {
-                                        if (platform ==
-                                            TargetPlatform.android) {
-                                          openBrowser(
-                                              'https://play.google.com/store/apps/details?id=${_package.packageName}');
-                                        } else {
-                                          setState(() {
-                                            _isLoading = true;
-                                          });
-                                          var response = await http.get(Uri.parse(
-                                              'http://itunes.apple.com/lookup?bundleId=${_package.packageName}'));
-                                          if (response.statusCode == 200) {
-                                            openBrowser(jsonDecode(
-                                                    response.body)['results'][0]
-                                                ['trackViewUrl']);
-                                          }
+                              Button(
+                                  onTap: () async {
+                                    if (platform ==
+                                        TargetPlatform.android) {
+                                      openBrowser(
+                                          'https://play.google.com/store/apps/details?id=${_package.packageName}');
+                                    } else {
+                                      setState(() {
+                                        _isLoading = true;
+                                      });
+                                      var response = await http.get(Uri.parse(
+                                          'http://itunes.apple.com/lookup?bundleId=${_package.packageName}'));
+                                      if (response.statusCode == 200) {
+                                        openBrowser(jsonDecode(
+                                            response.body)['results'][0]
+                                        ['trackViewUrl']);
+                                      }
 
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
-                                        }
-                                      },
-                                      text: 'Update')
-                                ],
-                              ))
-                        ],
-                      ),
-                    ))
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+                                    }
+                                  },
+                                  text: 'Update')
+                            ],
+                          ))
+                    ],
+                  ),
+                ))
                 : Container(),
 
-            //loader
             (_isLoading == true && internet == true)
                 ? const Positioned(top: 0, child: Loading())
                 : Container(),
 
-            //no internet
             (internet == false)
                 ? Positioned(
-                    top: 0,
-                    child: NoInternet(
-                      onTap: () {
-                        setState(() {
-                          internetTrue();
-                          getLanguageDone();
-                        });
-                      },
-                    ))
+                top: 0,
+                child: NoInternet(
+                  onTap: () {
+                    setState(() {
+                      internetTrue();
+                      getLanguageDone();
+                    });
+                  },
+                ))
                 : Container(),
           ],
         ),

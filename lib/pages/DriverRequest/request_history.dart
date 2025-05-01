@@ -17,8 +17,6 @@ class _RequestListState extends State<RequestList> {
   List<Map<String, dynamic>> rejectedRequests = [];
   List<Map<String, dynamic>> betUpdateRequests = [];
   List<Map<String, dynamic>> completedTrips = [];
-  List<Map<String, dynamic>> cancelledRequests = [];
-
   bool isLoading = true;
   String? selectedStatus;
   bool _isUpdating = false;
@@ -58,7 +56,6 @@ class _RequestListState extends State<RequestList> {
           rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected' && req['reject_count'] == 3).toList();
           betUpdateRequests = userRequestsData.where((req) => req['status'] == 'rejected' && (req['reject_count'] == null || req['reject_count'] < 3)).toList();
           completedTrips = userRequestsData.where((req) => req['status'] == 'completed').toList();
-          cancelledRequests = userRequestsData.where((req) => req['status'] == 'cancelled').toList();
           isLoading = false;
         });
       }
@@ -86,17 +83,11 @@ class _RequestListState extends State<RequestList> {
         'user_id': request['user_id'].toString(),
       };
 
-      print("Request Headers: $headers");
-      print("Request Body: $body");
-
       final response = await http.post(
         Uri.parse('https://admin.nxtdig.in/api/v1/request/respondToDriverRequest'),
         headers: headers,
         body: json.encode(body),
       );
-
-      print("Response Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
 
       final message = response.statusCode == 200
           ? "Status updated successfully"
@@ -110,7 +101,6 @@ class _RequestListState extends State<RequestList> {
         await _fetchRequests();
       }
     } catch (e) {
-      print("Error: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Error updating status")),
       );
@@ -279,7 +269,6 @@ class _RequestListState extends State<RequestList> {
                       _buildStatusButton('Fare Update', 'bet_update'),
                       _buildStatusButton('Rejected', 'rejected'),
                       _buildStatusButton('Completed', 'completed'),
-                      _buildStatusButton('Cancelled', 'cancelled'),
                     ],
                   ),
                 ),
@@ -294,7 +283,11 @@ class _RequestListState extends State<RequestList> {
           ),
           if (_isUpdating)
             Center(
-              child: CircularProgressIndicator(),
+              child: SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(strokeWidth: 3),
+              ),
             ),
         ],
       ),
@@ -349,7 +342,7 @@ class _RequestListState extends State<RequestList> {
         : selectedStatus == 'bet_update' ? betUpdateRequests
         : selectedStatus == 'rejected' ? rejectedRequests
         : selectedStatus == 'completed' ? completedTrips
-        : cancelledRequests;
+        : [];
 
     if (requests.isEmpty) {
       return SingleChildScrollView(
@@ -357,7 +350,10 @@ class _RequestListState extends State<RequestList> {
         child: Container(
           height: MediaQuery.of(context).size.height * 0.7,
           child: Center(
-            child: Text("No ${selectedStatus} requests", style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+            child: Text(
+              selectedStatus == 'bet_update' ? "No fare update request" : "No ${selectedStatus} request",
+              style: TextStyle(color: Colors.grey[600], fontSize: 14),
+            ),
           ),
         ),
       );
@@ -380,7 +376,6 @@ class _RequestListState extends State<RequestList> {
     else if (status == "confirmed") statusColor = Colors.green;
     else if (status == "rejected" || status == "bet_update") statusColor = Colors.red;
     else if (status == "completed") statusColor = Colors.green;
-    else if (status == "cancelled") statusColor = Colors.red;
 
     final endDate = DateTime.parse(data['end_date']);
     final today = DateTime.now();
@@ -435,11 +430,11 @@ class _RequestListState extends State<RequestList> {
                       ),
                     ),
                   ),
-                  if (showStatusButton) ...[
+                  if (status == "accepted" || status == "confirmed" || status == "bet_update") ...[
                     SizedBox(width: 8),
                     GestureDetector(
                       onTap: () {
-                        _showOptionsDialog(data, status);
+                        _showOptionsDialog(data, status == "bet_update" ? "accepted" : status);
                       },
                       child: Container(
                         padding: EdgeInsets.all(4),

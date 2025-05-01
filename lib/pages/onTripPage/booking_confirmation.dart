@@ -6450,8 +6450,7 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                         }
                                                                       },
                                                                       text: languages[
-                                                                              choosenLanguage]
-                                                                          [
+                                                                              choosenLanguage][
                                                                           'text_update'],
                                                                     ),
                                                                   ),

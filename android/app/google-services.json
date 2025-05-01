@@ -38,6 +38,13 @@
             {
               "client_id": "999810610432-fvv33ji9bb5b320k1nq43i4qskuchdue.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "999810610432-97lo3hrab0aj65g187okub0u040hbir7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ondemand.user"
+              }
             }
           ]
         }
@@ -51,6 +58,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "999810610432-hut6ktiq9fd7ed14gaid7ljdg7jvb2c9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ondemand.user",
+            "certificate_hash": "570df864907e83c417612c9eff25019fd140591d"
+          }
+        },
         {
           "client_id": "999810610432-fvv33ji9bb5b320k1nq43i4qskuchdue.apps.googleusercontent.com",
           "client_type": 3
@@ -67,6 +82,13 @@
             {
               "client_id": "999810610432-fvv33ji9bb5b320k1nq43i4qskuchdue.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "999810610432-97lo3hrab0aj65g187okub0u040hbir7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ondemand.user"
+              }
             }
           ]
         }

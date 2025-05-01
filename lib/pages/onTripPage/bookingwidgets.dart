@@ -322,17 +322,17 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(
-                                    width: media.width * 0.4,
-                                    child: Text(
-                                      languages[choosenLanguage]
-                                          ['text_recommended_fare'],
-                                      style: GoogleFonts.notoSans(
-                                          fontSize: media.width * sixteen,
-                                          color: textColor,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
+                                  // SizedBox(
+                                  //   width: media.width * 0.4,
+                                  //   child: Text(
+                                  //     languages[choosenLanguage]
+                                  //         ['text_recommended_fare'],
+                                  //     style: GoogleFonts.notoSans(
+                                  //         fontSize: media.width * sixteen,
+                                  //         color: textColor,
+                                  //         fontWeight: FontWeight.w600),
+                                  //   ),
+                                  // ),
                                   (etaDetails[widget.showInfoInt]
                                                   ['has_discount'] !=
                                               true ||
@@ -344,16 +344,16 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: [
-                                            Text(
-                                              '${etaDetails[widget.showInfoInt]['total'].toStringAsFixed(2)} ${etaDetails[widget.showInfoInt]['currency']}'
-                                              // etaDetails[_showInfoInt]['currency'] + ' ' + etaDetails[_showInfoInt]['total'].toStringAsFixed(2),
-                                              ,
-                                              style: GoogleFonts.notoSans(
-                                                  fontSize:
-                                                      media.width * fourteen,
-                                                  color: textColor,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
+                                            // Text(
+                                            //   '${etaDetails[widget.showInfoInt]['total'].toStringAsFixed(2)} ${etaDetails[widget.showInfoInt]['currency']}'
+                                            //   // etaDetails[_showInfoInt]['currency'] + ' ' + etaDetails[_showInfoInt]['total'].toStringAsFixed(2),
+                                            //   ,
+                                            //   style: GoogleFonts.notoSans(
+                                            //       fontSize:
+                                            //           media.width * fourteen,
+                                            //       color: textColor,
+                                            //       fontWeight: FontWeight.w600),
+                                            // ),
                                           ],
                                         )
                                       : Row(
@@ -394,9 +394,9 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                         )
                                 ],
                               ),
-                        SizedBox(
-                          height: media.width * 0.05,
-                        ),
+                        // SizedBox(
+                        //   height: media.width * 0.05,
+                        // ),
                         // MyText(
                         //     text: languages[choosenLanguage]
                         //         ['text_offer_your_fare'],
@@ -406,216 +406,218 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                         // SizedBox(
                         //   height: media.width * 0.05,
                         // ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                if (yourAmount.text.isNotEmpty &&
-                                    (etaDetails[choosenVehicle]
-                                                ['bidding_low_percentage'] ==
-                                            0 ||
-                                        (double.parse(yourAmount.text.toString()) -
-                                                ((userDetails['bidding_amount_increase_or_decrease']
-                                                        .toString()
-                                                        .contains('.'))
-                                                    ? double.parse(
-                                                        userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString())
-                                                    : int.parse(
-                                                        userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString()))) >=
-                                            (double.parse(etaDetails[choosenVehicle]['total'].toString()) -
-                                                ((double.parse(etaDetails[choosenVehicle]['bidding_low_percentage'].toString()) /
-                                                        100) *
-                                                    double.parse(etaDetails[choosenVehicle]['total'].toString()))))) {
-                                  setState(() {
-                                    yourAmount.text = (yourAmount.text.isEmpty)
-                                        ? (etaDetails[choosenVehicle]['total']
-                                                .toString()
-                                                .contains('.'))
-                                            ? (double.parse(etaDetails[choosenVehicle]['total'].toString()) -
-                                                    ((userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString()
-                                                            .contains('.'))
-                                                        ? double.parse(
-                                                            userDetails['bidding_amount_increase_or_decrease']
-                                                                .toString())
-                                                        : int.parse(userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString())))
-                                                .toStringAsFixed(2)
-                                            : (int.parse(etaDetails[choosenVehicle]['total'].toString()) -
-                                                    ((userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString()
-                                                            .contains('.'))
-                                                        ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString())
-                                                        : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString())))
-                                                .toString()
-                                        : (yourAmount.text.toString().contains('.'))
-                                            ? (double.parse(yourAmount.text.toString()) - ((userDetails['bidding_amount_increase_or_decrease'].toString().contains('.')) ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString()) : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString()))).toStringAsFixed(2)
-                                            : (int.parse(yourAmount.text.toString()) - ((userDetails['bidding_amount_increase_or_decrease'].toString().contains('.')) ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString()) : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString()))).toString();
-                                    // updateAmount.text = (updateAmount.text.isEmpty) ? (double.parse(rideList['price'].toString()) - 10).toStringAsFixed(2) : (double.parse(updateAmount.text.toString()) - 10).toStringAsFixed(2);
-                                  });
-                                }
-                              },
-                              child: Container(
-                                width: media.width * 0.2,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: (yourAmount.text.isNotEmpty &&
-                                            (etaDetails[choosenVehicle]['bidding_low_percentage'] == 0 ||
-                                                (double.parse(yourAmount.text.toString()) -
-                                                        ((userDetails['bidding_amount_increase_or_decrease']
-                                                                .toString()
-                                                                .contains('.'))
-                                                            ? double.parse(
-                                                                userDetails['bidding_amount_increase_or_decrease']
-                                                                    .toString())
-                                                            : int.parse(userDetails['bidding_amount_increase_or_decrease']
-                                                                .toString()))) >=
-                                                    (double.parse(etaDetails[choosenVehicle]['total'].toString()) -
-                                                        ((double.parse(etaDetails[choosenVehicle]['bidding_low_percentage'].toString()) /
-                                                                100) *
-                                                            double.parse(etaDetails[choosenVehicle]['total'].toString())))))
-                                        // double.parse(updateAmount.text.toString()) > double.parse(rideList['price'].toString()))
-                                        ? (isDarkTheme)
-                                            ? Colors.white
-                                            : Colors.black
-                                        : borderLines,
-                                    borderRadius: BorderRadius.circular(media.width * 0.04)),
-                                padding: EdgeInsets.all(media.width * 0.025),
-                                child: Text(
-                                  // '-10',
-                                  (userDetails[
-                                              'bidding_amount_increase_or_decrease']
-                                          .toString()
-                                          .contains('.'))
-                                      ? '-${double.parse(userDetails['bidding_amount_increase_or_decrease'].toString())}'
-                                      : '-${int.parse(userDetails['bidding_amount_increase_or_decrease'].toString())}',
-                                  style: GoogleFonts.notoSans(
-                                      fontSize: media.width * fourteen,
-                                      fontWeight: FontWeight.w600,
-                                      color: (isDarkTheme)
-                                          ? Colors.black
-                                          : Colors.white),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: media.width * 0.4,
-                              child: TextField(
-                                enabled: false,
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                controller: yourAmount,
-                                decoration: InputDecoration(
-                                  hintText: etaDetails[choosenVehicle]['price']
-                                      .toString(),
-                                  hintStyle: GoogleFonts.notoSans(
-                                      fontSize: media.width * sixteen,
-                                      color: textColor),
-                                  border: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: hintColor)),
-                                ),
-                                style: GoogleFonts.notoSans(
-                                  color: textColor,
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  if (etaDetails[choosenVehicle]
-                                              ['bidding_high_percentage'] ==
-                                          0 ||
-                                      (double.parse(yourAmount.text.toString()) +
-                                              ((userDetails['bidding_amount_increase_or_decrease']
-                                                      .toString()
-                                                      .contains('.'))
-                                                  ? double.parse(
-                                                      userDetails['bidding_amount_increase_or_decrease']
-                                                          .toString())
-                                                  : int.parse(
-                                                      userDetails['bidding_amount_increase_or_decrease']
-                                                          .toString()))) <=
-                                          (double.parse(etaDetails[choosenVehicle]['total'].toString()) +
-                                              ((double.parse(etaDetails[choosenVehicle]['bidding_high_percentage'].toString()) / 100) *
-                                                  double.parse(
-                                                      etaDetails[choosenVehicle]['total'].toString())))) {
-                                    yourAmount.text = (yourAmount.text.isEmpty)
-                                        ? (etaDetails[choosenVehicle]['price']
-                                                .toString()
-                                                .contains('.'))
-                                            ? (double.parse(etaDetails[choosenVehicle]['price'].toString()) +
-                                                    ((userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString()
-                                                            .contains('.'))
-                                                        ? double.parse(
-                                                            userDetails['bidding_amount_increase_or_decrease']
-                                                                .toString())
-                                                        : int.parse(userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString())))
-                                                .toStringAsFixed(2)
-                                            : (int.parse(etaDetails[choosenVehicle]['price'].toString()) +
-                                                    ((userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString()
-                                                            .contains('.'))
-                                                        ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString())
-                                                        : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString())))
-                                                .toString()
-                                        : (yourAmount.text.toString().contains('.'))
-                                            ? (double.parse(yourAmount.text.toString()) + ((userDetails['bidding_amount_increase_or_decrease'].toString().contains('.')) ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString()) : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString()))).toStringAsFixed(2)
-                                            : (int.parse(yourAmount.text.toString()) + ((userDetails['bidding_amount_increase_or_decrease'].toString().contains('.')) ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString()) : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString()))).toString();
-                                  }
-                                });
-                              },
-                              child: Container(
-                                width: media.width * 0.2,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: (etaDetails[choosenVehicle]['bidding_high_percentage'] == 0 ||
-                                            (double.parse(yourAmount.text.toString()) +
-                                                    ((userDetails['bidding_amount_increase_or_decrease']
-                                                            .toString()
-                                                            .contains('.'))
-                                                        ? double.parse(
-                                                            userDetails['bidding_amount_increase_or_decrease']
-                                                                .toString())
-                                                        : int.parse(
-                                                            userDetails['bidding_amount_increase_or_decrease']
-                                                                .toString()))) <=
-                                                (double.parse(etaDetails[choosenVehicle]['total'].toString()) +
-                                                    ((double.parse(etaDetails[choosenVehicle]['bidding_high_percentage'].toString()) /
-                                                            100) *
-                                                        double.parse(etaDetails[choosenVehicle]['total'].toString()))))
-                                        ? (isDarkTheme)
-                                            ? Colors.white
-                                            : Colors.black
-                                        : borderLines,
-                                    borderRadius: BorderRadius.circular(media.width * 0.04)),
-                                padding: EdgeInsets.all(media.width * 0.025),
-                                child: Text(
-                                  // '+10',
-                                  (userDetails[
-                                              'bidding_amount_increase_or_decrease']
-                                          .toString()
-                                          .contains('.'))
-                                      ? '+${double.parse(userDetails['bidding_amount_increase_or_decrease'].toString())}'
-                                      : '+${int.parse(userDetails['bidding_amount_increase_or_decrease'].toString())}',
-                                  style: GoogleFonts.notoSans(
-                                      fontSize: media.width * fourteen,
-                                      fontWeight: FontWeight.w600,
-                                      color: (isDarkTheme)
-                                          ? Colors.black
-                                          : Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: media.width * 0.05,
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     InkWell(
+                        //       onTap: () {
+                        //         if (yourAmount.text.isNotEmpty &&
+                        //             (etaDetails[choosenVehicle]
+                        //                         ['bidding_low_percentage'] ==
+                        //                     0 ||
+                        //                 (double.parse(yourAmount.text.toString()) -
+                        //                         ((userDetails['bidding_amount_increase_or_decrease']
+                        //                                 .toString()
+                        //                                 .contains('.'))
+                        //                             ? double.parse(
+                        //                                 userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString())
+                        //                             : int.parse(
+                        //                                 userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString()))) >=
+                        //                     (double.parse(etaDetails[choosenVehicle]['total'].toString()) -
+                        //                         ((double.parse(etaDetails[choosenVehicle]['bidding_low_percentage'].toString()) /
+                        //                                 100) *
+                        //                             double.parse(etaDetails[choosenVehicle]['total'].toString()))))) {
+                        //           setState(() {
+                        //             yourAmount.text = (yourAmount.text.isEmpty)
+                        //                 ? (etaDetails[choosenVehicle]['total']
+                        //                         .toString()
+                        //                         .contains('.'))
+                        //                     ? (double.parse(etaDetails[choosenVehicle]['total'].toString()) -
+                        //                             ((userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString()
+                        //                                     .contains('.'))
+                        //                                 ? double.parse(
+                        //                                     userDetails['bidding_amount_increase_or_decrease']
+                        //                                         .toString())
+                        //                                 : int.parse(userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString())))
+                        //                         .toStringAsFixed(2)
+                        //                     : (int.parse(etaDetails[choosenVehicle]['total'].toString()) -
+                        //                             ((userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString()
+                        //                                     .contains('.'))
+                        //                                 ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString())
+                        //                                 : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString())))
+                        //                         .toString()
+                        //                 : (yourAmount.text.toString().contains('.'))
+                        //                     ? (double.parse(yourAmount.text.toString()) - ((userDetails['bidding_amount_increase_or_decrease'].toString().contains('.')) ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString()) : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString()))).toStringAsFixed(2)
+                        //                     : (int.parse(yourAmount.text.toString()) - ((userDetails['bidding_amount_increase_or_decrease'].toString().contains('.')) ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString()) : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString()))).toString();
+                        //             // updateAmount.text = (updateAmount.text.isEmpty) ? (double.parse(rideList['price'].toString()) - 10).toStringAsFixed(2) : (double.parse(updateAmount.text.toString()) - 10).toStringAsFixed(2);
+                        //           });
+                        //         }
+                        //       },
+                        //       child: Container(
+                        //         width: media.width * 0.2,
+                        //         alignment: Alignment.center,
+                        //         decoration: BoxDecoration(
+                        //             color: (yourAmount.text.isNotEmpty &&
+                        //                     (etaDetails[choosenVehicle]['bidding_low_percentage'] == 0 ||
+                        //                         (double.parse(yourAmount.text.toString()) -
+                        //                                 ((userDetails['bidding_amount_increase_or_decrease']
+                        //                                         .toString()
+                        //                                         .contains('.'))
+                        //                                     ? double.parse(
+                        //                                         userDetails['bidding_amount_increase_or_decrease']
+                        //                                             .toString())
+                        //                                     : int.parse(userDetails['bidding_amount_increase_or_decrease']
+                        //                                         .toString()))) >=
+                        //                             (double.parse(etaDetails[choosenVehicle]['total'].toString()) -
+                        //                                 ((double.parse(etaDetails[choosenVehicle]['bidding_low_percentage'].toString()) /
+                        //                                         100) *
+                        //                                     double.parse(etaDetails[choosenVehicle]['total'].toString())))))
+                        //                 // double.parse(updateAmount.text.toString()) > double.parse(rideList['price'].toString()))
+                        //                 ? (isDarkTheme)
+                        //                     ? Colors.white
+                        //                     : Colors.black
+                        //                 : borderLines,
+                        //             borderRadius: BorderRadius.circular(media.width * 0.04)),
+                        //         padding: EdgeInsets.all(media.width * 0.025),
+                        //         child: Text(
+                        //           // '-10',
+                        //           (userDetails[
+                        //                       'bidding_amount_increase_or_decrease']
+                        //                   .toString()
+                        //                   .contains('.'))
+                        //               ? '-${double.parse(userDetails['bidding_amount_increase_or_decrease'].toString())}'
+                        //               : '-${int.parse(userDetails['bidding_amount_increase_or_decrease'].toString())}',
+                        //           style: GoogleFonts.notoSans(
+                        //               fontSize: media.width * fourteen,
+                        //               fontWeight: FontWeight.w600,
+                        //               color: (isDarkTheme)
+                        //                   ? Colors.black
+                        //                   : Colors.white),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       width: media.width * 0.4,
+                        //       child: TextField(
+                        //         enabled: false,
+                        //         textAlign: TextAlign.center,
+                        //         keyboardType: TextInputType.number,
+                        //         controller: yourAmount,
+                        //         decoration: InputDecoration(
+                        //           hintText: etaDetails[choosenVehicle]['price']
+                        //               .toString(),
+                        //           hintStyle: GoogleFonts.notoSans(
+                        //               fontSize: media.width * sixteen,
+                        //               color: textColor),
+                        //           border: UnderlineInputBorder(
+                        //               borderSide: BorderSide(color: hintColor)),
+                        //         ),
+                        //         style: GoogleFonts.notoSans(
+                        //           color: textColor,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     InkWell(
+                        //       onTap: () {
+                        //         setState(() {
+                        //           if (etaDetails[choosenVehicle]
+                        //                       ['bidding_high_percentage'] ==
+                        //                   0 ||
+                        //               (double.parse(yourAmount.text.toString()) +
+                        //                       ((userDetails['bidding_amount_increase_or_decrease']
+                        //                               .toString()
+                        //                               .contains('.'))
+                        //                           ? double.parse(
+                        //                               userDetails['bidding_amount_increase_or_decrease']
+                        //                                   .toString())
+                        //                           : int.parse(
+                        //                               userDetails['bidding_amount_increase_or_decrease']
+                        //                                   .toString()))) <=
+                        //                   (double.parse(etaDetails[choosenVehicle]['total'].toString()) +
+                        //                       ((double.parse(etaDetails[choosenVehicle]['bidding_high_percentage'].toString()) / 100) *
+                        //                           double.parse(
+                        //                               etaDetails[choosenVehicle]['total'].toString())))) {
+                        //             yourAmount.text = (yourAmount.text.isEmpty)
+                        //                 ? (etaDetails[choosenVehicle]['price']
+                        //                         .toString()
+                        //                         .contains('.'))
+                        //                     ? (double.parse(etaDetails[choosenVehicle]['price'].toString()) +
+                        //                             ((userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString()
+                        //                                     .contains('.'))
+                        //                                 ? double.parse(
+                        //                                     userDetails['bidding_amount_increase_or_decrease']
+                        //                                         .toString())
+                        //                                 : int.parse(userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString())))
+                        //                         .toStringAsFixed(2)
+                        //                     : (int.parse(etaDetails[choosenVehicle]['price'].toString()) +
+                        //                             ((userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString()
+                        //                                     .contains('.'))
+                        //                                 ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString())
+                        //                                 : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString())))
+                        //                         .toString()
+                        //                 : (yourAmount.text.toString().contains('.'))
+                        //                     ? (double.parse(yourAmount.text.toString()) + ((userDetails['bidding_amount_increase_or_decrease'].toString().contains('.')) ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString()) : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString()))).toStringAsFixed(2)
+                        //                     : (int.parse(yourAmount.text.toString()) + ((userDetails['bidding_amount_increase_or_decrease'].toString().contains('.')) ? double.parse(userDetails['bidding_amount_increase_or_decrease'].toString()) : int.parse(userDetails['bidding_amount_increase_or_decrease'].toString()))).toString();
+                        //           }
+                        //         });
+                        //       },
+                        //       child: Container(
+                        //         width: media.width * 0.2,
+                        //         alignment: Alignment.center,
+                        //         decoration: BoxDecoration(
+                        //             color: (etaDetails[choosenVehicle]['bidding_high_percentage'] == 0 ||
+                        //                     (double.parse(yourAmount.text.toString()) +
+                        //                             ((userDetails['bidding_amount_increase_or_decrease']
+                        //                                     .toString()
+                        //                                     .contains('.'))
+                        //                                 ? double.parse(
+                        //                                     userDetails['bidding_amount_increase_or_decrease']
+                        //                                         .toString())
+                        //                                 : int.parse(
+                        //                                     userDetails['bidding_amount_increase_or_decrease']
+                        //                                         .toString()))) <=
+                        //                         (double.parse(etaDetails[choosenVehicle]['total'].toString()) +
+                        //                             ((double.parse(etaDetails[choosenVehicle]['bidding_high_percentage'].toString()) /
+                        //                                     100) *
+                        //                                 double.parse(etaDetails[choosenVehicle]['total'].toString()))))
+                        //                 ? (isDarkTheme)
+                        //                     ? Colors.white
+                        //                     : Colors.black
+                        //                 : borderLines,
+                        //             borderRadius: BorderRadius.circular(media.width * 0.04)),
+                        //         padding: EdgeInsets.all(media.width * 0.025),
+                        //         child: Text(
+                        //           // '+10',
+                        //           (userDetails[
+                        //                       'bidding_amount_increase_or_decrease']
+                        //                   .toString()
+                        //                   .contains('.'))
+                        //               ? '+${double.parse(userDetails['bidding_amount_increase_or_decrease'].toString())}'
+                        //               : '+${int.parse(userDetails['bidding_amount_increase_or_decrease'].toString())}',
+                        //           style: GoogleFonts.notoSans(
+                        //               fontSize: media.width * fourteen,
+                        //               fontWeight: FontWeight.w600,
+                        //               color: (isDarkTheme)
+                        //                   ? Colors.black
+                        //                   : Colors.white),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+
+
+                        // SizedBox(
+                        //   height: media.width * 0.05,
+                        // ),
                         (fareError != '')
                             ? MyText(
                                 text: fareError,

@@ -25,7 +25,7 @@ Map<String, dynamic> languages = {
     "text_and": "and",
     "text_privacy": "Privacy Policy",
     "text_fastest_way":
-        "Fastest way to book Taxi without the hassle of waiting & haggling of price",
+    "Fastest way to book Taxi without the hassle of waiting & haggling of price",
     "text_phone_verify": "Phone Verification",
     "text_enter_otp": "Please enter the 6-digit code send to you at",
     "text_resend_code": "Resend Code",
