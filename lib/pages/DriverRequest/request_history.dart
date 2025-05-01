@@ -54,7 +54,7 @@ class _RequestListState extends State<RequestList> {
           acceptedRequests = userRequestsData.where((req) => req['status'] == 'accepted').toList();
           confirmedRequests = userRequestsData.where((req) => req['status'] == 'confirmed').toList();
           rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected' && req['reject_count'] == 3).toList();
-          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'rejected' && (req['reject_count'] == null || req['reject_count'] < 3)).toList();
+          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'Bet Update' && (req['reject_count'] == null || req['reject_count'] < 3)).toList();
           completedTrips = userRequestsData.where((req) => req['status'] == 'completed').toList();
           isLoading = false;
         });
@@ -303,18 +303,18 @@ class _RequestListState extends State<RequestList> {
         decoration: BoxDecoration(
           gradient: isSelected
               ? LinearGradient(
-            colors: [Color(0xFF1565C0), Color(0xFF42A5F5)],
+            colors: [Color(0xFF0D47A1), Color(0xFF1976D2)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           )
               : null,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.blueAccent),
+          border: Border.all(color: Color(0xFF0D47A1)),
           color: isSelected ? null : Colors.white,
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            foregroundColor: isSelected ? Colors.white : Colors.blueAccent,
+            foregroundColor: isSelected ? Colors.white : Color(0xFF0D47A1),
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
             shape: RoundedRectangleBorder(
@@ -327,9 +327,15 @@ class _RequestListState extends State<RequestList> {
               selectedStatus = status;
             });
           },
-          child: Text(label),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
+
     );
   }
 
