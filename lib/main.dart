@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     platform = Theme.of(context).platform;
     return GestureDetector(
         onTap: () {
-          //remove keyboard on touching anywhere on the screen.
+
           FocusScopeNode currentFocus = FocusScope.of(context);
 
           if (!currentFocus.hasPrimaryFocus) {

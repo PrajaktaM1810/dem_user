@@ -6061,7 +6061,8 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                           SingleChildScrollView(
                                                                         child: Column(
                                                                             children: driverList
-                                                                                .asMap()
+                                                                                // .asMap()
+                                                                                .reversed.toList().asMap()
                                                                                 .map((key, value) {
                                                                                   return MapEntry(
                                                                                       key,

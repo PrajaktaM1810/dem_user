@@ -545,7 +545,7 @@ Map<String, dynamic> languages = {
     "text_shipment_title": "Upload Shipment Proof",
     "text_owner": "Owner",
     "text_taxi": "Transport",
-    "text_delivery": "Delivery",
+    "text_delivery": "Goods",
     "text_waitingforpayment": "Waiting For Payment",
     "text_continue_with": "Continue with",
     "text_goto_url": "Goto URL",

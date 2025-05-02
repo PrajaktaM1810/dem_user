@@ -53,8 +53,8 @@ class _RequestListState extends State<RequestList> {
           pendingRequests = userRequestsData.where((req) => req['status'] == 'pending').toList();
           acceptedRequests = userRequestsData.where((req) => req['status'] == 'accepted').toList();
           confirmedRequests = userRequestsData.where((req) => req['status'] == 'confirmed').toList();
-          rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected' && req['reject_count'] == 3).toList();
-          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'Bet Update' && (req['reject_count'] == null || req['reject_count'] < 3)).toList();
+          rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected').toList();
+          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'Bet Update').toList();
           completedTrips = userRequestsData.where((req) => req['status'] == 'completed').toList();
           isLoading = false;
         });
@@ -83,11 +83,21 @@ class _RequestListState extends State<RequestList> {
         'user_id': request['user_id'].toString(),
       };
 
+      print('=== UPDATE REQUEST STATUS REQUEST ===');
+      print('URL: https://admin.nxtdig.in/api/v1/request/respondToDriverRequest');
+      print('Headers: $headers');
+      print('Body: $body');
+
       final response = await http.post(
         Uri.parse('https://admin.nxtdig.in/api/v1/request/respondToDriverRequest'),
         headers: headers,
         body: json.encode(body),
       );
+
+      print('=== UPDATE REQUEST STATUS RESPONSE ===');
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+      print('Response Headers: ${response.headers}');
 
       final message = response.statusCode == 200
           ? "Status updated successfully"
@@ -101,6 +111,8 @@ class _RequestListState extends State<RequestList> {
         await _fetchRequests();
       }
     } catch (e) {
+      print('=== UPDATE REQUEST STATUS ERROR ===');
+      print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Error updating status")),
       );
