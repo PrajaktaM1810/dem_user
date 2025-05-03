@@ -54,7 +54,7 @@ class _RequestListState extends State<RequestList> {
           acceptedRequests = userRequestsData.where((req) => req['status'] == 'accepted').toList();
           confirmedRequests = userRequestsData.where((req) => req['status'] == 'confirmed').toList();
           rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected').toList();
-          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'Bet Update').toList();
+          betUpdateRequests = userRequestsData.where((req) => (req['status'] == 'Bet Update')).toList();
           completedTrips = userRequestsData.where((req) => req['status'] == 'completed').toList();
           isLoading = false;
         });

@@ -6061,8 +6061,8 @@ class _BookingConfirmationState extends State<BookingConfirmation>
                                                                           SingleChildScrollView(
                                                                         child: Column(
                                                                             children: driverList
-                                                                                // .asMap()
-                                                                                .reversed.toList().asMap()
+                                                                                .asMap()
+                                                                                // .reversed.toList().asMap()
                                                                                 .map((key, value) {
                                                                                   return MapEntry(
                                                                                       key,
@@ -10178,4 +10178,4 @@ List decodeEncodedPolyline(String encoded) {
 }
 
 
-// FirebaseDatabase.instanceFor(app: Firebase.app(), databaseURL:
+// capacity
