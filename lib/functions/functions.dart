@@ -1,5 +1,3 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, unrelated_type_equality_checks
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -46,7 +44,7 @@ String signKey = '';
 //base url
 String url = 'https://admin.nxtdig.in/';
 String mapkey =
-    (platform == TargetPlatform.android) ? 'AIzaSyB3bs7otrlVeqcKYo3zw2Fn-luzy1Chp14' : 'AIzaSyB3bs7otrlVeqcKYo3zw2Fn-luzy1Chp14';
+    (platform == TargetPlatform.android) ? 'AIzaSyDkO48w1Cey0n_lDV3z-lXNAHiTHmkIXHQ' : 'AIzaSyDkO48w1Cey0n_lDV3z-lXNAHiTHmkIXHQ';
 
 String mapType = '';
 
@@ -400,6 +398,8 @@ getLocalData() async {
   return result;
 }
 
+
+
 //register user
 
 List<BearerClass> bearerToken = <BearerClass>[];
@@ -407,17 +407,22 @@ List<BearerClass> bearerToken = <BearerClass>[];
 registerUser() async {
   bearerToken.clear();
   dynamic result;
+  PackageInfo package = await PackageInfo.fromPlatform();
   try {
     var token = await FirebaseMessaging.instance.getToken();
     var fcm = token.toString();
     final response =
-        http.MultipartRequest('POST', Uri.parse('${url}api/v1/user/register'));
+    http.MultipartRequest('POST', Uri.parse('${url}api/v1/user/register'));
 
     response.headers.addAll({'Content-Type': 'application/json'});
+
     if (proImageFile1 != null) {
       response.files.add(
-          await http.MultipartFile.fromPath('profile_picture', proImageFile1));
+        await http.MultipartFile.fromPath('profile_picture', proImageFile1),
+      );
+      print('Image File Path: $proImageFile1');
     }
+
     response.fields.addAll({
       "name": name,
       "mobile": phnumber,
@@ -430,22 +435,30 @@ registerUser() async {
       'gender': (gender == 'male')
           ? 'male'
           : (gender == 'female')
-              ? 'female'
-              : 'others',
+          ? 'female'
+          : 'others',
     });
+
+    print('Request_URL: ${url}api/v1/user/register');
+    print('Request_Headers: ${response.headers}');
+    print('Request_Fields: ${response.fields}');
+    print('Request_Files: ${response.files.map((f) => f.filename).toList()}');
+
     var request = await response.send();
     var respon = await http.Response.fromStream(request);
 
+    print('Response_Status_Code: ${request.statusCode}');
+    print('Response_Body: ${respon.body}');
+
     if (request.statusCode == 200) {
       var jsonVal = jsonDecode(respon.body);
-      // if (ischeckownerordriver == 'driver') {
-      //   platforms.invokeMethod('login');
-      // }
       bearerToken.add(BearerClass(
-          type: jsonVal['token_type'].toString(),
-          token: jsonVal['access_token'].toString()));
+        type: jsonVal['token_type'].toString(),
+        token: jsonVal['access_token'].toString(),
+      ));
       pref.setString('Bearer', bearerToken[0].token);
       await getUserDetails();
+
       if (platform == TargetPlatform.android && package != null) {
         await FirebaseDatabase.instance
             .ref()
@@ -482,28 +495,41 @@ registerUser() async {
 updateReferral() async {
   dynamic result;
   try {
-    var response =
-        await http.post(Uri.parse('${url}api/v1/update/user/referral'),
-            headers: {
-              'Authorization': 'Bearer ${bearerToken[0].token}',
-              'Content-Type': 'application/json'
-            },
-            body: jsonEncode({"refferal_code": referalController.text}));
+    final fullUrl = '${url}api/v1/update/user/referral';
+    final headers = {
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+      'Content-Type': 'application/json'
+    };
+    final body = {"refferal_code": referalController.text};
+
+    print("URL: $fullUrl");
+    print("Headers: $headers");
+    print("Request_Body: ${jsonEncode(body)}");
+
+    var response = await http.post(
+      Uri.parse(fullUrl),
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    print("Response_Status: ${response.statusCode}");
+    print("Response_Body: ${response.body}");
+
     if (response.statusCode == 200) {
       if (jsonDecode(response.body)['success'] == true) {
         result = 'true';
       } else {
-        debugPrint(response.body);
         result = 'false';
       }
     } else if (response.statusCode == 401) {
       result = 'logout';
     } else {
-      debugPrint(response.body);
       result = 'false';
     }
+
     return result;
   } catch (e) {
+    print("Exception: $e");
     if (e is SocketException) {
       internet = false;
     }
@@ -696,7 +722,7 @@ userLogin(number, login, password, isOtp) async {
           token: jsonVal['access_token'].toString()));
       result = true;
       pref.setString('Bearer', bearerToken[0].token);
-      package = await PackageInfo.fromPlatform();
+      final package = await PackageInfo.fromPlatform();
       if (platform == TargetPlatform.android && package != null) {
         await FirebaseDatabase.instance
             .ref()
@@ -760,8 +786,7 @@ getUserDetails({id}) async {
     print('Response Body: ${response.body}');
 
     if (response.statusCode == 200) {
-      userDetails =
-      Map<String, dynamic>.from(jsonDecode(response.body)['data']);
+      userDetails = Map<String, dynamic>.from(jsonDecode(response.body)['data']);
 
       // Additional debugging
       print('User_Details: $userDetails');
@@ -1540,17 +1565,24 @@ etaRequest({transport, outstation}) async {
       'is_outstation': outstation
     });
 
-    print("Request Body: $requestBody");
+    final requestUrl = '${url}api/v1/request/eta';
+    final requestHeaders = {
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+      'Content-Type': 'application/json',
+    };
 
-    var response = await http.post(Uri.parse('${url}api/v1/request/eta'),
-        headers: {
-          'Authorization': 'Bearer ${bearerToken[0].token}',
-          'Content-Type': 'application/json',
-        },
-        body: requestBody);
+    print("Request_URL: $requestUrl");
+    print("Request_Headers: $requestHeaders");
+    print("Request_Body: $requestBody");
 
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
+    var response = await http.post(
+      Uri.parse(requestUrl),
+      headers: requestHeaders,
+      body: requestBody,
+    );
+
+    print("Response_Status: ${response.statusCode}");
+    print("Response_Body: ${response.body}");
 
     if (response.statusCode == 200) {
       etaDetails = jsonDecode(response.body)['data'];
@@ -1565,7 +1597,7 @@ etaRequest({transport, outstation}) async {
     } else if (response.statusCode == 401) {
       result = 'logout';
     } else {
-      debugPrint(response.body);
+      print(response.body);
       if (jsonDecode(response.body)['message'] ==
           "service not available with this location") {
         serviceNotAvailable = true;
@@ -1579,6 +1611,7 @@ etaRequest({transport, outstation}) async {
     }
   }
 }
+
 
 
 etaRequestWithPromo({outstation}) async {
@@ -1685,6 +1718,121 @@ etaRequestWithPromo({outstation}) async {
   }
 }
 
+//  Product Purchase Functionality
+
+Future<Map<String, dynamic>> getProductList() async {
+  try {
+    var response = await http.post(
+      Uri.parse('${url}api/v1/request/list-product'),
+      headers: {
+        'Authorization': 'Bearer ${bearerToken[0].token}',
+        'Content-Type': 'application/json'
+      },
+      body: jsonEncode({}),
+    );
+
+    print('=== COMPLETE RAW RESPONSE ===\n${response.body}\n======================');
+
+    if (response.statusCode == 200) {
+      var decodedResponse = jsonDecode(response.body);
+
+      if (decodedResponse['success'] == true && decodedResponse['data'] is List) {
+        return {
+          'status': 'success',
+          'data': List<Map<String, dynamic>>.from(decodedResponse['data'])
+        };
+      } else {
+        return {'status': 'no_data', 'data': []};
+      }
+    } else if (response.statusCode == 401) {
+      return {'status': 'logout', 'data': []};
+    } else {
+      return {'status': 'failure', 'data': []};
+    }
+  } catch (e, stackTrace) {
+    print('Error fetching products: $e');
+    print(stackTrace);
+    return {'status': 'failure', 'data': []};
+  }
+}
+
+Future<Map<String, dynamic>> buyProduct({
+  required int roleId,
+  required String userId,
+  required int productId,
+}) async {
+  final url = 'https://admin.nxtdig.in/api/v1/request/buy-product';
+  final headers = {
+    'Authorization': 'Bearer ${bearerToken[0].token}',
+    'Content-Type': 'application/json',
+  };
+  final body = {
+    'role_id': roleId,
+    'user_id': userId,
+    'product_id': productId,
+  };
+
+  print('BUY PRODUCT REQUEST:');
+  print('URL: $url');
+  print('HEADERS: $headers');
+  print('BODY: $body');
+
+  final response = await http.post(
+    Uri.parse(url),
+    headers: headers,
+    body: jsonEncode(body),
+  );
+
+  print('BUY PRODUCT RESPONSE:');
+  print('STATUS: ${response.statusCode}');
+  print('BODY: ${response.body}');
+
+  final decoded = jsonDecode(response.body);
+
+  return {
+    'status': decoded['success'] ? 'success' : 'error',
+    'message': decoded['message'],
+    'data': decoded['success'] ? Map<String, dynamic>.from(decoded['data']) : {},
+  };
+}
+
+Future<Map<String, dynamic>> getProductPurchaseHistory({
+  required int roleId,
+  required int userId,
+}) async {
+  final url = 'https://admin.nxtdig.in/api/v1/request/getProductPurchaseHistory';
+  final headers = {
+    'Authorization': 'Bearer ${bearerToken[0].token}',
+    'Content-Type': 'application/json',
+  };
+  final body = {
+    'role_id': roleId,
+    'user_id': userId,
+  };
+
+  print('PURCHASE HISTORY REQUEST:');
+  print('URL: $url');
+  print('HEADERS: $headers');
+  print('BODY: $body');
+
+  final response = await http.post(
+    Uri.parse(url),
+    headers: headers,
+    body: jsonEncode(body),
+  );
+
+  print('PURCHASE HISTORY RESPONSE:');
+  print('STATUS: ${response.statusCode}');
+  print('BODY: ${response.body}');
+
+  final decoded = jsonDecode(response.body);
+
+  return {
+    'status': decoded['success'] ? 'success' : 'no_data',
+    'message': decoded['message'],
+    'data': decoded['success'] ? List<Map<String, dynamic>>.from(decoded['data']) : [],
+  };
+}
 
 //rental eta request
 
@@ -1843,12 +1991,23 @@ createRequest(value, api) async {
   waitingTime = 0;
   dynamic result;
   try {
-    var response = await http.post(Uri.parse('$url$api'),
-        headers: {
-          'Authorization': 'Bearer ${bearerToken[0].token}',
-          'Content-Type': 'application/json',
-        },
+    final fullUrl = '$url$api';
+    final headers = {
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+      'Content-Type': 'application/json',
+    };
+
+    print('API_URL: $fullUrl');
+    print('Headers: $headers');
+    print('Request_Body: $value');
+
+    var response = await http.post(Uri.parse(fullUrl),
+        headers: headers,
         body: value);
+
+    print('Response_Code: ${response.statusCode}');
+    print('Response_Body: ${response.body}');
+
     if (response.statusCode == 200) {
       userRequestData = jsonDecode(response.body)['data'];
       streamRequest();
@@ -3017,11 +3176,20 @@ Map<String, dynamic> myReferralCode = {};
 getReferral() async {
   dynamic result;
   try {
-    var response =
-        await http.get(Uri.parse('${url}api/v1/get/referral'), headers: {
+    final requestUrl = '${url}api/v1/get/referral';
+    final requestHeaders = {
       'Authorization': 'Bearer ${bearerToken[0].token}',
       'Content-Type': 'application/json'
-    });
+    };
+
+    debugPrint('URL: $requestUrl');
+    debugPrint('Headers: $requestHeaders');
+
+    var response = await http.get(Uri.parse(requestUrl), headers: requestHeaders);
+
+    debugPrint('Status_Code: ${response.statusCode}');
+    debugPrint('Response_Body: ${response.body}');
+
     if (response.statusCode == 200) {
       result = 'success';
       myReferralCode = jsonDecode(response.body)['data'];
@@ -3029,10 +3197,10 @@ getReferral() async {
     } else if (response.statusCode == 401) {
       result = 'logout';
     } else {
-      debugPrint(response.body);
       result = 'failure';
     }
   } catch (e) {
+    debugPrint('Exception: $e');
     if (e is SocketException) {
       result = 'no internet';
       internet = false;
@@ -3104,7 +3272,6 @@ getHistory() async {
   } catch (e) {
     if (e is SocketException) {
       result = 'no internet';
-
       internet = false;
       valueNotifierBook.incrementNotifier();
     }
@@ -3114,7 +3281,6 @@ getHistory() async {
 
 getHistoryPages(id) async {
   dynamic result;
-
   try {
     var response = await http.get(Uri.parse('${url}api/v1/request/history?$id'),
         headers: {'Authorization': 'Bearer ${bearerToken[0].token}'});
@@ -3153,34 +3319,72 @@ Map<String, dynamic> paymentGateways = {};
 List walletHistory = [];
 Map<String, dynamic> walletPages = {};
 
-getWalletHistory() async {
-  dynamic result;
+Future<String> getWalletHistory() async {
+  String result = 'failure';
   try {
-    var response = await http.get(
-        Uri.parse('${url}api/v1/payment/wallet/history'),
-        headers: {'Authorization': 'Bearer ${bearerToken[0].token}'});
+    final response = await http.get(
+      Uri.parse('${url}api/v1/payment/wallet/history'),
+      headers: {'Authorization': 'Bearer ${bearerToken[0].token}'},
+    );
+
+    // >>> PRINT 1 - API response details
+    print('=== WALLET API RESPONSE ===');
+    print('URL: ${url}api/v1/payment/wallet/history');
+    print('Status Code: ${response.statusCode}');
+    print('Full Response Body:');
+    print(response.body); // Prints raw JSON response
+
     if (response.statusCode == 200) {
-      walletBalance = jsonDecode(response.body);
-      walletHistory = walletBalance['wallet_history']['data'];
-      walletPages = walletBalance['wallet_history']['meta']['pagination'];
-      paymentGateways = walletBalance['payment_gateways'];
-      result = 'success';
-      valueNotifierBook.incrementNotifier();
-    } else if (response.statusCode == 401) {
+      try {
+        final responseData = jsonDecode(response.body);
+
+        walletBalance = responseData;
+        walletHistory = List<Map<String, dynamic>>.from(responseData['wallet_history']['data'] ?? []);
+        walletPages = responseData['wallet_history']['meta']['pagination'] ?? {};
+
+        // >>> PRINT 2 - Payment gateways check
+        if (responseData.containsKey('payment_gateways')) {
+          paymentGateways = responseData['payment_gateways'];
+          print('PAYMENT GATEWAYS DATA:');
+          print(paymentGateways.toString()); // Prints all gateways
+        } else {
+          print('WARNING: No payment_gateways in response');
+        }
+
+        result = 'success';
+        valueNotifierBook.incrementNotifier();
+      } catch (e) {
+        // >>> PRINT 3 - JSON parsing error
+        print('JSON DECODE ERROR: $e');
+        result = 'failure';
+      }
+    }
+    else if (response.statusCode == 401) {
       result = 'logout';
-    } else {
-      debugPrint(response.body);
+    }
+    else {
+      // >>> PRINT 4 - API error
+      print('API ERROR: ${response.body}');
       result = 'failure';
       valueNotifierBook.incrementNotifier();
     }
+
     walletHistory.removeWhere((element) => element.isEmpty);
+
+  } on SocketException {
+    internet = false;
+    result = 'no internet';
+    // >>> PRINT 5 - Network error
+    print('NETWORK ERROR: No internet connection');
+    valueNotifierBook.incrementNotifier();
   } catch (e) {
-    if (e is SocketException) {
-      internet = false;
-      result = 'no internet';
-      valueNotifierBook.incrementNotifier();
-    }
+    // >>> PRINT 6 - Unknown error
+    print('UNEXPECTED ERROR: $e');
+    result = 'failure';
   }
+
+  // >>> PRINT 7 - Final result
+  print('FUNCTION RESULT: $result');
   return result;
 }
 
@@ -3968,24 +4172,31 @@ deleteNotification(id) async {
 sharewalletfun({mobile, role, amount}) async {
   dynamic result;
   try {
-    var response = await http.post(
-        Uri.parse('${url}api/v1/payment/wallet/transfer-money-from-wallet'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${bearerToken[0].token}',
-        },
-        body: jsonEncode({'mobile': mobile, 'role': role, 'amount': amount}));
+    final uri = Uri.parse('${url}api/v1/payment/wallet/transfer-money-from-wallet');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+    };
+    final body = jsonEncode({'mobile': mobile, 'role': role, 'amount': amount});
+
+    print('Request_URL: $uri');
+    print('Request_Headers: $headers');
+    print('Request_Body: $body');
+
+    var response = await http.post(uri, headers: headers, body: body);
+
+    print('Response_Status_Code: ${response.statusCode}');
+    print('Response_Body: ${response.body}');
+
     if (response.statusCode == 200) {
       if (jsonDecode(response.body)['success'] == true) {
         result = 'success';
       } else {
-        debugPrint(response.body);
         result = 'failed';
       }
     } else if (response.statusCode == 401) {
       result = 'logout';
     } else {
-      debugPrint(response.body);
       result = jsonDecode(response.body)['message'];
     }
   } catch (e) {
@@ -4311,7 +4522,7 @@ outStationPush() async {
               RemoteNotification noti = RemoteNotification(
                   title: languages[choosenLanguage]['text_got_new_driver'],
                   body:
-                      '${v['driver_name']} ${languages[choosenLanguage]['text_bid_ride_amount_of']} ${v['price']}');
+                  '${v['driver_name']} ${languages[choosenLanguage]['text_bid_ride_amount_of']} ${v['price']}');
               showRideNotification(noti);
             }
           });
@@ -4319,190 +4530,6 @@ outStationPush() async {
       });
     }
   });
-
-
-//  RENT DRIVER FUNCTIONALITY
-
-
-  // Future<Map<String, dynamic>> sendDriverRequest({
-  //   required String vehicleType,
-  //   required String startDate,
-  //   required String endDate,
-  //   required String fromLocation,
-  //   required String toLocation,
-  //   required String note,
-  //   required String vehicleNumber,
-  //   required bool nightStay,
-  //   required bool foodOption,
-  //   required String userId,
-  // }) async {
-  //   const String url = 'https://admin.nxtdig.in/api/v1/request/sendDriverRequest';
-  //
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse(url),
-  //       headers: {
-  //         'Content-Type': 'application/x-www-form-urlencoded',
-  //         'Authorization': 'Bearer ${bearerToken[0].token}',
-  //       },
-  //       body: {
-  //         'vehicle_type': vehicleType,
-  //         'start_date': startDate,
-  //         'end_date': endDate,
-  //         'from_location': fromLocation,
-  //         'to_location': toLocation,
-  //         'note': note,
-  //         'vehicle_number': vehicleNumber,
-  //         'night_stay': nightStay.toString(),
-  //         'food_option': foodOption.toString(),
-  //         'user_id': userId,
-  //       },
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       final decodedResponse = jsonDecode(response.body);
-  //
-  //       if (decodedResponse['success'] == true) {
-  //         return {
-  //           'status': 'success',
-  //           'data': decodedResponse['data']['request'],
-  //         };
-  //       } else {
-  //         return {'status': 'failure', 'message': decodedResponse['message'] ?? 'Unknown error'};
-  //       }
-  //     } else if (response.statusCode == 401) {
-  //       return {'status': 'logout', 'message': 'Unauthorized access'};
-  //     } else {
-  //       return {'status': 'failure', 'message': 'Something went wrong'};
-  //     }
-  //   } catch (e) {
-  //     return {'status': 'failure', 'message': e.toString()};
-  //   }
-  // }
-
-  Future<Map<String, dynamic>> getUserDriverRequests({
-    required String id,
-    required bool isDriver,
-  }) async {
-    const String url = 'https://admin.nxtdig.in/api/v1/request/getUserDriverRequests';
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${bearerToken[0].token}',
-        },
-        body: jsonEncode({
-          isDriver ? 'driver_id' : 'user_id': id,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final decodedResponse = jsonDecode(response.body);
-
-        if (decodedResponse['success'] == true && decodedResponse['data'] is List) {
-          return {
-            'status': 'success',
-            'data': List<Map<String, dynamic>>.from(decodedResponse['data']),
-          };
-        } else {
-          return {'status': 'no_data', 'data': []};
-        }
-      } else if (response.statusCode == 401) {
-        return {'status': 'logout', 'data': []};
-      } else {
-        return {'status': 'failure', 'data': []};
-      }
-    } catch (e) {
-      return {'status': 'failure', 'data': []};
-    }
-  }
-
-  Future<Map<String, dynamic>> respondToDriverRequest({
-    required int requestId,
-    required String status,
-    required int userId,
-  }) async {
-    const String url = 'https://admin.nxtdig.in/api/v1/request/respondToDriverRequest';
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${bearerToken[0].token}',
-        },
-        body: jsonEncode({
-          'id': requestId,
-          'status': status,
-          'user_id': userId,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final decodedResponse = jsonDecode(response.body);
-
-        if (decodedResponse['success'] == true && decodedResponse['data'] != null) {
-          return {
-            'status': 'success',
-            'data': decodedResponse['data'],
-          };
-        } else {
-          return {'status': 'no_data', 'data': {}};
-        }
-      } else if (response.statusCode == 401) {
-        return {'status': 'logout', 'data': {}};
-      } else {
-        return {'status': 'failure', 'data': {}};
-      }
-    } catch (e) {
-      return {'status': 'failure', 'data': {}};
-    }
-  }
-
-
-  Future<Map<String, dynamic>> completeDriverRequest({
-    required int requestId,
-    required int userId,
-    required String token,
-  }) async {
-    const String url = 'https://admin.nxtdig.in/api/v1/request/completeDriverRequest';
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode({
-          'request_id': requestId,
-          'user_id': userId,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final decodedResponse = jsonDecode(response.body);
-
-        if (decodedResponse['success'] == true) {
-          return {
-            'status': 'success',
-            'data': decodedResponse['data'],
-          };
-        } else {
-          return {'status': 'error', 'message': decodedResponse['message']};
-        }
-      } else if (response.statusCode == 401) {
-        return {'status': 'logout'};
-      } else {
-        return {'status': 'failure'};
-      }
-    } catch (e) {
-      return {'status': 'failure', 'error': e.toString()};
-    }
-  }
-
 
 
 }

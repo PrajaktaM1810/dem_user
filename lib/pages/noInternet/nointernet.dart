@@ -52,7 +52,7 @@ class _NoInternetState extends State<NoInternet> {
               MyText(
                 text: (languages.isNotEmpty && choosenLanguage != '')
                     ? languages[choosenLanguage]['text_nointernetdesc']
-                    : 'Please check your Internet connection, try enabling wifi or tey again later',
+                    : 'Please check your Internet connection, try enabling wifi or try again later',
                 size: media.width * fourteen,
                 color: hintColor,
               ),

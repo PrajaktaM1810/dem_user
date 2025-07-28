@@ -971,8 +971,7 @@ class _WalletPageState extends State<WalletPage> {
                                                                               1,
                                                                       child:
                                                                           SingleChildScrollView(
-                                                                        child:
-                                                                            Column(
+                                                                        child: Column(
                                                                           children: paymentGateways
                                                                               .map((i, value) {
                                                                                 return MapEntry(
@@ -986,7 +985,6 @@ class _WalletPageState extends State<WalletPage> {
                                                                                                 if (val) {
                                                                                                   setState(() {
                                                                                                     isLoading = true;
-
                                                                                                     addMoney = null;
                                                                                                   });
                                                                                                   await getWallet();
@@ -1558,49 +1556,99 @@ class _MonetTransferBottomSheetState extends State<MonetTransferBottomSheet> {
                   height: media.width * 0.05,
                 ),
                 (isLoading == false)
-                    ? Button(
-                        onTap: () async {
-                          // Navigator.pop(context);
-                          setState(() {
-                            isLoading = true;
-                          });
-                          if (phonenumber.text == '' || amount.text == '') {
-                            setState(() {
-                              error = true;
-                              errortext = languages[choosenLanguage]
-                                  ['text_fill_fileds'];
-                              isLoading = false;
-                            });
-                          } else {
-                            // Navigator.pop(context);
-                            var result = await sharewalletfun(
-                                amount: amount.text,
-                                mobile: phonenumber.text,
-                                role: dropdownValue);
-                            if (result == 'success') {
-                              // ignore: use_build_context_synchronously
-                              Navigator.pop(context);
-                              setState(() {
-                                dropdownValue = 'user';
-                                error = false;
-                                errortext = '';
+                    ?
+                Button(
+                  onTap: () async {
+                    setState(() {
+                      isLoading = true;
+                      error = false;
+                      errortext = '';
+                    });
 
-                                getWallet();
-                                showtoast = true;
-                              });
-                            } else {
-                              setState(() {
-                                error = true;
-                                errortext = result.toString();
-                                isLoading = false;
-                              });
-                            }
-                          }
-                        },
-                        text: languages[choosenLanguage]['text_credit_trans'],
-                        width: media.width * 0.9,
-                      )
-                    : Container(
+                    // Debug print to check wallet balance
+                    print('Wallet Balance: ${walletBalance['wallet_balance']}');
+                    print('Wallet Balance Type: ${walletBalance['wallet_balance'].runtimeType}');
+
+                    // Input validations
+                    if (phonenumber.text.isEmpty || amount.text.isEmpty) {
+                      setState(() {
+                        error = true;
+                        errortext = languages[choosenLanguage]['text_fill_fileds'];
+                        isLoading = false;
+                      });
+                      return;
+                    }
+
+                    // Parse transfer amount
+                    final transferAmount = double.tryParse(amount.text);
+                    if (transferAmount == null || transferAmount < 5) {
+                      setState(() {
+                        error = true;
+                        errortext = 'Amount must be at least 5';
+                        isLoading = false;
+                      });
+                      return;
+                    }
+
+                    // Parse wallet amount with better error handling
+                    double walletAmount;
+                    try {
+                      // Handle different possible formats of wallet balance
+                      final balance = walletBalance['wallet_balance'];
+                      if (balance is String) {
+                        walletAmount = double.parse(balance.replaceAll(',', ''));
+                      } else if (balance is int) {
+                        walletAmount = balance.toDouble();
+                      } else if (balance is double) {
+                        walletAmount = balance;
+                      } else {
+                        throw Exception('Unknown wallet balance format');
+                      }
+                    } catch (e) {
+                      print('Error parsing wallet balance: $e');
+                      setState(() {
+                        error = true;
+                        errortext = 'Could not read wallet balance';
+                        isLoading = false;
+                      });
+                      return;
+                    }
+
+                    // Compare amounts
+                    if (transferAmount > walletAmount) {
+                      setState(() {
+                        error = true;
+                        errortext = 'Insufficient Wallet balance';
+                        isLoading = false;
+                      });
+                      return;
+                    }
+
+                    // Proceed with transfer
+                    var result = await sharewalletfun(
+                      amount: amount.text,
+                      mobile: phonenumber.text,
+                      role: dropdownValue,
+                    );
+
+                    if (result == 'success') {
+                      Navigator.pop(context);
+                      setState(() {
+                        dropdownValue = 'user';
+                        showtoast = true;
+                      });
+                      await getWallet(); // Refresh wallet balance
+                    } else {
+                      setState(() {
+                        error = true;
+                        errortext = result.toString();
+                        isLoading = false;
+                      });
+                    }
+                  },
+                  text: languages[choosenLanguage]['text_credit_trans'],
+                  width: media.width * 0.9,
+                ) : Container(
                         height: media.width * 0.12,
                         width: media.width * 0.9,
                         alignment: Alignment.center,

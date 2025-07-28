@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_user/pages/DriverRequest/driver_request_form.dart';
 import 'package:flutter_user/pages/DriverRequest/request_history.dart';
+import 'package:flutter_user/pages/NavigatorPages/ProductList.dart';
+import 'package:flutter_user/pages/NavigatorPages/PurchaseList.dart';
 import 'package:flutter_user/pages/NavigatorPages/fav_address.dart';
 import 'package:flutter_user/pages/NavigatorPages/makecomplaint.dart';
 import 'package:flutter_user/pages/NavigatorPages/outstation.dart';
+import 'package:flutter_user/pages/referralcode/referral_level.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../functions/functions.dart';
 import '../../styles/styles.dart';
@@ -131,6 +134,84 @@ class _NavDrawerState extends State<NavDrawer> {
                                 icon: Icons.stars_outlined,
                               ),
                             ),
+
+                            // SizedBox(
+                            //   width: media.width * 0.7,
+                            //   child: NavMenu(
+                            //     onTap: () {
+                            //       Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //               builder: (context) => ProductListScreen()));
+                            //       // DriverRequestScreen()));
+                            //     },
+                            //     text: languages[choosenLanguage]
+                            //     ['text_product_list'],
+                            //     icon: Icons.view_list_outlined,
+                            //   ),
+                            // ),
+                            //
+                            // SizedBox(
+                            //   width: media.width * 0.7,
+                            //   child: NavMenu(
+                            //     onTap: () {
+                            //       Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //               builder: (context) => PurchaseHistoryScreen()));
+                            //       // DriverRequestScreen()));
+                            //     },
+                            //     text: languages[choosenLanguage]
+                            //     ['text_purchase_history'],
+                            //     icon: Icons.view_list_outlined,
+                            //   ),
+                            // ),
+
+                            //wallet page
+
+                            (userDetails['owner_id'] == null &&
+                                userDetails['show_wallet_feature_on_mobile_app']
+                                    .toString() ==
+                                    '1')
+                                ? SizedBox(
+                              width: media.width * 0.7,
+                              child: NavMenu(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const WalletPage()));
+                                },
+                                text: languages[choosenLanguage]
+                                ['text_enable_wallet'],
+                                icon: Icons.payment,
+                              ),
+                            )
+                                : Container(),
+
+                            //referral page
+                            SizedBox(
+                              width: media.width * 0.7,
+                              child: NavMenu(
+                                onTap: () {
+                                  Future.delayed(
+                                      const Duration(microseconds: 500), () {
+                                    Navigator.push(
+                                      // ignore: use_build_context_synchronously
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                            const ReferralPage()));
+                                  });
+                                },
+                                text: languages[choosenLanguage]
+                                ['text_referral'],
+                                image: 'assets/images/referral.png',
+                              ),
+                            ),
+
+
                             SizedBox(
                               width: media.width * 0.7,
                               child: NavMenu(
@@ -138,14 +219,16 @@ class _NavDrawerState extends State<NavDrawer> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => RequestList()));
+                                          builder: (context) => ReferralLevelScreen()));
                                               // DriverRequestScreen()));
                                 },
                                 text: languages[choosenLanguage]
-                                ['send_driver_request'],
+                                ['text_referral_level'],
                                 icon: Icons.view_list_outlined,
                               ),
                             ),
+
+
                             SizedBox(
                               width: media.width * 0.7,
                               child: NavMenu(
@@ -263,29 +346,6 @@ class _NavDrawerState extends State<NavDrawer> {
                                 ),
                               ),
 
-                            //wallet page
-
-                            (userDetails['owner_id'] == null &&
-                                    userDetails['show_wallet_feature_on_mobile_app']
-                                            .toString() ==
-                                        '1')
-                                ? SizedBox(
-                                    width: media.width * 0.7,
-                                    child: NavMenu(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const WalletPage()));
-                                      },
-                                      text: languages[choosenLanguage]
-                                          ['text_enable_wallet'],
-                                      icon: Icons.payment,
-                                    ),
-                                  )
-                                : Container(),
-
                             //sos page
                             SizedBox(
                               width: media.width * 0.7,
@@ -320,25 +380,25 @@ class _NavDrawerState extends State<NavDrawer> {
                               ),
                             ),
 
-                            //settings
-                            SizedBox(
-                              width: media.width * 0.7,
-                              child: NavMenu(
-                                onTap: () async {
-                                  var nav = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SettingsPage()));
-                                  if (nav) {
-                                    setState(() {});
-                                  }
-                                },
-                                text: languages[choosenLanguage]
-                                    ['text_settings'],
-                                icon: Icons.settings,
-                              ),
-                            ),
+                            // //settings
+                            // SizedBox(
+                            //   width: media.width * 0.7,
+                            //   child: NavMenu(
+                            //     onTap: () async {
+                            //       var nav = await Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //               builder: (context) =>
+                            //                   const SettingsPage()));
+                            //       if (nav) {
+                            //         setState(() {});
+                            //       }
+                            //     },
+                            //     text: languages[choosenLanguage]
+                            //         ['text_settings'],
+                            //     icon: Icons.settings,
+                            //   ),
+                            // ),
 
                             //support
                             ValueListenableBuilder(
@@ -412,26 +472,6 @@ class _NavDrawerState extends State<NavDrawer> {
                                   );
                                 }),
 
-                            //referral page
-                            SizedBox(
-                              width: media.width * 0.7,
-                              child: NavMenu(
-                                onTap: () {
-                                  Future.delayed(
-                                      const Duration(microseconds: 500), () {
-                                    Navigator.push(
-                                        // ignore: use_build_context_synchronously
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ReferralPage()));
-                                  });
-                                },
-                                text: languages[choosenLanguage]
-                                    ['text_referral'],
-                                image: 'assets/images/referral.png',
-                              ),
-                            ),
 
                             SizedBox(
                               // padding: EdgeInsets.only(top: 100),

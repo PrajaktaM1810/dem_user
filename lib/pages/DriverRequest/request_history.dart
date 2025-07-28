@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_user/functions/functions.dart';
 import 'package:flutter_user/pages/DriverRequest/driver_request_form.dart';
+import 'package:flutter_user/pages/onTripPage/map_page.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -240,7 +241,12 @@ class _RequestListState extends State<RequestList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Maps()));
+          return false;
+        },
+    child: Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -303,6 +309,7 @@ class _RequestListState extends State<RequestList> {
             ),
         ],
       ),
+     ),
     );
   }
 

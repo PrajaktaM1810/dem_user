@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_user/functions/functions.dart';
+import 'package:flutter_user/pages/DriverRequest/request_history.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -58,19 +59,10 @@ class _DriverRequestScreenState extends State<DriverRequestScreen> {
       );
 
       if (response['status'] == 'success') {
-        _vehicleTypeController.clear();
-        _startDateController.clear();
-        _endDateController.clear();
-        _fromLocationController.clear();
-        _toLocationController.clear();
-        _noteController.clear();
-        _vehicleNumberController.clear();
-        _selectedStartDate = null;
-        _selectedEndDate = null;
-        setState(() {
-          _nightStay = false;
-          _foodOption = false;
-        });
+        Navigator.push (
+            context,
+            MaterialPageRoute(
+                builder: (context) => RequestList()));
       }
     }
   }
@@ -267,6 +259,3 @@ Future<Map<String, dynamic>> sendDriverRequest({
     return {'status': 'error', 'message': e.toString()};
   }
 }
-
-
-// apiKey

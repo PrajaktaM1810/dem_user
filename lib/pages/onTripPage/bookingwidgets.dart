@@ -646,7 +646,10 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                   ),
                                 ),
                               )
-                            : Button(
+                            :
+
+
+                        Button(
                                 onTap: () async {
                                   if (yourAmount.text.isNotEmpty) {
                                     var g = widget.geo.encode(
@@ -1944,8 +1947,7 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                                       }),
                                                       (userDetails['is_delivery_app'] !=
                                                                   null &&
-                                                              userDetails[
-                                                                      'is_delivery_app'] ==
+                                                              userDetails['is_delivery_app'] ==
                                                                   true)
                                                           ? 'api/v1/request/create'
                                                           : 'api/v1/request/delivery/create');
@@ -1962,7 +1964,6 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                         setState(() {
                                           isLoading = true;
                                         });
-
                                         if (choosenVehicle != null) {
                                           if (isOutStation) {
                                             if (choosenTransportType == 0) {
@@ -2257,7 +2258,7 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                           'is_out_station': true,
                                           'distance': etaDetails[choosenVehicle]
                                                   ['distance']
-                                              .toString(),
+                                              .toString(),                                                                                                                                                                                                                                                                                                                                                                                                                                                 
                                           'is_pet_available':
                                               (addPetPreferences == false)
                                                   ? false
@@ -2266,13 +2267,13 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                               (addLuggagePreferences == false)
                                                   ? false
                                                   : true,
+                                          'first_ride': true,
                                         });
                                         userRequestData.clear();
                                       } else {
                                         // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
-                                        FirebaseDatabase.instance
-                                            .ref()
+                                        FirebaseDatabase.instance.ref()
                                             .child(
                                                 'bid-meta/${userRequestData["id"]}')
                                             .update({
@@ -2328,8 +2329,10 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                               (addLuggagePreferences == false)
                                                   ? false
                                                   : true,
+                                          'first_ride': true,
                                         });
                                       }
+
                                     }
                                     setState(() {
                                       // yourAmount.clear();
@@ -2346,8 +2349,20 @@ class _CreateRequestBottomSheetState extends State<CreateRequestBottomSheet> {
                                 //         : Colors.black
                                 //     : Colors.grey,
                               )
+
+
+
+
+
+
+
+
+
                       ],
                     )
+
+
+
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

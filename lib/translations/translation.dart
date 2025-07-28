@@ -75,7 +75,7 @@ Map<String, dynamic> languages = {
     "text_on_duty": "Off Duty",
     "text_pickpoint": "Pickup point",
     "text_droppoint": "Dropout point",
-    "text_decline": "Decline",
+    "text_decline": "Bid",
     "text_accept": "Accept",
     "text_call": "Call",
     "text_chat": "Chat",
@@ -92,6 +92,9 @@ Map<String, dynamic> languages = {
         "Enter the OTP displayed in Customer's App to start the ride",
     "text_enable_history": "History",
     "send_driver_request" : "Driver Request",
+    "text_product_list" : "Product List",
+    "text_purchase_history" : "Purchase History",
+    "text_referral_level" : "Refferal List",
     "text_enable_wallet": "Wallet",
     "text_enable_referal": "Referral",
     "text_faq": "FAQ",
@@ -149,6 +152,8 @@ Map<String, dynamic> languages = {
     "text_promoaccepted": " Coupon Applied",
     "text_promorejected": "Invalid Coupon Code",
     "text_findingdriver": "Looking for nearby drivers",
+    "text_placebid": "Place a bid on the driver's offered price",
+    "searching_driver": "Looking for nearby drivers, please wait until drivers accepts the request..",
     "text_finddriverdesc":
         "We Are Looking For Nearby Driver To Accept Your Ride. Once Accepted You Can Ride With Us! We Appreciate Your Patience!",
     "text_pickup_instruction": "Any Instructions for pick up",
@@ -191,7 +196,7 @@ Map<String, dynamic> languages = {
     "text_noDataFound": "No Data Found",
     "text_removeFav": "Are you sure to remove this address from your favorites",
     "text_invite": "Invite",
-    "text_invitation_1": "Join me on 55! using my invite code",
+    "text_invitation_1": "Join me on Onecall! using my invite code",
     "text_invitation_2": "To make easy your ride",
     "text_upcoming": "Upcoming",
     "text_completed": "Completed",
@@ -391,6 +396,7 @@ Map<String, dynamic> languages = {
     "text_recharge_bal": "Recharge Balance",
     "text_rechage_text": "Here you can top-up your wallet",
     "text_credit_trans": "Transfer Money",
+    'text_insufficient_balance': 'Insufficient wallet balance !',
     "text_todayearn": "Today Earnings",
     "text_new_connection": "Add a Contact",
     "text_add_con_name": "Add Connection Name",
@@ -545,6 +551,7 @@ Map<String, dynamic> languages = {
     "text_shipment_title": "Upload Shipment Proof",
     "text_owner": "Owner",
     "text_taxi": "Transport",
+    "text_driver_rent": "Driver Request",
     "text_delivery": "Goods",
     "text_waitingforpayment": "Waiting For Payment",
     "text_continue_with": "Continue with",
@@ -554,6 +561,7 @@ Map<String, dynamic> languages = {
     "text_offer_your_fare": "Offer Your Fare",
     "text_offered_fare": "Offered ride fare",
     "text_current_fare": "Current Fare",
+    "text_update_fare": "Update Fare",
     "text_update": "Update",
     "text_you_are_offduty": "You are Off Duty now",
     "text_cancel_confirmation": "Are you sure want to cancel the ride?",
@@ -908,7 +916,7 @@ Map<String, dynamic> languages = {
         "क्या आप निश्चित रूप से इस पते को अपने पसंदीदा से हटा देंगे?",
     "text_invite": "आमंत्रित करना",
     "text_invitation_1":
-        "55 पर मेरे साथ जुड़ें! मेरे आमंत्रण कोड का उपयोग कर रहा हूँ",
+        "Onecall पर मेरे साथ जुड़ें! मेरे आमंत्रण कोड का उपयोग कर रहा हूँ",
     "text_invitation_2": "आपकी सवारी को आसान बनाने के लिए",
     "text_upcoming": "आगामी",
     "text_completed": "पुरा होना।",
@@ -2344,7 +2352,7 @@ Map<String, dynamic> languages = {
     "text_removeFav": "Êtes-vous sûr de supprimer cette adresse de vos favoris",
     "text_invite": "Inviter",
     "text_invitation_1":
-        "Rejoignez-moi au 55 ! en utilisant mon code d'invitation",
+        "Rejoignez-moi au Onecall ! en utilisant mon code d'invitation",
     "text_invitation_2": "Pour faciliter votre trajet",
     "text_upcoming": "Prochain",
     "text_completed": "Complété",
@@ -3080,7 +3088,7 @@ Map<String, dynamic> languages = {
     "text_removeFav":
         "Bu adresi favorilerinizden çıkardığınızdan emin misiniz?",
     "text_invite": "Davet etmek",
-    "text_invitation_1": "55'te bana katılın! davet kodumu kullanıyorum",
+    "text_invitation_1": "Onecall'te bana katılın! davet kodumu kullanıyorum",
     "text_invitation_2": "Sürüşünüzü kolaylaştırmak için",
     "text_upcoming": "Yaklaşan",
     "text_completed": "Tamamlanmış",
@@ -3809,7 +3817,7 @@ Map<String, dynamic> languages = {
         "Sei sicuro di rimuovere questo indirizzo dai tuoi preferiti?",
     "text_invite": "Invitare",
     "text_invitation_1":
-        "Unisciti a me su 55! utilizzando il mio codice di invito",
+        "Unisciti a me su Onecall! utilizzando il mio codice di invito",
     "text_invitation_2": "Per rendere più facile il tuo viaggio",
     "text_upcoming": "Prossimamente",
     "text_completed": "Completato",
@@ -5215,7 +5223,7 @@ Map<String, dynamic> languages = {
     "text_removeFav":
         "¿Estás seguro de eliminar esta dirección de tus favoritos?",
     "text_invite": "Invitar",
-    "text_invitation_1": "¡Únete a mí en 55! usando mi código de invitación",
+    "text_invitation_1": "¡Únete a mí en Onecall! usando mi código de invitación",
     "text_invitation_2": "Para facilitar tu viaje",
     "text_upcoming": "Próximo",
     "text_completed": "Terminado",
@@ -5953,7 +5961,7 @@ Map<String, dynamic> languages = {
     "text_removeFav":
         "Tem certeza de que deseja remover este endereço dos seus favoritos",
     "text_invite": "Convidar",
-    "text_invitation_1": "Junte-se a mim no 55! usando meu código de convite",
+    "text_invitation_1": "Junte-se a mim no Onecall! usando meu código de convite",
     "text_invitation_2": "Para facilitar seu passeio",
     "text_upcoming": "Por vir",
     "text_completed": "Concluído",
@@ -6496,3 +6504,4 @@ Map<String, dynamic> languages = {
         "Nova viagem solicitada, você pode licitar ou rejeitar a solicitação"
   }
 };
+
