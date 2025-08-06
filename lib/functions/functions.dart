@@ -284,31 +284,40 @@ dynamic credentials;
 
 phoneAuth(String phone) async {
   try {
+    print('phoneAuth called with phone: $phone, resendTokenId: $resendTokenId');
     credentials = null;
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
       verificationCompleted: (PhoneAuthCredential credential) async {
         credentials = credential;
+        print('verificationCompleted credential: $credential');
         valueNotifierHome.incrementNotifier();
       },
       forceResendingToken: resendTokenId,
       verificationFailed: (FirebaseAuthException e) {
+        print('verificationFailed code: ${e.code}, message: ${e.message}');
         if (e.code == 'invalid-phone-number') {
-          debugPrint('The provided phone number is not valid.');
+          print('The provided phone number is not valid.');
         }
       },
       codeSent: (String verificationId, int? resendToken) async {
         verId = verificationId;
         resendTokenId = resendToken;
+        print('codeSent verificationId: $verificationId, resendToken: $resendToken');
       },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      codeAutoRetrievalTimeout: (String verificationId) {
+        print('codeAutoRetrievalTimeout verificationId: $verificationId');
+      },
     );
   } catch (e) {
+    print('phoneAuth exception: $e');
     if (e is SocketException) {
       internet = false;
+      print('SocketException caught, internet set to false');
     }
   }
 }
+
 
 //get local bearer token
 
@@ -537,13 +546,20 @@ updateReferral() async {
 }
 
 //call firebase otp
-
 otpCall() async {
   dynamic result;
   try {
-    var otp = await FirebaseDatabase.instance.ref().child('call_FB_OTP').get();
+    final ref = FirebaseDatabase.instance.ref().child('call_FB_OTP');
+    print('Request Path: ${ref.path}');
+    print('Request Parameters: None');
+
+    var otp = await ref.get();
+    print('Response Exists: ${otp.exists}');
+    print('Response Value: ${otp.value}');
+
     result = otp;
   } catch (e) {
+    print('Error: $e');
     if (e is SocketException) {
       internet = false;
       result = 'no Internet';
@@ -552,6 +568,7 @@ otpCall() async {
   }
   return result;
 }
+
 
 // verify user already exist
 
@@ -4312,36 +4329,46 @@ paymentMethod(payment) async {
   return result;
 }
 
+// OTP
+
 String isemailmodule = '1';
 bool isCheckFireBaseOTP = true;
 bool isMobileOtpSignIn = true;
 bool isMobileOtpSignUp = true;
+
 getemailmodule() async {
   dynamic res;
   try {
+    final uri = Uri.parse('${url}api/v1/common/modules');
+    print('Request URL: $uri');
+    print('Request Headers: ${{'Content-Type': 'application/json'}}');
+
     final response = await http.get(
-      Uri.parse('${url}api/v1/common/modules'),
+      uri,
     );
+
+    print('Response Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
 
     if (response.statusCode == 200) {
       isemailmodule = jsonDecode(response.body)['enable_email_otp'];
       isCheckFireBaseOTP = jsonDecode(response.body)['firebase_otp_enabled'];
       isMobileOtpSignIn =
-          jsonDecode(response.body)['mobile_otp_enabled_for_login'];
+      jsonDecode(response.body)['mobile_otp_enabled_for_login'];
       isMobileOtpSignUp =
-          jsonDecode(response.body)['mobile_otp_enabled_for_signup'];
+      jsonDecode(response.body)['mobile_otp_enabled_for_signup'];
 
       res = 'success';
     } else {
       debugPrint(response.body);
     }
   } catch (e) {
+    print('Error: $e');
     if (e is SocketException) {
       internet = false;
       res = 'no internet';
     }
   }
-
   return res;
 }
 

@@ -1322,7 +1322,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             : CrossFadeState.showSecond,
                                         duration:
                                         const Duration(milliseconds: 200)),
-                                    if (isMobileOtpSignUp == true)
+                                    // if (isMobileOtpSignUp == true)
+                                    if (isCheckFireBaseOTP == true)
                                       AnimatedCrossFade(
                                           firstChild: Container(),
                                           secondChild: Column(
@@ -1974,7 +1975,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                         var val =
                                                         await otpCall();
 
-                                                        if (val.value == true) {
+                                                        if (val.exists == true) {
                                                           await phoneAuth(
                                                               countries[phcode][
                                                               'dial_code'] +
@@ -2177,7 +2178,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                       if (isCheckFireBaseOTP) {
                                                         var val =
                                                         await otpCall();
-                                                        if (val.value == true) {
+                                                        if (val.exists == true) {
                                                           await phoneAuth(
                                                               countries[phcode][
                                                               'dial_code'] +
@@ -2430,7 +2431,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                   if (isCheckFireBaseOTP) {
                                                     var val =
                                                     await otpCall();
-                                                    if (val.value == true) {
+                                                    if (val.exists == true) {
                                                       await phoneAuth(
                                                           countries[phcode][
                                                           'dial_code'] +
@@ -2526,7 +2527,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                                       if (isCheckFireBaseOTP) {
                                                         var val =
                                                         await otpCall();
-                                                        if (val.value ==
+                                                        if (val.exists ==
                                                             true) {
                                                           await phoneAuth(
                                                               countries[phcode]
