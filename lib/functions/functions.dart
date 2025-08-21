@@ -64,6 +64,228 @@ checkInternetConnection() {
   });
 }
 
+
+//withdraw request
+
+
+String ownermodule = '1';
+String ischeckownerordriver = '';
+
+
+Map<String, dynamic> withDrawList = {};
+List withDrawHistory = [];
+Map<String, dynamic> withDrawHistoryPages = {};
+Map<String, dynamic> bankData = {};
+
+//withdraw list
+
+getWithdrawList() async {
+  dynamic result;
+  try {
+    var finalUrl = '${url}api/v1/payment/wallet/withdrawal-requests';
+    var finalHeaders = {
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+      'Content-Type': 'application/json'
+    };
+
+    debugPrint("[API-LOG] URL => $finalUrl");
+    debugPrint("[API-LOG] HEADERS => $finalHeaders");
+
+    var response = await http.get(Uri.parse(finalUrl), headers: finalHeaders);
+
+    debugPrint("[API-LOG] RESPONSE STATUS => ${response.statusCode}");
+    debugPrint("[API-LOG] RESPONSE BODY => ${response.body}");
+
+    if (response.statusCode == 200) {
+      withDrawList = jsonDecode(response.body);
+      withDrawHistory = jsonDecode(response.body)['withdrawal_history']['data'];
+      withDrawHistoryPages =
+      jsonDecode(response.body)['withdrawal_history']['meta']['pagination'];
+      result = 'success';
+    } else if (response.statusCode == 401) {
+      result = 'logout';
+    } else {
+      result = 'failure';
+    }
+  } catch (e) {
+    if (e is SocketException) {
+      result = 'no internet';
+      internet = false;
+    }
+  }
+  return result;
+}
+
+requestWithdraw(amount) async {
+  dynamic result;
+  try {
+    var finalUrl = '${url}api/v1/payment/wallet/request-for-withdrawal';
+    var finalHeaders = {
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+      'Content-Type': 'application/json'
+    };
+    var finalBody = {'requested_amount': amount};
+
+    debugPrint("[API-LOG] URL => $finalUrl");
+    debugPrint("[API-LOG] HEADERS => $finalHeaders");
+    debugPrint("[API-LOG] BODY => $finalBody");
+
+    var response = await http.post(
+      Uri.parse(finalUrl),
+      headers: finalHeaders,
+      body: jsonEncode(finalBody),
+    );
+
+    debugPrint("[API-LOG] RESPONSE STATUS => ${response.statusCode}");
+    debugPrint("[API-LOG] RESPONSE BODY => ${response.body}");
+
+    if (response.statusCode == 200) {
+      await getWithdrawList();
+      result = 'success';
+    } else if (response.statusCode == 401) {
+      result = 'logout';
+    } else {
+      result = jsonDecode(response.body)['message'];
+    }
+  } catch (e) {
+    if (e is SocketException) {
+      result = 'no internet';
+      internet = false;
+    }
+  }
+  return result;
+}
+
+getWithdrawListPages(page) async {
+  dynamic result;
+  try {
+    var finalUrl =
+        '${url}api/v1/payment/wallet/withdrawal-requests?page=$page';
+    var finalHeaders = {
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+      'Content-Type': 'application/json'
+    };
+
+    debugPrint("[API-LOG] URL => $finalUrl");
+    debugPrint("[API-LOG] HEADERS => $finalHeaders");
+
+    var response = await http.get(Uri.parse(finalUrl), headers: finalHeaders);
+
+    debugPrint("[API-LOG] RESPONSE STATUS => ${response.statusCode}");
+    debugPrint("[API-LOG] RESPONSE BODY => ${response.body}");
+
+    if (response.statusCode == 200) {
+      withDrawList = jsonDecode(response.body);
+      List val = jsonDecode(response.body)['withdrawal_history']['data'];
+      val.forEach((element) {
+        withDrawHistory.add(element);
+      });
+      withDrawHistoryPages =
+      jsonDecode(response.body)['withdrawal_history']['meta']['pagination'];
+      result = 'success';
+    } else if (response.statusCode == 401) {
+      result = 'logout';
+    } else {
+      result = 'failure';
+    }
+  } catch (e) {
+    if (e is SocketException) {
+      result = 'no internet';
+      internet = false;
+    }
+  }
+  return result;
+}
+
+getBankInfo() async {
+  bankData.clear();
+  dynamic result;
+  try {
+    var finalUrl = '${url}api/v1/user/get-bank-info';
+    var finalHeaders = {
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+      'Content-Type': 'application/json'
+    };
+
+    debugPrint("[API-LOG] URL => $finalUrl");
+    debugPrint("[API-LOG] HEADERS => $finalHeaders");
+
+    var response = await http.get(Uri.parse(finalUrl), headers: finalHeaders);
+
+    debugPrint("[API-LOG] RESPONSE STATUS => ${response.statusCode}");
+    debugPrint("[API-LOG] RESPONSE BODY => ${response.body}");
+
+    if (response.statusCode == 200) {
+      result = 'success';
+      bankData = jsonDecode(response.body)['data'];
+    } else if (response.statusCode == 401) {
+      result = 'logout';
+    } else {
+      result = 'failure';
+    }
+  } catch (e) {
+    if (e is SocketException) {
+      result = 'no internet';
+      internet = false;
+    }
+  }
+  return result;
+}
+
+addBankData(accName, accNo, bankCode, bankName) async {
+  dynamic result;
+  try {
+    var finalUrl = '${url}api/v1/user/update-bank-info';
+    var finalHeaders = {
+      'Authorization': 'Bearer ${bearerToken[0].token}',
+      'Content-Type': 'application/json'
+    };
+    var finalBody = {
+      'account_name': accName,
+      'account_no': accNo,
+      'bank_code': bankCode,
+      'bank_name': bankName
+    };
+
+    debugPrint("[API-LOG] URL => $finalUrl");
+    debugPrint("[API-LOG] HEADERS => $finalHeaders");
+    debugPrint("[API-LOG] BODY => $finalBody");
+
+    var response = await http.post(
+      Uri.parse(finalUrl),
+      headers: finalHeaders,
+      body: jsonEncode(finalBody),
+    );
+
+    debugPrint("[API-LOG] RESPONSE STATUS => ${response.statusCode}");
+    debugPrint("[API-LOG] RESPONSE BODY => ${response.body}");
+
+    if (response.statusCode == 200) {
+      await getBankInfo();
+      result = 'success';
+    } else if (response.statusCode == 401) {
+      result = 'logout';
+    } else if (response.statusCode == 422) {
+      var error = jsonDecode(response.body)['errors'];
+      result = error[error.keys.toList()[0]]
+          .toString()
+          .replaceAll('[', '')
+          .replaceAll(']', '')
+          .toString();
+    } else {
+      result = jsonDecode(response.body)['message'];
+    }
+  } catch (e) {
+    if (e is SocketException) {
+      result = 'no internet';
+      internet = false;
+    }
+  }
+  return result;
+}
+
+
+
 getDetailsOfDevice() async {
   var connectivityResult = await (Connectivity().checkConnectivity());
   if (connectivityResult == ConnectivityResult.none) {
@@ -1220,6 +1442,14 @@ geoCodingForLatLng(id, sessionToken) async {
     debugPrint(e.toString());
   }
 }
+
+
+
+
+
+
+
+
 
 //pickup drop address list
 
@@ -4557,6 +4787,5 @@ outStationPush() async {
       });
     }
   });
-
 
 }

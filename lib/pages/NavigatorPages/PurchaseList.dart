@@ -130,7 +130,7 @@ class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
           ),
         ),
         title: const Text(
-          "Purchase History",
+          "Subscription History",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -142,7 +142,7 @@ class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
       body: isLoading
           ? const Center(child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator()))
           : purchaseHistory.isEmpty
-          ? const Center(child: Text('No purchase history available'))
+          ? const Center(child: Text('No subscription history available'))
           : ListView.builder(
         padding: const EdgeInsets.only(top: 16),
         itemCount: purchaseHistory.length,

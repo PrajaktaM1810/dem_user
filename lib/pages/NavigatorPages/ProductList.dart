@@ -178,7 +178,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           ),
         ),
         title: const Text(
-          "Product List",
+          "Subscription List",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
@@ -191,7 +191,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       body: isLoading
           ? _buildShimmerLoader()
           : productList.isEmpty
-          ? const Center(child: Text('No products available'))
+          ? const Center(child: Text('No subscription available'))
           : ListView.builder(
         padding: const EdgeInsets.only(top: 16, bottom: 16),
         itemCount: productList.length,

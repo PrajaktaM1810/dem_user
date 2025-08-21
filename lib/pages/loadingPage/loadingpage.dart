@@ -32,7 +32,7 @@ class _LoadingPageState extends State<LoadingPage> {
   bool _error = false;
   bool _isLoading = false;
   bool _prefsInitialized = false;
-  static const String appVersion = '1.1';
+  static const String appVersion = '1.3';
 
   @override
   void initState() {

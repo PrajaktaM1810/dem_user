@@ -135,37 +135,21 @@ class _NavDrawerState extends State<NavDrawer> {
                               ),
                             ),
 
-                            // SizedBox(
-                            //   width: media.width * 0.7,
-                            //   child: NavMenu(
-                            //     onTap: () {
-                            //       Navigator.push(
-                            //           context,
-                            //           MaterialPageRoute(
-                            //               builder: (context) => ProductListScreen()));
-                            //       // DriverRequestScreen()));
-                            //     },
-                            //     text: languages[choosenLanguage]
-                            //     ['text_product_list'],
-                            //     icon: Icons.view_list_outlined,
-                            //   ),
-                            // ),
-                            //
-                            // SizedBox(
-                            //   width: media.width * 0.7,
-                            //   child: NavMenu(
-                            //     onTap: () {
-                            //       Navigator.push(
-                            //           context,
-                            //           MaterialPageRoute(
-                            //               builder: (context) => PurchaseHistoryScreen()));
-                            //       // DriverRequestScreen()));
-                            //     },
-                            //     text: languages[choosenLanguage]
-                            //     ['text_purchase_history'],
-                            //     icon: Icons.view_list_outlined,
-                            //   ),
-                            // ),
+                            SizedBox(
+                              width: media.width * 0.7,
+                              child: NavMenu(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const History()));
+                                },
+                                text: languages[choosenLanguage]
+                                ['text_enable_history'],
+                                icon: Icons.view_list_outlined,
+                              ),
+                            ),
 
                             //wallet page
 
@@ -228,6 +212,21 @@ class _NavDrawerState extends State<NavDrawer> {
                               ),
                             ),
 
+                            SizedBox(
+                              width: media.width * 0.7,
+                              child: NavMenu(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductListScreen()));
+                                  // DriverRequestScreen()));
+                                },
+                                text: languages[choosenLanguage]
+                                ['text_product_list'],
+                                icon: Icons.view_list_outlined,
+                              ),
+                            ),
 
                             SizedBox(
                               width: media.width * 0.7,
@@ -236,14 +235,15 @@ class _NavDrawerState extends State<NavDrawer> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const History()));
+                                          builder: (context) => PurchaseHistoryScreen()));
+                                  // DriverRequestScreen()));
                                 },
                                 text: languages[choosenLanguage]
-                                    ['text_enable_history'],
+                                ['text_purchase_history'],
                                 icon: Icons.view_list_outlined,
                               ),
                             ),
+
                             ValueListenableBuilder(
                                 valueListenable:
                                     valueNotifierNotification.value,

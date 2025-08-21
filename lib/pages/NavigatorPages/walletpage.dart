@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_user/pages/NavigatorPages/paymentgateways.dart';
+import 'package:flutter_user/pages/NavigatorPages/withdraw.dart';
+import 'package:flutter_user/pages/onTripPage/map_page.dart';
 import 'package:flutter_user/translations/translation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../functions/functions.dart';
@@ -8,6 +10,7 @@ import '../../widgets/widgets.dart';
 import '../loadingPage/loading.dart';
 import '../login/login.dart';
 import '../noInternet/nointernet.dart';
+import 'package:flutter_user/pages/NavigatorPages/walletpage.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
@@ -601,526 +604,392 @@ class _WalletPageState extends State<WalletPage> {
                                 width: media.width * 0.9,
                                 alignment: Alignment.center,
                                 color: Colors.grey.withOpacity(0.3),
-                                // color: textColor,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          addMoneyController.text = '';
-                                          addMoney = null;
-                                        });
-
-                                        showModalBottomSheet(
-                                            context: context,
-                                            isScrollControlled: true,
-                                            builder: (context) {
-                                              return Container(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                decoration: BoxDecoration(
-                                                    color: page,
-                                                    borderRadius: BorderRadius
-                                                        .only(
-                                                            topLeft: Radius
-                                                                .circular(media
-                                                                        .width *
-                                                                    0.05),
-                                                            topRight: Radius
-                                                                .circular(media
-                                                                        .width *
-                                                                    0.05))),
-                                                // padding:
-                                                //     EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
-                                                child: Container(
-                                                  padding: EdgeInsets.all(
-                                                      media.width * 0.05),
-                                                  child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .stretch,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: MyText(
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            text: languages[
-                                                                    choosenLanguage]
-                                                                [
-                                                                'text_add_money_wallet'],
-                                                            size: media.width *
-                                                                sixteen,
-                                                            fontweight:
-                                                                FontWeight.w600,
-                                                            color: textColor,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: media.width *
-                                                              0.06,
-                                                        ),
-                                                        Container(
-                                                          height: media.width *
-                                                              0.128,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            border: Border.all(
-                                                                color:
-                                                                    borderLines,
-                                                                width: 1.2),
-                                                          ),
-                                                          child: Row(children: [
-                                                            Container(
-                                                                width: media
-                                                                        .width *
-                                                                    0.1,
-                                                                height: media
-                                                                        .width *
-                                                                    0.128,
-                                                                decoration:
-                                                                    const BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius
-                                                                                .only(
-                                                                          topLeft:
-                                                                              Radius.circular(12),
-                                                                          bottomLeft:
-                                                                              Radius.circular(12),
-                                                                        ),
-                                                                        color: Color(
-                                                                            0xffF0F0F0)),
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: MyText(
-                                                                  text: walletBalance[
-                                                                      'currency_symbol'],
-                                                                  size: media
-                                                                          .width *
-                                                                      twelve,
-                                                                  fontweight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: (isDarkTheme ==
-                                                                          true)
-                                                                      ? Colors
-                                                                          .black
-                                                                      : textColor,
-                                                                )),
-                                                            SizedBox(
-                                                              width:
-                                                                  media.width *
-                                                                      0.05,
-                                                            ),
-                                                            Container(
-                                                              height:
-                                                                  media.width *
-                                                                      0.128,
-                                                              width:
-                                                                  media.width *
-                                                                      0.6,
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: TextField(
-                                                                controller:
-                                                                    addMoneyController,
-                                                                onChanged:
-                                                                    (val) {
-                                                                  setState(() {
-                                                                    addMoney =
-                                                                        int.parse(
-                                                                            val);
-                                                                  });
-                                                                },
-                                                                keyboardType:
-                                                                    TextInputType
-                                                                        .number,
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  border:
-                                                                      InputBorder
-                                                                          .none,
-                                                                  hintText: languages[
-                                                                          choosenLanguage]
-                                                                      [
-                                                                      'text_enteramount'],
-                                                                  hintStyle:
-                                                                      GoogleFonts
-                                                                          .notoSans(
-                                                                    fontSize: media
-                                                                            .width *
-                                                                        fourteen,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    color: textColor
-                                                                        .withOpacity(
-                                                                            0.4),
-                                                                  ),
-                                                                ),
-                                                                style: GoogleFonts.notoSans(
-                                                                    fontSize: media
-                                                                            .width *
-                                                                        fourteen,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    color:
-                                                                        textColor),
-                                                                maxLines: 1,
-                                                              ),
-                                                            ),
-                                                          ]),
-                                                        ),
-                                                        SizedBox(
-                                                          height: media.width *
-                                                              0.05,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            InkWell(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  addMoneyController
-                                                                          .text =
-                                                                      '100';
-                                                                  addMoney =
-                                                                      100;
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                height: media
-                                                                        .width *
-                                                                    0.11,
-                                                                width: media
-                                                                        .width *
-                                                                    0.17,
-                                                                decoration: BoxDecoration(
-                                                                    border: Border.all(
-                                                                        color:
-                                                                            borderLines,
-                                                                        width:
-                                                                            1.2),
-                                                                    color: page,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            6)),
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: MyText(
-                                                                  text: walletBalance[
-                                                                          'currency_symbol'] +
-                                                                      '100',
-                                                                  size: media
-                                                                          .width *
-                                                                      twelve,
-                                                                  fontweight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              width:
-                                                                  media.width *
-                                                                      0.05,
-                                                            ),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  addMoneyController
-                                                                          .text =
-                                                                      '500';
-                                                                  addMoney =
-                                                                      500;
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                height: media
-                                                                        .width *
-                                                                    0.11,
-                                                                width: media
-                                                                        .width *
-                                                                    0.17,
-                                                                decoration: BoxDecoration(
-                                                                    border: Border.all(
-                                                                        color:
-                                                                            borderLines,
-                                                                        width:
-                                                                            1.2),
-                                                                    color: page,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            6)),
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: MyText(
-                                                                  text: walletBalance[
-                                                                          'currency_symbol'] +
-                                                                      '500',
-                                                                  size: media
-                                                                          .width *
-                                                                      twelve,
-                                                                  fontweight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              width:
-                                                                  media.width *
-                                                                      0.05,
-                                                            ),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  addMoneyController
-                                                                          .text =
-                                                                      '1000';
-                                                                  addMoney =
-                                                                      1000;
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                height: media
-                                                                        .width *
-                                                                    0.11,
-                                                                width: media
-                                                                        .width *
-                                                                    0.17,
-                                                                decoration: BoxDecoration(
-                                                                    border: Border.all(
-                                                                        color:
-                                                                            borderLines,
-                                                                        width:
-                                                                            1.2),
-                                                                    color: page,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            6)),
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: MyText(
-                                                                  text: walletBalance[
-                                                                          'currency_symbol'] +
-                                                                      '1000',
-                                                                  size: media
-                                                                          .width *
-                                                                      twelve,
-                                                                  fontweight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height:
-                                                              media.width * 0.1,
-                                                        ),
-                                                        Button(
-                                                          onTap: () async {
-                                                            FocusManager
-                                                                .instance
-                                                                .primaryFocus
-                                                                ?.unfocus();
-                                                            if (addMoney != 0 &&
-                                                                addMoney !=
-                                                                    null) {
-                                                              Navigator.pop(
-                                                                  context);
-                                                              showModalBottomSheet(
-                                                                  context:
-                                                                      context,
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return Container(
-                                                                      padding: EdgeInsets.all(
-                                                                          media.width *
-                                                                              0.05),
-                                                                      height:
-                                                                          media.width *
-                                                                              1,
-                                                                      width:
-                                                                          media.width *
-                                                                              1,
-                                                                      child:
-                                                                          SingleChildScrollView(
-                                                                        child: Column(
-                                                                          children: paymentGateways
-                                                                              .map((i, value) {
-                                                                                return MapEntry(
-                                                                                    i,
-                                                                                    (paymentGateways[i]['enabled'] == true)
-                                                                                        ? InkWell(
-                                                                                            onTap: () async {
-                                                                                              Navigator.pop(context);
-                                                                                              var val = await Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentGatwaysPage(url: paymentGateways[i]['url'])));
-                                                                                              if (val != null) {
-                                                                                                if (val) {
-                                                                                                  setState(() {
-                                                                                                    isLoading = true;
-                                                                                                    addMoney = null;
-                                                                                                  });
-                                                                                                  await getWallet();
-                                                                                                }
-                                                                                              }
-                                                                                            },
-                                                                                            child: Container(
-                                                                                              height: media.width * 0.15,
-                                                                                              width: media.width * 0.6,
-                                                                                              margin: EdgeInsets.only(bottom: media.width * 0.02),
-                                                                                              decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(paymentGateways[i]['image']))),
-                                                                                            ),
-                                                                                          )
-                                                                                        : Container());
-                                                                              })
-                                                                              .values
-                                                                              .toList(),
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  });
-                                                            }
-                                                          },
-                                                          text: languages[
-                                                                  choosenLanguage]
-                                                              ['text_addmoney'],
-                                                          width:
-                                                              media.width * 0.4,
-                                                        ),
-                                                        SizedBox(
-                                                          height: media.width *
-                                                              0.02,
-                                                        ),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              addMoney = null;
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                              addMoneyController
-                                                                  .clear();
-                                                              Navigator.pop(
-                                                                  context);
-                                                            });
-                                                          },
-                                                          child: Padding(
-                                                            padding: EdgeInsets
-                                                                .all(media
-                                                                        .width *
-                                                                    0.02),
-                                                            child: MyText(
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              text: languages[
-                                                                      choosenLanguage]
-                                                                  [
-                                                                  'text_cancel'],
-                                                              size:
-                                                                  media.width *
-                                                                      sixteen,
-                                                              color:
-                                                                  verifyDeclined,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ]),
+                                    if (userDetails['show_bank_info_feature_on_mobile_app'].toString() == '1')
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => const Withdraw()),
+                                            );
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(Icons.money,
+                                                  size: media.width * 0.05,
+                                                  color: (ischeckmoneytransfer == 3)
+                                                      ? buttonColor
+                                                      : textColor),
+                                              SizedBox(width: media.width * 0.01),
+                                              Flexible(
+                                                child: MyText(
+                                                  text: languages[choosenLanguage]['text_withdraw'],
+                                                  size: media.width * fourteen,
+                                                  color: (ischeckmoneytransfer == 3)
+                                                      ? buttonColor
+                                                      : textColor,
+                                                  overflow: TextOverflow.ellipsis,
                                                 ),
-                                              );
-                                            });
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.credit_card,
-                                            color: (ischeckmoneytransfer == 1)
-                                                ? const Color(0xFFFF0000)
-                                                : textColor,
+                                              ),
+                                            ],
                                           ),
-                                          MyText(
-                                              text: languages[choosenLanguage]
-                                                  ['text_addmoney'],
-                                              size: media.width * sixteen,
-                                              color: (ischeckmoneytransfer == 1)
-                                                  ? const Color(0xFFFF0000)
-                                                  : textColor)
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                    if (userDetails[
-                                            'show_wallet_money_transfer_feature_on_mobile_app'] ==
-                                        '1')
+
+                                    if (userDetails['show_bank_info_feature_on_mobile_app'].toString() == '1')
                                       Container(
                                         height: media.width * 0.1,
                                         width: 1,
                                         color: textColor.withOpacity(0.3),
                                       ),
-                                    if (userDetails[
-                                            'show_wallet_money_transfer_feature_on_mobile_app'] ==
-                                        '1')
-                                      InkWell(
+
+                                    Flexible(
+                                      child: InkWell(
                                         onTap: () {
+                                          setState(() {
+                                            addMoneyController.text = '';
+                                            addMoney = null;
+                                          });
+
                                           showModalBottomSheet(
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: (context) {
+                                              return Container(
+                                                padding: MediaQuery.of(context).viewInsets,
+                                                decoration: BoxDecoration(
+                                                  color: page,
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(media.width * 0.05),
+                                                    topRight: Radius.circular(media.width * 0.05),
+                                                  ),
+                                                ),
+                                                child: Container(
+                                                  padding: EdgeInsets.all(media.width * 0.05),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: MyText(
+                                                          textAlign: TextAlign.center,
+                                                          text: languages[choosenLanguage]['text_add_money_wallet'],
+                                                          size: media.width * fourteen,
+                                                          fontweight: FontWeight.w600,
+                                                          color: textColor,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: media.width * 0.06),
+                                                      Container(
+                                                        height: media.width * 0.128,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(12),
+                                                          border: Border.all(color: borderLines, width: 1.2),
+                                                        ),
+                                                        child: Row(children: [
+                                                          Container(
+                                                            width: media.width * 0.1,
+                                                            height: media.width * 0.128,
+                                                            decoration: const BoxDecoration(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(12),
+                                                                bottomLeft: Radius.circular(12),
+                                                              ),
+                                                              color: Color(0xffF0F0F0),
+                                                            ),
+                                                            alignment: Alignment.center,
+                                                            child: MyText(
+                                                              text: walletBalance['currency_symbol'],
+                                                              size: media.width * twelve,
+                                                              fontweight: FontWeight.w600,
+                                                              color: (isDarkTheme == true)
+                                                                  ? Colors.black
+                                                                  : textColor,
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: media.width * 0.05),
+                                                          Container(
+                                                            height: media.width * 0.128,
+                                                            width: media.width * 0.6,
+                                                            alignment: Alignment.center,
+                                                            child: TextField(
+                                                              controller: addMoneyController,
+                                                              onChanged: (val) {
+                                                                setState(() {
+                                                                  addMoney = int.parse(val);
+                                                                });
+                                                              },
+                                                              keyboardType: TextInputType.number,
+                                                              decoration: InputDecoration(
+                                                                border: InputBorder.none,
+                                                                hintText: languages[choosenLanguage]['text_enteramount'],
+                                                                hintStyle: GoogleFonts.notoSans(
+                                                                  fontSize: media.width * fourteen,
+                                                                  fontWeight: FontWeight.normal,
+                                                                  color: textColor.withOpacity(0.4),
+                                                                ),
+                                                              ),
+                                                              style: GoogleFonts.notoSans(
+                                                                fontSize: media.width * fourteen,
+                                                                fontWeight: FontWeight.normal,
+                                                                color: textColor,
+                                                              ),
+                                                              maxLines: 1,
+                                                            ),
+                                                          ),
+                                                        ]),
+                                                      ),
+                                                      SizedBox(height: media.width * 0.05),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                addMoneyController.text = '100';
+                                                                addMoney = 100;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                              height: media.width * 0.11,
+                                                              width: media.width * 0.17,
+                                                              decoration: BoxDecoration(
+                                                                border: Border.all(color: borderLines, width: 1.2),
+                                                                color: page,
+                                                                borderRadius: BorderRadius.circular(6),
+                                                              ),
+                                                              alignment: Alignment.center,
+                                                              child: MyText(
+                                                                text: walletBalance['currency_symbol'] + '100',
+                                                                size: media.width * twelve,
+                                                                fontweight: FontWeight.w600,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: media.width * 0.05),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                addMoneyController.text = '500';
+                                                                addMoney = 500;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                              height: media.width * 0.11,
+                                                              width: media.width * 0.17,
+                                                              decoration: BoxDecoration(
+                                                                border: Border.all(color: borderLines, width: 1.2),
+                                                                color: page,
+                                                                borderRadius: BorderRadius.circular(6),
+                                                              ),
+                                                              alignment: Alignment.center,
+                                                              child: MyText(
+                                                                text: walletBalance['currency_symbol'] + '500',
+                                                                size: media.width * twelve,
+                                                                fontweight: FontWeight.w600,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: media.width * 0.05),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                addMoneyController.text = '1000';
+                                                                addMoney = 1000;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                              height: media.width * 0.11,
+                                                              width: media.width * 0.17,
+                                                              decoration: BoxDecoration(
+                                                                border: Border.all(color: borderLines, width: 1.2),
+                                                                color: page,
+                                                                borderRadius: BorderRadius.circular(6),
+                                                              ),
+                                                              alignment: Alignment.center,
+                                                              child: MyText(
+                                                                text: walletBalance['currency_symbol'] + '1000',
+                                                                size: media.width * twelve,
+                                                                fontweight: FontWeight.w600,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(height: media.width * 0.1),
+                                                      Button(
+                                                        onTap: () async {
+                                                          FocusManager.instance.primaryFocus?.unfocus();
+                                                          if (addMoney != 0 && addMoney != null) {
+                                                            Navigator.pop(context);
+                                                            showModalBottomSheet(
+                                                              context: context,
+                                                              isScrollControlled: true,
+                                                              builder: (context) {
+                                                                return Container(
+                                                                  padding: EdgeInsets.all(media.width * 0.05),
+                                                                  height: media.width * 1,
+                                                                  width: media.width * 1,
+                                                                  child: SingleChildScrollView(
+                                                                    child: Column(
+                                                                      children: paymentGateways
+                                                                          .map((i, value) {
+                                                                        return MapEntry(
+                                                                          i,
+                                                                          (paymentGateways[i]['enabled'] == true)
+                                                                              ? InkWell(
+                                                                            onTap: () async {
+                                                                              Navigator.pop(context);
+                                                                              var val = await Navigator.push(
+                                                                                context,
+                                                                                MaterialPageRoute(
+                                                                                  builder: (context) => PaymentGatwaysPage(
+                                                                                    url: paymentGateways[i]['url'],
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                              if (val != null) {
+                                                                                if (val) {
+                                                                                  setState(() {
+                                                                                    isLoading = true;
+                                                                                    addMoney = null;
+                                                                                  });
+                                                                                  await getWallet();
+                                                                                }
+                                                                              }
+                                                                            },
+                                                                            child: Container(
+                                                                              height: media.width * 0.15,
+                                                                              width: media.width * 0.6,
+                                                                              margin: EdgeInsets.only(bottom: media.width * 0.02),
+                                                                              decoration: BoxDecoration(
+                                                                                image: DecorationImage(
+                                                                                  image: NetworkImage(paymentGateways[i]['image']),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          )
+                                                                              : Container(),
+                                                                        );
+                                                                      }).values.toList(),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+                                                          }
+                                                        },
+                                                        text: languages[choosenLanguage]['text_addmoney'],
+                                                        width: media.width * 0.4,
+                                                      ),
+                                                      SizedBox(height: media.width * 0.02),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            addMoney = null;
+                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                            addMoneyController.clear();
+                                                            Navigator.pop(context);
+                                                          });
+                                                        },
+                                                        child: Padding(
+                                                          padding: EdgeInsets.all(media.width * 0.02),
+                                                          child: MyText(
+                                                            textAlign: TextAlign.center,
+                                                            text: languages[choosenLanguage]['text_cancel'],
+                                                            size: media.width * sixteen,
+                                                            color: verifyDeclined,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.credit_card,
+                                              size: media.width * 0.05,
+                                              color: (ischeckmoneytransfer == 1)
+                                                  ? const Color(0xFFFF0000)
+                                                  : textColor,
+                                            ),
+                                            SizedBox(width: media.width * 0.01),
+                                            Flexible(
+                                              child: MyText(
+                                                text: languages[choosenLanguage]['text_addmoney'],
+                                                size: media.width * fourteen,
+                                                color: (ischeckmoneytransfer == 1)
+                                                    ? const Color(0xFFFF0000)
+                                                    : textColor,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+
+                                    if (userDetails['show_wallet_money_transfer_feature_on_mobile_app'] == '1')
+                                      Container(
+                                        height: media.width * 0.1,
+                                        width: 1,
+                                        color: textColor.withOpacity(0.3),
+                                      ),
+
+                                    if (userDetails['show_wallet_money_transfer_feature_on_mobile_app'] == '1')
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
                                               context: context,
                                               isScrollControlled: true,
                                               backgroundColor: page,
                                               builder: (context) {
                                                 return const MonetTransferBottomSheet();
-                                              });
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.swap_horiz_outlined,
-                                                color: (ischeckmoneytransfer ==
-                                                        2)
+                                              },
+                                            );
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.swap_horiz_outlined,
+                                                size: media.width * 0.05,
+                                                color: (ischeckmoneytransfer == 2)
                                                     ? const Color(0xFFFF0000)
-                                                    : textColor),
-                                            MyText(
-                                                text: languages[choosenLanguage]
-                                                    ['text_credit_trans'],
-                                                size: media.width * sixteen,
-                                                color: (ischeckmoneytransfer ==
-                                                        2)
-                                                    ? const Color(0xFFFF0000)
-                                                    : textColor)
-                                          ],
+                                                    : textColor,
+                                              ),
+                                              SizedBox(width: media.width * 0.01),
+                                              Flexible(
+                                                child: MyText(
+                                                  text: languages[choosenLanguage]['text_credit_trans'],
+                                                  size: media.width * fourteen,
+                                                  color: (ischeckmoneytransfer == 2)
+                                                      ? const Color(0xFFFF0000)
+                                                      : textColor,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                height: media.width * 0.1,
-                              )
+                              SizedBox(height: media.width * 0.1),
                             ],
                           ),
                         ],
@@ -1138,7 +1007,10 @@ class _WalletPageState extends State<WalletPage> {
                           : null,
                       child: InkWell(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Maps()),
+                            );
                           },
                           child: Icon(
                             Icons.arrow_back_ios,
